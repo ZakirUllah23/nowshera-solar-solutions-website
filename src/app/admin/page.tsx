@@ -179,14 +179,11 @@ import { createClient } from "@/lib/supabase/server";
 import {
   Package,
   Layers,
-  Percent,
   MessageSquare,
-  AlertTriangle,
   History,
   Plus,
   ArrowRight,
   FolderTree,
-  Award,
 } from "lucide-react";
 
 export default async function AdminDashboardPage() {

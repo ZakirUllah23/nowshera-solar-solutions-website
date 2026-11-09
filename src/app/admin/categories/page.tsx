@@ -39,6 +39,7 @@ export default async function AdminCategoriesPage() {
 
     revalidatePath("/admin/categories");
     revalidatePath("/admin");
+    revalidatePath("/products");
   }
 
   async function toggleCategoryStatus(id: string, currentStatus: boolean) {
@@ -52,6 +53,7 @@ export default async function AdminCategoriesPage() {
       .eq("id", id);
 
     revalidatePath("/admin/categories");
+    revalidatePath("/products");
   }
 
   async function deleteCategory(id: string) {
@@ -62,6 +64,7 @@ export default async function AdminCategoriesPage() {
     await supabaseServer.from("categories").delete().eq("id", id);
     revalidatePath("/admin/categories");
     revalidatePath("/admin");
+    revalidatePath("/products");
   }
 
   return (
