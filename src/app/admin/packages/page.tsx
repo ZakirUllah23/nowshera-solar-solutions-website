@@ -704,18 +704,18 @@ export default async function AdminPackagesPage(props: PageProps) {
                     </div>
 
                     {/* Component Items List */}
-                    <div className="bg-slate-950 rounded-xl border border-slate-800/80 overflow-hidden">
-                      <table className="w-full text-left text-xs text-slate-300">
-                        <thead className="bg-slate-900/60 text-slate-400 uppercase tracking-wider border-b border-slate-800 font-mono">
+                    <div className="w-full overflow-x-auto rounded-xl border border-slate-800 bg-slate-900 shadow-sm">
+                      <table className="w-full text-left text-xs text-slate-300 min-w-[650px]">
+                        <thead className="bg-slate-950/70 text-slate-400 uppercase tracking-wider border-b border-slate-800 font-mono">
                           <tr>
-                            <th className="py-2.5 px-3 font-medium">Product</th>
-                            <th className="py-2.5 px-3 font-medium">SKU</th>
-                            <th className="py-2.5 px-3 font-medium">Quantity</th>
-                            <th className="py-2.5 px-3 font-medium">Unit Price</th>
-                            <th className="py-2.5 px-3 font-medium">Subtotal</th>
-                            <th className="py-2.5 px-3 font-medium">Notes</th>
+                            <th className="py-2.5 px-3 font-medium whitespace-nowrap">Product</th>
+                            <th className="py-2.5 px-3 font-medium whitespace-nowrap">SKU</th>
+                            <th className="py-2.5 px-3 font-medium whitespace-nowrap">Quantity</th>
+                            <th className="py-2.5 px-3 font-medium whitespace-nowrap">Unit Price</th>
+                            <th className="py-2.5 px-3 font-medium whitespace-nowrap">Subtotal</th>
+                            <th className="py-2.5 px-3 font-medium whitespace-nowrap">Notes</th>
                             {canEdit && (
-                              <th className="py-2.5 px-3 font-medium text-right">
+                              <th className="py-2.5 px-3 font-medium text-right whitespace-nowrap">
                                 Actions
                               </th>
                             )}
@@ -726,7 +726,7 @@ export default async function AdminPackagesPage(props: PageProps) {
                             <tr>
                               <td
                                 colSpan={7}
-                                className="py-6 text-center text-slate-500"
+                                className="py-6 text-center text-slate-500 whitespace-nowrap"
                               >
                                 No components added to this package yet. Add solar
                                 panels or inverters below.
@@ -741,28 +741,28 @@ export default async function AdminPackagesPage(props: PageProps) {
                               return (
                                 <tr
                                   key={item.id}
-                                  className="hover:bg-slate-900/40"
+                                  className="hover:bg-slate-800/40 transition"
                                 >
-                                  <td className="py-2.5 px-3 font-medium text-white">
+                                  <td className="py-2.5 px-3 font-medium text-white whitespace-nowrap">
                                     {item.product?.name ?? "Unknown Product"}
                                   </td>
-                                  <td className="py-2.5 px-3 font-mono text-slate-400">
+                                  <td className="py-2.5 px-3 font-mono text-slate-400 whitespace-nowrap">
                                     {item.product?.sku ?? "—"}
                                   </td>
-                                  <td className="py-2.5 px-3 font-mono font-semibold text-amber-400">
+                                  <td className="py-2.5 px-3 font-mono font-semibold text-amber-400 whitespace-nowrap">
                                     {item.quantity}×
                                   </td>
-                                  <td className="py-2.5 px-3 font-mono text-slate-400">
+                                  <td className="py-2.5 px-3 font-mono text-slate-400 whitespace-nowrap">
                                     {formatPrice(unitPrice)}
                                   </td>
-                                  <td className="py-2.5 px-3 font-mono font-semibold text-white">
+                                  <td className="py-2.5 px-3 font-mono font-semibold text-white whitespace-nowrap">
                                     {formatPrice(subtotal)}
                                   </td>
-                                  <td className="py-2.5 px-3 text-slate-400">
+                                  <td className="py-2.5 px-3 text-slate-400 whitespace-nowrap">
                                     {item.notes ?? "—"}
                                   </td>
                                   {canEdit && (
-                                    <td className="py-2.5 px-3 text-right">
+                                    <td className="py-2.5 px-3 text-right whitespace-nowrap">
                                       <form
                                         action={removePackageItem.bind(
                                           null,

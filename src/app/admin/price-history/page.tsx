@@ -176,21 +176,20 @@ export default async function AdminPriceHistoryPage(props: PageProps) {
       </div>
 
       {/* Table */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-sm">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-300">
-            <thead className="bg-slate-950/80 text-xs uppercase tracking-wider text-slate-400 border-b border-slate-800">
-              <tr>
-                <th className="py-3.5 px-4 font-semibold">Date & Time (PKT)</th>
-                <th className="py-3.5 px-4 font-semibold">Target & Field</th>
-                <th className="py-3.5 px-4 font-semibold">Item & SKU</th>
-                <th className="py-3.5 px-4 font-semibold">Previous Price</th>
-                <th className="py-3.5 px-4 font-semibold">New Price</th>
-                <th className="py-3.5 px-4 font-semibold">Reason</th>
-                <th className="py-3.5 px-4 font-semibold">Changed By</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800/70">
+      <div className="w-full overflow-x-auto rounded-xl border border-slate-800 bg-slate-900 shadow-sm">
+        <table className="w-full text-left text-sm text-slate-300 min-w-[850px]">
+          <thead className="bg-slate-950/80 text-xs uppercase font-mono tracking-wider text-slate-400 border-b border-slate-800">
+            <tr>
+              <th className="py-3.5 px-4 font-semibold whitespace-nowrap">Date & Time (PKT)</th>
+              <th className="py-3.5 px-4 font-semibold whitespace-nowrap">Target & Field</th>
+              <th className="py-3.5 px-4 font-semibold whitespace-nowrap">Item & SKU</th>
+              <th className="py-3.5 px-4 font-semibold whitespace-nowrap">Previous Price</th>
+              <th className="py-3.5 px-4 font-semibold whitespace-nowrap">New Price</th>
+              <th className="py-3.5 px-4 font-semibold whitespace-nowrap">Reason</th>
+              <th className="py-3.5 px-4 font-semibold whitespace-nowrap">Changed By</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-800/60">
               {records.length === 0 ? (
                 <tr>
                   <td
@@ -210,7 +209,7 @@ export default async function AdminPriceHistoryPage(props: PageProps) {
                   return (
                     <tr
                       key={record.id}
-                      className="hover:bg-slate-850/50 transition"
+                      className="hover:bg-slate-800/40 transition"
                     >
                       {/* Date & Time */}
                       <td className="py-3 px-4 text-xs font-mono text-slate-300 whitespace-nowrap">
@@ -318,7 +317,6 @@ export default async function AdminPriceHistoryPage(props: PageProps) {
               )}
             </tbody>
           </table>
-        </div>
       </div>
     </div>
   );

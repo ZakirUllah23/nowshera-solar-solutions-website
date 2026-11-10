@@ -138,28 +138,29 @@ export default async function AdminBrandsPage() {
         </form>
       )}
 
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-        <table className="w-full text-left border-collapse text-sm">
+      {/* Brands Table */}
+      <div className="w-full overflow-x-auto rounded-xl border border-slate-800 bg-slate-900 shadow-sm">
+        <table className="w-full text-left border-collapse text-sm min-w-[650px]">
           <thead>
-            <tr className="border-b border-slate-800 text-slate-400 text-xs uppercase bg-slate-950/50">
-              <th className="py-3.5 px-4">Brand</th>
-              <th className="py-3.5 px-4">Slug</th>
-              <th className="py-3.5 px-4">Tier</th>
-              <th className="py-3.5 px-4">Description</th>
-              <th className="py-3.5 px-4">Status</th>
-              {canEdit && <th className="py-3.5 px-4 text-right">Actions</th>}
+            <tr className="border-b border-slate-800 text-slate-400 text-xs uppercase font-mono tracking-wider bg-slate-950/70">
+              <th className="py-3.5 px-4 whitespace-nowrap">Brand</th>
+              <th className="py-3.5 px-4 whitespace-nowrap">Slug</th>
+              <th className="py-3.5 px-4 whitespace-nowrap">Tier</th>
+              <th className="py-3.5 px-4 whitespace-nowrap">Description</th>
+              <th className="py-3.5 px-4 whitespace-nowrap">Status</th>
+              {canEdit && <th className="py-3.5 px-4 whitespace-nowrap text-right">Actions</th>}
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-800/60">
             {brands?.map((b) => (
-              <tr key={b.id} className="hover:bg-slate-800/30">
-                <td className="py-3.5 px-4 font-semibold text-white">
+              <tr key={b.id} className="hover:bg-slate-800/40 transition">
+                <td className="py-3.5 px-4 font-semibold text-white whitespace-nowrap">
                   {b.name}
                 </td>
-                <td className="py-3.5 px-4 font-mono text-xs text-amber-400">
+                <td className="py-3.5 px-4 font-mono text-xs text-amber-400 whitespace-nowrap">
                   {b.slug}
                 </td>
-                <td className="py-3.5 px-4">
+                <td className="py-3.5 px-4 whitespace-nowrap">
                   <span className="px-2 py-0.5 text-xs rounded bg-amber-500/10 text-amber-300 border border-amber-500/30">
                     {b.tier_rating || "Standard"}
                   </span>
@@ -167,7 +168,7 @@ export default async function AdminBrandsPage() {
                 <td className="py-3.5 px-4 text-slate-300 text-xs max-w-xs truncate">
                   {b.description || "—"}
                 </td>
-                <td className="py-3.5 px-4">
+                <td className="py-3.5 px-4 whitespace-nowrap">
                   {b.is_active ? (
                     <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
                       <CheckCircle2 className="w-3 h-3" /> Active
@@ -179,14 +180,14 @@ export default async function AdminBrandsPage() {
                   )}
                 </td>
                 {canEdit && (
-                  <td className="py-3.5 px-4 text-right">
+                  <td className="py-3.5 px-4 text-right whitespace-nowrap">
                     <div className="flex items-center justify-end gap-2">
                       <form
                         action={toggleBrandStatus.bind(null, b.id, b.is_active)}
                       >
                         <button
                           type="submit"
-                          className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 cursor-pointer"
+                          className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 cursor-pointer transition"
                         >
                           {b.is_active ? "Disable" : "Enable"}
                         </button>
@@ -194,7 +195,7 @@ export default async function AdminBrandsPage() {
                       <form action={deleteBrand.bind(null, b.id)}>
                         <button
                           type="submit"
-                          className="p-1.5 rounded bg-red-500/10 hover:bg-red-500/20 text-red-400 cursor-pointer"
+                          className="p-1.5 rounded bg-red-500/10 hover:bg-red-500/20 text-red-400 cursor-pointer transition"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>

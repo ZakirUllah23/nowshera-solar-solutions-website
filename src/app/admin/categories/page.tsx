@@ -144,34 +144,34 @@ export default async function AdminCategoriesPage() {
       )}
 
       {/* Categories Table */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-        <table className="w-full text-left border-collapse text-sm">
+      <div className="w-full overflow-x-auto rounded-xl border border-slate-800 bg-slate-900 shadow-sm">
+        <table className="w-full text-left border-collapse text-sm min-w-[650px]">
           <thead>
-            <tr className="border-b border-slate-800 text-slate-400 text-xs uppercase bg-slate-950/50">
-              <th className="py-3.5 px-4">Order</th>
-              <th className="py-3.5 px-4">Name</th>
-              <th className="py-3.5 px-4">Slug</th>
-              <th className="py-3.5 px-4">Description</th>
-              <th className="py-3.5 px-4">Status</th>
-              {canEdit && <th className="py-3.5 px-4 text-right">Actions</th>}
+            <tr className="border-b border-slate-800 text-slate-400 text-xs uppercase font-mono tracking-wider bg-slate-950/70">
+              <th className="py-3.5 px-4 whitespace-nowrap">Order</th>
+              <th className="py-3.5 px-4 whitespace-nowrap">Name</th>
+              <th className="py-3.5 px-4 whitespace-nowrap">Slug</th>
+              <th className="py-3.5 px-4 whitespace-nowrap">Description</th>
+              <th className="py-3.5 px-4 whitespace-nowrap">Status</th>
+              {canEdit && <th className="py-3.5 px-4 whitespace-nowrap text-right">Actions</th>}
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-800/60">
             {categories?.map((cat) => (
-              <tr key={cat.id} className="hover:bg-slate-800/30">
-                <td className="py-3.5 px-4 font-mono text-xs text-slate-400">
+              <tr key={cat.id} className="hover:bg-slate-800/40 transition">
+                <td className="py-3.5 px-4 font-mono text-xs text-slate-400 whitespace-nowrap">
                   #{cat.display_order}
                 </td>
-                <td className="py-3.5 px-4 font-semibold text-white">
+                <td className="py-3.5 px-4 font-semibold text-white whitespace-nowrap">
                   {cat.name}
                 </td>
-                <td className="py-3.5 px-4 font-mono text-xs text-amber-400">
+                <td className="py-3.5 px-4 font-mono text-xs text-amber-400 whitespace-nowrap">
                   {cat.slug}
                 </td>
                 <td className="py-3.5 px-4 text-slate-300 text-xs max-w-xs truncate">
                   {cat.description || "—"}
                 </td>
-                <td className="py-3.5 px-4">
+                <td className="py-3.5 px-4 whitespace-nowrap">
                   {cat.is_active ? (
                     <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
                       <CheckCircle2 className="w-3 h-3" /> Active
@@ -183,7 +183,7 @@ export default async function AdminCategoriesPage() {
                   )}
                 </td>
                 {canEdit && (
-                  <td className="py-3.5 px-4 text-right">
+                  <td className="py-3.5 px-4 text-right whitespace-nowrap">
                     <div className="flex items-center justify-end gap-2">
                       <form
                         action={toggleCategoryStatus.bind(
@@ -194,7 +194,7 @@ export default async function AdminCategoriesPage() {
                       >
                         <button
                           type="submit"
-                          className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 cursor-pointer"
+                          className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 cursor-pointer transition"
                         >
                           {cat.is_active ? "Disable" : "Enable"}
                         </button>
@@ -203,7 +203,7 @@ export default async function AdminCategoriesPage() {
                         <button
                           type="submit"
                           title="Delete Category (if no products attached)"
-                          className="p-1.5 rounded bg-red-500/10 hover:bg-red-500/20 text-red-400 cursor-pointer"
+                          className="p-1.5 rounded bg-red-500/10 hover:bg-red-500/20 text-red-400 cursor-pointer transition"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>

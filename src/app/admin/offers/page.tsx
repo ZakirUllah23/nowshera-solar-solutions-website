@@ -487,7 +487,7 @@ export default async function AdminOffersPage(props: PageProps) {
         </h2>
 
         {offers.length === 0 ? (
-          <div className="bg-slate-900 border border-slate-800 rounded-lg p-12 text-center text-slate-400">
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-12 text-center text-slate-400">
             <Percent className="w-12 h-12 mx-auto text-slate-600 mb-3" />
             <p className="font-semibold text-slate-300">
               No promotional offers configured yet.
@@ -497,7 +497,108 @@ export default async function AdminOffersPage(props: PageProps) {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-6">
+          <>
+            {/* Industrial Offers Overview Table */}
+            <div className="w-full overflow-x-auto rounded-xl border border-slate-800 bg-slate-900 shadow-sm">
+              <table className="w-full text-left text-xs text-slate-300 min-w-[850px]">
+                <thead className="bg-slate-950/80 text-slate-400 uppercase font-mono tracking-wider border-b border-slate-800">
+                  <tr>
+                    <th className="py-3 px-4 font-semibold whitespace-nowrap">Campaign Title</th>
+                    <th className="py-3 px-4 font-semibold whitespace-nowrap">Discount Value</th>
+                    <th className="py-3 px-4 font-semibold whitespace-nowrap">Status</th>
+                    <th className="py-3 px-4 font-semibold whitespace-nowrap">Start Time (PKT)</th>
+                    <th className="py-3 px-4 font-semibold whitespace-nowrap">Expiry Time (PKT)</th>
+                    <th className="py-3 px-4 font-semibold whitespace-nowrap">Attached Hardware</th>
+                    <th className="py-3 px-4 font-semibold whitespace-nowrap text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800/60">
+                  {offers.map((offer) => {
+                    const status = getOfferStatus(offer);
+                    const prodCount = (offerProductsData ?? []).filter(
+                      (op) => op.offer_id === offer.id
+                    ).length;
+                    const pkgCount = (offerPackagesData ?? []).filter(
+                      (op) => op.offer_id === offer.id
+                    ).length;
+
+                    return (
+                      <tr key={`table-${offer.id}`} className="hover:bg-slate-800/40 transition">
+                        <td className="py-3 px-4 font-semibold text-white whitespace-nowrap">
+                          {offer.title}
+                        </td>
+                        <td className="py-3 px-4 font-mono font-bold text-amber-400 whitespace-nowrap">
+                          {offer.discount_type === "percentage" && `${offer.discount_value}% OFF`}
+                          {offer.discount_type === "fixed_amount" && `${formatPrice(offer.discount_value)} OFF`}
+                          {offer.discount_type === "special_price" && `Special: ${formatPrice(offer.discount_value)}`}
+                        </td>
+                        <td className="py-3 px-4 whitespace-nowrap">
+                          <span
+                            className={`text-[11px] px-2.5 py-0.5 rounded font-mono font-medium border ${status.badge}`}
+                          >
+                            {status.label}
+                          </span>
+                        </td>
+                        <td className="py-3 px-4 font-mono text-slate-400 whitespace-nowrap">
+                          {new Date(offer.start_time).toLocaleString("en-PK", {
+                            timeZone: "Asia/Karachi",
+                            dateStyle: "short",
+                            timeStyle: "short",
+                          })}{" "}
+                          PKT
+                        </td>
+                        <td className="py-3 px-4 font-mono text-slate-400 whitespace-nowrap">
+                          {new Date(offer.end_time).toLocaleString("en-PK", {
+                            timeZone: "Asia/Karachi",
+                            dateStyle: "short",
+                            timeStyle: "short",
+                          })}{" "}
+                          PKT
+                        </td>
+                        <td className="py-3 px-4 whitespace-nowrap font-mono text-xs text-slate-300">
+                          {prodCount} Products • {pkgCount} Packages
+                        </td>
+                        <td className="py-3 px-4 text-right whitespace-nowrap">
+                          {canEdit && (
+                            <div className="flex items-center justify-end gap-2">
+                              <form
+                                action={toggleOfferStatus.bind(
+                                  null,
+                                  offer.id,
+                                  offer.is_enabled
+                                )}
+                              >
+                                <button
+                                  type="submit"
+                                  className={`px-2 py-0.5 rounded text-[11px] font-mono border transition ${
+                                    offer.is_enabled
+                                      ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20"
+                                      : "bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700"
+                                  }`}
+                                >
+                                  {offer.is_enabled ? "Enabled" : "Disabled"}
+                                </button>
+                              </form>
+                              <form action={deleteOffer.bind(null, offer.id)}>
+                                <button
+                                  type="submit"
+                                  title="Delete Offer"
+                                  className="p-1 rounded text-slate-500 hover:text-rose-400 transition"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </form>
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6">
             {offers.map((offer) => {
               const status = getOfferStatus(offer);
               const assignedProducts = (offerProductsData ?? [])
@@ -812,6 +913,7 @@ export default async function AdminOffersPage(props: PageProps) {
               );
             })}
           </div>
+          </>
         )}
       </div>
     </div>

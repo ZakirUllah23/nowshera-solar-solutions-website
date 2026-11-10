@@ -1,6 +1,7 @@
 import { requireStaffAuth, requireAdminOrOwner } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { formatPrice } from "@/lib/utils";
 import type { StockStatus, PublicationStatus } from "@/types/database.types";
 import {
   Package,
@@ -489,6 +490,98 @@ export default async function AdminProductsPage() {
           </span>
         </div>
 
+        {/* Industrial Products Table Overview */}
+        <div className="w-full overflow-x-auto rounded-xl border border-slate-800 bg-slate-900 shadow-sm">
+          <table className="w-full text-left text-xs text-slate-300 min-w-[950px]">
+            <thead className="bg-slate-950/80 text-slate-400 uppercase font-mono tracking-wider border-b border-slate-800">
+              <tr>
+                <th className="py-3 px-4 font-semibold whitespace-nowrap">Product</th>
+                <th className="py-3 px-4 font-semibold whitespace-nowrap">SKU</th>
+                <th className="py-3 px-4 font-semibold whitespace-nowrap">Category</th>
+                <th className="py-3 px-4 font-semibold whitespace-nowrap">Brand</th>
+                <th className="py-3 px-4 font-semibold whitespace-nowrap">Regular Price</th>
+                <th className="py-3 px-4 font-semibold whitespace-nowrap">Stock Status</th>
+                <th className="py-3 px-4 font-semibold whitespace-nowrap">Publication</th>
+                <th className="py-3 px-4 font-semibold whitespace-nowrap text-right">Quick Action</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-800/60">
+              {products?.map((prod) => {
+                const primaryImage =
+                  prod.product_images?.find((img) => img.is_primary) ||
+                  prod.product_images?.[0];
+
+                return (
+                  <tr key={`table-${prod.id}`} className="hover:bg-slate-800/40 transition">
+                    <td className="py-2.5 px-4 whitespace-nowrap">
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-lg bg-slate-950 border border-slate-800 overflow-hidden shrink-0 flex items-center justify-center">
+                          {primaryImage ? (
+                            <img
+                              src={primaryImage.image_url}
+                              alt={prod.name}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <ImageIcon className="w-4 h-4 text-slate-600" />
+                          )}
+                        </div>
+                        <span className="font-semibold text-white max-w-[200px] truncate">
+                          {prod.name}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="py-2.5 px-4 font-mono font-bold text-amber-400 whitespace-nowrap">
+                      {prod.sku}
+                    </td>
+                    <td className="py-2.5 px-4 text-slate-300 whitespace-nowrap">
+                      {prod.categories?.name || "—"}
+                    </td>
+                    <td className="py-2.5 px-4 text-slate-300 whitespace-nowrap">
+                      {prod.brands?.name || "Unbranded"}
+                    </td>
+                    <td className="py-2.5 px-4 font-mono font-semibold text-white whitespace-nowrap">
+                      {formatPrice(prod.regular_price)}
+                    </td>
+                    <td className="py-2.5 px-4 whitespace-nowrap">
+                      <span
+                        className={`text-[11px] px-2 py-0.5 rounded font-mono font-medium border ${
+                          prod.inventory_status === "in_stock"
+                            ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                            : prod.inventory_status === "available_on_order"
+                            ? "bg-amber-500/10 text-amber-400 border-amber-500/30"
+                            : "bg-rose-500/10 text-rose-400 border-rose-500/30"
+                        }`}
+                      >
+                        {prod.inventory_status}
+                      </span>
+                    </td>
+                    <td className="py-2.5 px-4 whitespace-nowrap">
+                      <span
+                        className={`text-[11px] px-2 py-0.5 rounded font-mono font-medium border ${
+                          prod.publication_status === "published"
+                            ? "bg-sky-500/10 text-sky-400 border-sky-500/30"
+                            : "bg-slate-800 text-slate-400 border-slate-700"
+                        }`}
+                      >
+                        {prod.publication_status}
+                      </span>
+                    </td>
+                    <td className="py-2.5 px-4 text-right whitespace-nowrap">
+                      <a
+                        href={`#product-${prod.id}`}
+                        className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition"
+                      >
+                        Edit Card ↓
+                      </a>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+
         {products?.map((prod) => {
           const primaryImage =
             prod.product_images?.find((img) => img.is_primary) ||
@@ -500,6 +593,7 @@ export default async function AdminProductsPage() {
 
           return (
             <div
+              id={`product-${prod.id}`}
               key={prod.id}
               className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm"
             >

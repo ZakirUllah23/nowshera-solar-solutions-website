@@ -225,7 +225,7 @@ export default async function AdminInquiriesPage(props: PageProps) {
         </h2>
 
         {inquiries.length === 0 ? (
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400">
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-12 text-center text-slate-400">
             <MessageSquare className="w-12 h-12 mx-auto text-slate-600 mb-3" />
             <p className="font-medium text-slate-300">No customer enquiries found.</p>
             <p className="text-xs text-slate-500 mt-1">
@@ -234,7 +234,90 @@ export default async function AdminInquiriesPage(props: PageProps) {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-6">
+          <>
+            {/* Industrial Table Overview */}
+            <div className="w-full overflow-x-auto rounded-xl border border-slate-800 bg-slate-900 shadow-sm">
+              <table className="w-full text-left text-xs text-slate-300 min-w-[950px]">
+                <thead className="bg-slate-950/80 text-slate-400 uppercase font-mono tracking-wider border-b border-slate-800">
+                  <tr>
+                    <th className="py-3 px-4 font-semibold whitespace-nowrap">Customer</th>
+                    <th className="py-3 px-4 font-semibold whitespace-nowrap">Phone & WhatsApp</th>
+                    <th className="py-3 px-4 font-semibold whitespace-nowrap">Location</th>
+                    <th className="py-3 px-4 font-semibold whitespace-nowrap">Message Snippet</th>
+                    <th className="py-3 px-4 font-semibold whitespace-nowrap">Status</th>
+                    <th className="py-3 px-4 font-semibold whitespace-nowrap">Assigned Agent</th>
+                    <th className="py-3 px-4 font-semibold whitespace-nowrap">Received (PKT)</th>
+                    <th className="py-3 px-4 font-semibold whitespace-nowrap text-right">Quick Contact</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800/60">
+                  {inquiries.map((inq) => {
+                    const statusBadge = getStatusBadge(inq.status);
+                    const cleanPhone = cleanWhatsAppNumber(inq.phone);
+                    const inquiredItem =
+                      inq.products?.name ?? inq.packages?.name ?? null;
+
+                    const whatsappMessage = encodeURIComponent(
+                      `Hello ${inq.customer_name}, thank you for contacting Nowshera Solar Solutions regarding ${
+                        inquiredItem ?? "our solar solutions"
+                      }. We received your inquiry: "${inq.message}". How can we assist you today?`
+                    );
+
+                    const whatsappUrl = `https://wa.me/${cleanPhone}?text=${whatsappMessage}`;
+
+                    return (
+                      <tr key={`table-${inq.id}`} className="hover:bg-slate-800/40 transition">
+                        <td className="py-3 px-4 font-semibold text-white whitespace-nowrap">
+                          {inq.customer_name}
+                        </td>
+                        <td className="py-3 px-4 font-mono text-slate-300 whitespace-nowrap">
+                          {inq.phone}
+                        </td>
+                        <td className="py-3 px-4 whitespace-nowrap text-slate-400">
+                          {inq.city || inq.address || "—"}
+                        </td>
+                        <td className="py-3 px-4 text-slate-300 max-w-[220px] truncate">
+                          {inq.message}
+                        </td>
+                        <td className="py-3 px-4 whitespace-nowrap">
+                          <span
+                            className={`text-[11px] px-2 py-0.5 rounded font-mono font-medium border ${statusBadge.badge}`}
+                          >
+                            {statusBadge.label}
+                          </span>
+                        </td>
+                        <td className="py-3 px-4 whitespace-nowrap text-slate-400">
+                          {inq.profiles?.full_name ?? (
+                            <span className="text-slate-600 italic">Unassigned</span>
+                          )}
+                        </td>
+                        <td className="py-3 px-4 font-mono text-slate-400 whitespace-nowrap">
+                          {new Date(inq.created_at).toLocaleString("en-PK", {
+                            timeZone: "Asia/Karachi",
+                            dateStyle: "short",
+                            timeStyle: "short",
+                          })}{" "}
+                          PKT
+                        </td>
+                        <td className="py-3 px-4 text-right whitespace-nowrap">
+                          <a
+                            href={whatsappUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-600/90 hover:bg-emerald-500 text-white font-medium rounded text-[11px] transition shadow-sm"
+                          >
+                            <Send className="w-3 h-3" />
+                            <span>WhatsApp</span>
+                          </a>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6">
             {inquiries.map((inq) => {
               const statusBadge = getStatusBadge(inq.status);
               const cleanPhone = cleanWhatsAppNumber(inq.phone);
@@ -423,6 +506,7 @@ export default async function AdminInquiriesPage(props: PageProps) {
               );
             })}
           </div>
+          </>
         )}
       </div>
     </div>
