@@ -1,19 +1,18 @@
 import React from "react";
 import Image from "next/image";
 import PublicShell from "@/components/public/PublicShell";
+import SolarLoadCalculator from "@/components/public/SolarLoadCalculator";
 import { createClient } from "@/lib/supabase/server";
 import { formatPrice } from "@/lib/utils";
 import {
   Zap,
   CheckCircle2,
   ShieldCheck,
-  MessageCircle,
   Package as PackageIcon,
   Layers,
   ArrowRight,
-  TrendingUp,
   Cpu,
-  Clock,
+  Sun,
   Sparkles,
 } from "lucide-react";
 
@@ -53,12 +52,74 @@ const LOAD_COMPARISON_DATA = [
     capacity: "15.0 kW",
     type: "Commercial & Industrial Heavy Duty",
     inverterAc: "5× to 6× Inverter ACs + Office Equipment",
-    appliances: "Multiple Fridges, Commercial Lighting, Lab Equipment",
+    appliances: "Multiple Fridges, Commercial Lighting, Plazas & Shops",
     pump: "3.0 HP – 5.0 HP Agricultural/Industrial Pump",
     generation: "1,900 – 2,200 Units / Month",
     netMetering: "Full 3-Phase Commercial Net-Metering",
   },
 ];
+
+// Determine component category icon & color for BOM breakdown
+function getComponentDetails(name: string = ""): {
+  Icon: typeof Sun;
+  colorClass: string;
+  categoryLabel: string;
+} {
+  const lower = name.toLowerCase();
+  if (
+    lower.includes("panel") ||
+    lower.includes("pv") ||
+    lower.includes("module") ||
+    lower.includes("longi") ||
+    lower.includes("canadian") ||
+    lower.includes("jinko") ||
+    lower.includes("ja solar")
+  ) {
+    return {
+      Icon: Sun,
+      colorClass: "text-amber-600 bg-amber-50 border-amber-200",
+      categoryLabel: "Solar Panels",
+    };
+  }
+  if (
+    lower.includes("inverter") ||
+    lower.includes("veyron") ||
+    lower.includes("nitrox") ||
+    lower.includes("aerox") ||
+    lower.includes("knox") ||
+    lower.includes("crown") ||
+    lower.includes("itel") ||
+    lower.includes("growatt") ||
+    lower.includes("huawei")
+  ) {
+    return {
+      Icon: Cpu,
+      colorClass: "text-blue-600 bg-blue-50 border-blue-200",
+      categoryLabel: "Hybrid Inverter",
+    };
+  }
+  if (
+    lower.includes("battery") ||
+    lower.includes("storage") ||
+    lower.includes("dyness") ||
+    lower.includes("pylontech") ||
+    lower.includes("narada") ||
+    lower.includes("lifepo4") ||
+    lower.includes("lithium") ||
+    lower.includes("tubular")
+  ) {
+    return {
+      Icon: Layers,
+      colorClass: "text-emerald-600 bg-emerald-50 border-emerald-200",
+      categoryLabel: "Battery Storage",
+    };
+  }
+  return {
+    Icon: ShieldCheck,
+    colorClass: "text-slate-600 bg-slate-100 border-slate-200",
+    categoryLabel: "Structure & BoS",
+  };
+}
 
 export default async function PublicPackagesPage() {
   const supabase = await createClient();
@@ -102,32 +163,26 @@ export default async function PublicPackagesPage() {
   return (
     <PublicShell>
       {/* -------------------------------------------------------------------
-          HERO SECTION (High-Res Rooftop Installation Image + Architectural Overlay)
+          1. HERO SECTION (Clean, Bright Lighting, No Top Badge)
       ------------------------------------------------------------------- */}
-      <section className="relative h-[340px] md:h-[400px] flex items-center justify-center overflow-hidden bg-slate-950">
+      <section className="relative h-[280px] sm:h-[340px] md:h-[380px] flex items-center justify-center overflow-hidden bg-slate-900">
         <Image
           src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&w=1920&q=80"
           alt="Turnkey solar packages and commercial rooftop installations"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center brightness-75 contrast-105"
+          className="object-cover object-center brightness-[0.88] contrast-[1.05]"
         />
-        {/* Dark Slate Architectural Overlay */}
-        <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-[1px] z-10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent z-10" />
+        {/* Clean Navy Slate Overlay (Bright & Clear, matching homepage) */}
+        <div className="absolute inset-0 bg-slate-950/45 z-10" />
 
-        <div className="relative z-20 max-w-7xl mx-auto px-6 sm:px-8 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-amber-500/30 text-amber-400 text-xs font-mono font-semibold backdrop-blur-md">
-            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-            <span>[ TURNKEY HYBRID &amp; NET-METERING SYSTEMS — KPK ]</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-3 sm:space-y-4">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
             Engineered Solar System Packages
           </h1>
 
-          <p className="max-w-3xl mx-auto text-sm sm:text-base text-slate-300 font-normal leading-relaxed">
+          <p className="max-w-2xl mx-auto text-xs sm:text-sm md:text-base text-slate-200 font-normal leading-relaxed">
             Complete Tier-1 solar systems engineered for residential homes,
             commercial plazas, and tube-wells. Includes high-efficiency
             monocrystalline panels, hybrid inverters, lithium battery banks, and
@@ -137,28 +192,29 @@ export default async function PublicPackagesPage() {
       </section>
 
       {/* -------------------------------------------------------------------
-          LIVE DATABASE-DRIVEN PACKAGES GRID
+          2. LIVE DATABASE-DRIVEN PACKAGES GRID (Blue & White Wholesale Theme)
       ------------------------------------------------------------------- */}
-      <section className="bg-slate-950 py-16 sm:py-20 text-white border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 space-y-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800 pb-6">
-            <div>
-              <span className="font-mono text-xs font-bold uppercase tracking-wider text-amber-400 block">
-                01 // TURNKEY SOLAR SOLUTIONS
+      <section className="bg-slate-50 py-12 sm:py-16 md:py-20 text-slate-900 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
+          {/* Section Heading */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-5">
+            <div className="space-y-1">
+              <span className="font-mono text-xs font-bold uppercase tracking-wider text-blue-600 block">
+                01 // Turnkey Solar Solutions
               </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
                 Configured System Packages ({packages.length})
               </h2>
             </div>
-            <span className="font-mono text-xs text-slate-400">
-              REAL-TIME BOM HARDWARE PRICING
+            <span className="font-mono text-xs text-slate-500">
+              Live BOM Hardware Pricing
             </span>
           </div>
 
           {packages.length === 0 ? (
-            <div className="p-12 text-center bg-slate-900 rounded-md border border-slate-800 space-y-2">
-              <Layers className="w-10 h-10 text-slate-600 mx-auto" />
-              <p className="text-sm text-slate-300 font-medium">
+            <div className="p-12 text-center bg-white rounded-xl border border-slate-200 shadow-sm space-y-2">
+              <Layers className="w-10 h-10 text-slate-400 mx-auto" />
+              <p className="text-sm text-slate-700 font-semibold">
                 No turnkey packages published at the moment.
               </p>
               <p className="text-xs text-slate-500">
@@ -166,7 +222,7 @@ export default async function PublicPackagesPage() {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
               {packages.map((pkg) => {
                 const promo = promoMap.get(pkg.package_id);
                 const hasDiscount =
@@ -196,12 +252,12 @@ export default async function PublicPackagesPage() {
                 return (
                   <div
                     key={pkg.package_id}
-                    className="bg-slate-900 border border-slate-800 rounded-md overflow-hidden flex flex-col justify-between shadow-sm hover:border-slate-700 transition-colors"
+                    className="bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col justify-between shadow-sm hover:border-blue-400 hover:shadow-md transition-all duration-200"
                   >
                     <div>
                       {/* Optional Package Featured Image */}
                       {pkg.featured_image_url && (
-                        <div className="relative h-56 w-full bg-slate-950 overflow-hidden border-b border-slate-800">
+                        <div className="relative h-52 sm:h-60 w-full bg-slate-100 overflow-hidden border-b border-slate-200">
                           <Image
                             src={pkg.featured_image_url}
                             alt={pkg.name}
@@ -209,26 +265,25 @@ export default async function PublicPackagesPage() {
                             sizes="(max-width: 1024px) 100vw, 600px"
                             className="object-cover object-center"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
                         </div>
                       )}
 
                       {/* Header Badge Row */}
-                      <div className="p-6 pb-4 border-b border-slate-800/80 space-y-3">
+                      <div className="p-6 md:p-8 pb-4 space-y-3">
                         <div className="flex flex-wrap items-center justify-between gap-2">
                           <div className="flex items-center gap-2">
-                            <span className="font-mono text-xs font-bold px-2.5 py-1 bg-amber-500 text-slate-950 rounded">
+                            <span className="font-mono text-xs font-black px-3 py-1 bg-blue-600 text-white rounded-md shadow-xs">
                               {pkg.capacity_kw} kW SYSTEM
                             </span>
                             {pkg.is_featured && (
-                              <span className="font-mono text-[10px] font-bold px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded flex items-center gap-1">
-                                <Sparkles className="w-3 h-3" />
+                              <span className="font-mono text-[10px] font-bold px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded-md flex items-center gap-1">
+                                <Sparkles className="w-3 h-3 text-blue-600" />
                                 FEATURED
                               </span>
                             )}
                           </div>
 
-                          <span className="font-mono text-[11px] px-2 py-0.5 rounded border border-slate-700 text-slate-300 bg-slate-950">
+                          <span className="font-mono text-[11px] font-semibold px-2.5 py-0.5 rounded-full border border-slate-200 text-slate-700 bg-slate-50">
                             {pkg.inventory_status === "in_stock"
                               ? "IN STOCK"
                               : pkg.inventory_status === "available_on_order"
@@ -238,65 +293,66 @@ export default async function PublicPackagesPage() {
                         </div>
 
                         <div>
-                          <h3 className="text-xl font-bold text-white tracking-tight">
+                          <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
                             {pkg.name}
                           </h3>
                           {pkg.description && (
-                            <p className="text-xs text-slate-400 leading-relaxed mt-1.5">
+                            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mt-2">
                               {pkg.description}
                             </p>
                           )}
                         </div>
                       </div>
 
-                      {/* Pricing Box (Strict Engineering Monospace) */}
-                      <div className="p-6 py-4 bg-slate-950 border-b border-slate-800 space-y-3 font-mono">
+                      {/* Pricing Box (Clean Blue & White Theme) */}
+                      <div className="p-6 md:p-8 py-4 bg-slate-50/70 border-y border-slate-200 space-y-3 font-mono">
                         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
                           <div>
-                            <span className="text-[10px] uppercase tracking-wider text-slate-400 block">
-                              Total System Price (Turnkey)
+                            <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500 block">
+                              Total Turnkey System Price:
                             </span>
                             {hasDiscount ? (
-                              <div className="flex items-baseline gap-2 mt-0.5">
-                                <span className="line-through text-slate-500 text-sm">
+                              <div className="flex flex-wrap items-baseline gap-2 mt-1">
+                                <span className="line-through text-slate-400 text-sm">
                                   {formatPrice(regularPrice)}
                                 </span>
-                                <span className="text-2xl font-black text-emerald-400">
+                                <span className="text-2xl sm:text-3xl font-black text-blue-600">
                                   {formatPrice(effectivePrice)}
                                 </span>
-                                <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30 font-bold">
+                                <span className="inline-flex items-center gap-1 text-[11px] px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-bold">
+                                  <Sparkles className="w-3 h-3 text-blue-600" />
                                   {promo?.offer_title}
                                 </span>
                               </div>
                             ) : (
-                              <span className="text-2xl font-black text-amber-400 mt-0.5 block">
+                              <span className="text-2xl sm:text-3xl font-black text-slate-900 mt-1 block">
                                 {formatPrice(effectivePrice)}
                               </span>
                             )}
                           </div>
 
-                          <span className="text-[11px] text-slate-500">
+                          <span className="text-xs text-slate-500 font-medium">
                             {pkg.is_manually_overridden
-                              ? "PROMOTIONAL PACKAGE OVERRIDE"
-                              : "DYNAMIC BOM CALCULATED"}
+                              ? "Promotional Package"
+                              : "Calculated BOM"}
                           </span>
                         </div>
 
                         {/* Cost Breakdown */}
-                        <div className="grid grid-cols-2 gap-3 pt-3 border-t border-slate-900 text-xs">
+                        <div className="grid grid-cols-2 gap-3 pt-3 border-t border-slate-200 text-xs">
                           <div>
-                            <span className="text-slate-400 block text-[10px] uppercase">
-                              Components Hardware Total:
+                            <span className="text-slate-500 block text-[10px] uppercase font-bold">
+                              Hardware Total:
                             </span>
-                            <span className="text-white font-bold">
+                            <span className="text-slate-900 font-bold">
                               {formatPrice(Number(pkg.component_total))}
                             </span>
                           </div>
                           <div>
-                            <span className="text-slate-400 block text-[10px] uppercase">
-                              Installation &amp; BoS Labor:
+                            <span className="text-slate-500 block text-[10px] uppercase font-bold">
+                              Turnkey Labor &amp; BoS:
                             </span>
-                            <span className="text-white font-bold">
+                            <span className="text-slate-900 font-bold">
                               {formatPrice(
                                 Number(pkg.installation_cost) +
                                   Number(pkg.additional_costs)
@@ -306,63 +362,89 @@ export default async function PublicPackagesPage() {
                         </div>
                       </div>
 
-                      {/* Bill of Materials (Included Components List) */}
-                      <div className="p-6 space-y-3">
-                        <div className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase text-slate-300">
-                          <PackageIcon className="w-3.5 h-3.5 text-amber-400" />
+                      {/* Bill of Materials (Included Components List with Clear Icons) */}
+                      <div className="p-6 md:p-8 space-y-4">
+                        <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase text-slate-700">
+                          <PackageIcon className="w-4 h-4 text-blue-600" />
                           <span>Bill of Materials (Included Hardware):</span>
                         </div>
 
                         {items.length === 0 ? (
                           <p className="text-xs text-slate-500 italic">
-                            Standard Tier-1 panels, hybrid inverter, and mounting
-                            kit included.
+                            Standard Tier-1 panels, hybrid inverter, and mounting kit included.
                           </p>
                         ) : (
-                          <div className="divide-y divide-slate-800/80 border border-slate-800 rounded bg-slate-950/60 overflow-hidden text-xs">
-                            {items.map((item) => (
-                              <div
-                                key={item.id}
-                                className="p-3 flex items-start justify-between gap-3"
-                              >
-                                <div className="space-y-0.5">
-                                  <div className="flex items-center gap-2">
-                                    <span className="font-mono font-bold text-amber-400 shrink-0">
-                                      {item.quantity}×
-                                    </span>
-                                    <span className="font-medium text-slate-200">
-                                      {item.product?.name ?? "Hardware Component"}
-                                    </span>
+                          <div className="space-y-2.5">
+                            {items.map((item) => {
+                              const componentName =
+                                item.product?.name ?? "Hardware Component";
+                              const { Icon, colorClass, categoryLabel } =
+                                getComponentDetails(componentName);
+
+                              return (
+                                <div
+                                  key={item.id}
+                                  className="p-3.5 rounded-lg bg-slate-50/70 border border-slate-200/80 hover:border-slate-300 flex items-start justify-between gap-3 text-xs transition"
+                                >
+                                  <div className="flex items-start gap-3 min-w-0">
+                                    <div
+                                      className={`p-2 rounded-md border shrink-0 ${colorClass}`}
+                                    >
+                                      <Icon className="w-4 h-4" />
+                                    </div>
+                                    <div className="space-y-0.5 min-w-0">
+                                      <div className="flex items-center gap-2">
+                                        <span className="font-mono font-bold text-blue-600 shrink-0">
+                                          {item.quantity}×
+                                        </span>
+                                        <span className="font-bold text-slate-900 truncate">
+                                          {componentName}
+                                        </span>
+                                      </div>
+                                      <div className="flex items-center gap-2 text-[11px] text-slate-500">
+                                        <span className="font-semibold text-slate-600">
+                                          {categoryLabel}
+                                        </span>
+                                        {item.notes && (
+                                          <>
+                                            <span>•</span>
+                                            <span className="truncate">{item.notes}</span>
+                                          </>
+                                        )}
+                                      </div>
+                                    </div>
                                   </div>
-                                  {item.notes && (
-                                    <p className="text-[11px] text-slate-400 pl-6">
-                                      {item.notes}
-                                    </p>
+
+                                  {item.product?.sku && (
+                                    <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-white text-slate-600 border border-slate-200 shrink-0">
+                                      {item.product.sku}
+                                    </span>
                                   )}
                                 </div>
-
-                                {item.product?.sku && (
-                                  <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-800 shrink-0">
-                                    {item.product.sku}
-                                  </span>
-                                )}
-                              </div>
-                            ))}
+                              );
+                            })}
                           </div>
                         )}
                       </div>
                     </div>
 
-                    {/* WhatsApp CTA Action Button */}
-                    <div className="p-6 pt-0">
+                    {/* Card Footer: Compact WhatsApp Button & Net-Metering Included */}
+                    <div className="p-6 md:p-8 pt-0 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 border-t border-slate-100 mt-2">
+                      <div className="text-xs text-slate-500 flex items-center gap-1.5">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                        <span>PESCO Net-Metering Ready</span>
+                      </div>
+
                       <a
                         href={waUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider transition-colors shadow-sm"
+                        className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs sm:text-sm transition-all shadow-xs hover:shadow-sm active:scale-95 shrink-0"
                       >
-                        <MessageCircle className="w-4 h-4 fill-slate-950" />
-                        <span>Book Package or Inquire on WhatsApp</span>
+                        <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
+                          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                        </svg>
+                        <span>Book on WhatsApp</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </a>
                     </div>
@@ -375,60 +457,68 @@ export default async function PublicPackagesPage() {
       </section>
 
       {/* -------------------------------------------------------------------
-          SYSTEM LOAD COMPARISON TABLE (Technical Reference Matrix)
+          3. INTERACTIVE SOLAR LOAD CALCULATOR WIDGET SECTION
       ------------------------------------------------------------------- */}
-      <section className="bg-white py-20 text-slate-900 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 space-y-8">
+      <section className="bg-white py-12 sm:py-16 md:py-20 text-slate-900 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SolarLoadCalculator />
+        </div>
+      </section>
+
+      {/* -------------------------------------------------------------------
+          4. ENLARGED SYSTEM LOAD COMPARISON TABLE (High Readability)
+      ------------------------------------------------------------------- */}
+      <section className="bg-slate-50 py-12 sm:py-16 md:py-20 text-slate-900 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
           <div className="max-w-3xl space-y-2">
-            <span className="font-mono text-xs font-bold uppercase tracking-wider text-amber-600 block">
-              02 // ENGINEERING SIZING MATRIX
+            <span className="font-mono text-xs font-bold uppercase tracking-wider text-blue-600 block">
+              02 // Engineering Sizing Matrix
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-950 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
               Solar System Capacity &amp; Load Comparison Table
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600">
-              Technical guideline for selecting the appropriate solar capacity
-              based on electrical appliance loads and PESCO net-metering goals.
+            <p className="text-xs sm:text-sm md:text-base text-slate-600">
+              Clear technical reference to match your home appliances and electricity bill targets with the appropriate solar system.
             </p>
           </div>
 
-          <div className="border border-slate-200 rounded-md overflow-x-auto bg-white shadow-sm">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-700 font-mono text-[11px] uppercase border-b border-slate-200">
+          <div className="border border-slate-200 rounded-xl overflow-x-auto bg-white shadow-sm">
+            <table className="w-full text-left">
+              <thead className="bg-slate-100 text-slate-800 font-mono text-xs sm:text-sm uppercase border-b border-slate-200">
                 <tr>
-                  <th className="py-3.5 px-4 font-bold">Capacity</th>
-                  <th className="py-3.5 px-4 font-bold">System Role</th>
-                  <th className="py-3.5 px-4 font-bold">Supported Inverter ACs</th>
-                  <th className="py-3.5 px-4 font-bold">Refrigeration &amp; Home Loads</th>
-                  <th className="py-3.5 px-4 font-bold">Water Pump</th>
-                  <th className="py-3.5 px-4 font-bold">Monthly Yield (kWh)</th>
-                  <th className="py-3.5 px-4 font-bold">PESCO Net-Metering</th>
+                  <th className="py-4 px-5 font-bold whitespace-nowrap">Capacity</th>
+                  <th className="py-4 px-5 font-bold whitespace-nowrap">System Role</th>
+                  <th className="py-4 px-5 font-bold whitespace-nowrap">Supported Inverter ACs</th>
+                  <th className="py-4 px-5 font-bold whitespace-nowrap">Refrigeration &amp; Home Loads</th>
+                  <th className="py-4 px-5 font-bold whitespace-nowrap">Water Pump</th>
+                  <th className="py-4 px-5 font-bold whitespace-nowrap">Monthly Yield (kWh)</th>
+                  <th className="py-4 px-5 font-bold whitespace-nowrap">PESCO Net-Metering</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200 font-sans">
+              <tbody className="divide-y divide-slate-200 font-sans text-sm md:text-base">
                 {LOAD_COMPARISON_DATA.map((row) => (
-                  <tr key={row.capacity} className="hover:bg-slate-50/70 transition-colors">
-                    <td className="py-3.5 px-4 font-mono font-bold text-amber-600 text-sm whitespace-nowrap">
+                  <tr key={row.capacity} className="hover:bg-slate-50 transition-colors">
+                    <td className="py-4 px-5 font-mono font-black text-blue-600 text-base md:text-lg whitespace-nowrap">
                       {row.capacity}
                     </td>
-                    <td className="py-3.5 px-4 font-semibold text-slate-900 whitespace-nowrap">
+                    <td className="py-4 px-5 font-bold text-slate-900 whitespace-nowrap">
                       {row.type}
                     </td>
-                    <td className="py-3.5 px-4 text-slate-700">
+                    <td className="py-4 px-5 font-medium text-slate-800">
                       {row.inverterAc}
                     </td>
-                    <td className="py-3.5 px-4 text-slate-600">
+                    <td className="py-4 px-5 text-slate-600">
                       {row.appliances}
                     </td>
-                    <td className="py-3.5 px-4 font-mono text-slate-700">
+                    <td className="py-4 px-5 font-mono text-slate-800 whitespace-nowrap">
                       {row.pump}
                     </td>
-                    <td className="py-3.5 px-4 font-mono font-semibold text-emerald-700 whitespace-nowrap">
+                    <td className="py-4 px-5 font-mono font-bold text-emerald-600 whitespace-nowrap">
                       {row.generation}
                     </td>
-                    <td className="py-3.5 px-4 font-mono text-xs text-slate-800 whitespace-nowrap">
-                      <span className="inline-flex items-center gap-1">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <td className="py-4 px-5 text-slate-800 whitespace-nowrap font-medium">
+                      <span className="inline-flex items-center gap-1.5">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                         <span>{row.netMetering}</span>
                       </span>
                     </td>

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 /* -------------------------------------------------------------------------
-   1. HERO CAROUSEL WITH TYPEWRITER EFFECT (Bright & Clean Blue Theme)
+   1. HERO CAROUSEL WITH TYPEWRITER EFFECT (Mobile-First Blue Theme)
 ------------------------------------------------------------------------- */
 interface Slide {
   id: number;
@@ -93,7 +93,7 @@ export function HeroCarouselWithTypewriter() {
   }, [text, isDeleting, phraseIndex]);
 
   return (
-    <section className="relative min-h-[580px] lg:min-h-[660px] flex items-center justify-center overflow-hidden bg-slate-900">
+    <section className="relative min-h-[520px] sm:min-h-[580px] lg:min-h-[660px] flex items-center justify-center overflow-hidden bg-slate-900">
       {/* Background Images Crossfade - High Visibility & Brightness */}
       {HERO_SLIDES.map((slide, index) => (
         <div
@@ -116,9 +116,9 @@ export function HeroCarouselWithTypewriter() {
       {/* Lighter Clean Navy Blue Overlay (Bright & Clear) */}
       <div className="absolute inset-0 bg-slate-950/40 z-10" />
 
-      {/* Content Container */}
-      <div className="relative z-20 max-w-7xl mx-auto px-6 sm:px-8 w-full py-20 lg:py-24">
-        <div className="max-w-3xl space-y-6">
+      {/* Content Container (Mobile-First padding & typography) */}
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-14 sm:py-20 lg:py-24">
+        <div className="max-w-3xl space-y-5 sm:space-y-6">
           {/* Headline Line 1 + Dynamic Typewriter Line 2 */}
           <div className="space-y-1">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15]">
@@ -137,24 +137,24 @@ export function HeroCarouselWithTypewriter() {
           </div>
 
           {/* Sub-copy */}
-          <p className="text-sm sm:text-base md:text-lg text-slate-200 leading-relaxed max-w-2xl font-normal drop-shadow-sm">
+          <p className="text-xs sm:text-base md:text-lg text-slate-200 leading-relaxed max-w-2xl font-normal drop-shadow-sm">
             Supplying A-grade pallet &amp; container stock, verified manufacturer
             warranties, and PEC-compliant turnkey installations across Nowshera,
             Peshawar, Mardan, and Northern Pakistan.
           </p>
 
-          {/* 1-2 Word CTA Buttons */}
-          <div className="pt-2 flex flex-wrap items-center gap-3 sm:gap-4">
+          {/* Mobile-First 1-2 Word CTA Buttons (Full width on phones, inline on tablet+) */}
+          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 max-w-xs sm:max-w-none">
             <Link
               href="/products"
-              className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition shadow-sm"
+              className="inline-flex items-center justify-center px-7 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition shadow-sm text-center"
             >
               <span>Catalog</span>
             </Link>
 
             <Link
               href="/packages"
-              className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl bg-white/15 hover:bg-white/25 text-white border border-white/25 font-semibold text-sm backdrop-blur-sm transition"
+              className="inline-flex items-center justify-center px-7 py-3 rounded-xl bg-white/15 hover:bg-white/25 text-white border border-white/25 font-semibold text-sm backdrop-blur-sm transition text-center"
             >
               <span>Packages</span>
             </Link>
@@ -246,14 +246,14 @@ export function AnimatedStatsCounter() {
       ref={containerRef}
       className="bg-slate-900 border-y border-slate-800 text-white relative z-20 py-2"
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-8">
-        <div className="grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 lg:divide-x divide-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:divide-x divide-slate-800">
           {STATS_DATA.map((stat, idx) => (
             <div
               key={stat.metric}
-              className="py-6 px-4 sm:px-6 flex flex-col justify-center items-center text-center space-y-1"
+              className="py-4 px-2 sm:py-6 sm:px-6 flex flex-col justify-center items-center text-center space-y-1"
             >
-              <div className="font-mono text-3xl sm:text-4xl font-bold text-white tabular-nums tracking-tight">
+              <div className="font-mono text-2xl sm:text-3xl lg:text-4xl font-bold text-white tabular-nums tracking-tight">
                 {counts[idx].toLocaleString()}
                 <span className="text-blue-400 ml-1">{stat.suffix}</span>
               </div>
