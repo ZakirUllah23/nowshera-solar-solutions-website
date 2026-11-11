@@ -5,9 +5,10 @@ import { Clock } from "lucide-react";
 
 interface OfferCountdownProps {
   endTime: string;
+  variant?: "dark" | "clean";
 }
 
-export default function OfferCountdown({ endTime }: OfferCountdownProps) {
+export default function OfferCountdown({ endTime, variant = "dark" }: OfferCountdownProps) {
   const [timeLeft, setTimeLeft] = useState<{
     days: number;
     hours: number;
@@ -51,6 +52,19 @@ export default function OfferCountdown({ endTime }: OfferCountdownProps) {
       <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-rose-500/10 border border-rose-500/30 rounded-md text-xs font-mono text-rose-400">
         <Clock className="w-3.5 h-3.5 text-rose-500" />
         <span>Offer Expired</span>
+      </div>
+    );
+  }
+
+  if (variant === "clean") {
+    return (
+      <div className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-white border border-blue-200 rounded-md text-[11px] font-mono shadow-2xs">
+        <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-ping inline-block shrink-0" />
+        <span className="text-slate-500 text-[10px] uppercase font-bold">Left:</span>
+        <span className="tabular-nums font-bold text-blue-700">
+          {String(timeLeft.days).padStart(2, "0")}d : {String(timeLeft.hours).padStart(2, "0")}h :{" "}
+          {String(timeLeft.minutes).padStart(2, "0")}m : {String(timeLeft.seconds).padStart(2, "0")}s
+        </span>
       </div>
     );
   }

@@ -2,11 +2,11 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import PublicShell from "@/components/public/PublicShell";
+import AboutStatsCounter from "@/components/public/AboutStatsCounter";
 import {
   ShieldCheck,
   Zap,
   Cpu,
-  Layers,
   CheckCircle2,
   Truck,
   Wrench,
@@ -17,11 +17,6 @@ import {
   PhoneCall,
   Gauge,
   ArrowRight,
-  Users,
-  Activity,
-  MapPin,
-  Clock,
-  Sparkles,
 } from "lucide-react";
 
 export const metadata = {
@@ -33,237 +28,272 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <PublicShell>
-      {/* 1. Hero Section (Industrial Authority Dark) */}
-      <section className="relative bg-slate-950 text-white border-b border-slate-800 overflow-hidden py-18 sm:py-24">
-        {/* Engineering Background Image Overlay */}
-        <div className="absolute inset-0 pointer-events-none opacity-20">
-          <Image
-            src="https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1920&q=80"
-            alt="Solar Hardware Distribution Facility"
-            fill
-            priority
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/85 to-transparent" />
-        </div>
+      {/* -------------------------------------------------------------------
+          1. HERO SECTION (Natural Lighting, Clean Title & Subtext, Animated Counters)
+      ------------------------------------------------------------------- */}
+      <section className="relative bg-slate-900 text-white border-b border-slate-800 overflow-hidden py-16 sm:py-20 md:py-24">
+        {/* High-Resolution Engineering Background with Natural Lighting */}
+        <Image
+          src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1920&q=80"
+          alt="Solar Hardware Distribution Facility"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center brightness-[0.92] contrast-[1.03]"
+        />
+        {/* Natural Subtle Contrast Overlay */}
+        <div className="absolute inset-0 bg-slate-950/45 z-10" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl space-y-5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-500/10 border border-amber-500/30 rounded text-xs font-mono text-amber-400 uppercase tracking-widest">
-              <Building2 className="w-3.5 h-3.5 text-amber-500" />
-              <span>ESTABLISHED WHOLESALE DISTRIBUTOR & EPC FIRM — NOWSHERA, KPK</span>
-            </div>
-
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-[1.12]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+          <div className="max-w-3xl space-y-4 sm:space-y-5">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
               Powering Northern Pakistan with A-Grade Solar Infrastructure
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg text-slate-200 leading-relaxed font-normal">
               From container-load wholesale distribution of Tier-1 photovoltaic modules to
               PEC-compliant industrial installations and local diagnostic repair, we are committed to
               long-term energy independence.
             </p>
 
-            {/* Quick Metrics Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-slate-800/80">
-              <div>
-                <span className="block font-mono text-xl sm:text-2xl font-bold text-amber-400 tabular-nums">
-                  15MW+
-                </span>
-                <span className="text-xs font-mono text-slate-400 uppercase tracking-wider">
-                  Hardware Distributed
-                </span>
-              </div>
-              <div>
-                <span className="block font-mono text-xl sm:text-2xl font-bold text-white tabular-nums">
-                  500+
-                </span>
-                <span className="text-xs font-mono text-slate-400 uppercase tracking-wider">
-                  Turnkey Installs
-                </span>
-              </div>
-              <div>
-                <span className="block font-mono text-xl sm:text-2xl font-bold text-emerald-400 tabular-nums">
-                  100%
-                </span>
-                <span className="text-xs font-mono text-slate-400 uppercase tracking-wider">
-                  A-Grade Tier-1 Only
-                </span>
-              </div>
-              <div>
-                <span className="block font-mono text-xl sm:text-2xl font-bold text-sky-400 tabular-nums">
-                  24–48h
-                </span>
-                <span className="text-xs font-mono text-slate-400 uppercase tracking-wider">
-                  KPK Dispatch Time
-                </span>
-              </div>
+            {/* Animated Count-Up Numbers */}
+            <div className="pt-2">
+              <AboutStatsCounter />
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. Section 1 — Mission & Vision (Structured Architectural Cards) */}
+      {/* -------------------------------------------------------------------
+          2. MISSION, VISION & CORE VALUES SECTION (3 Aligned Cards)
+      ------------------------------------------------------------------- */}
       <section className="bg-slate-50 py-16 sm:py-20 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-          <div>
-            <span className="text-xs font-mono text-amber-600 font-semibold uppercase tracking-wider block mb-1">
-              01 // CORE PURPOSE & STRATEGIC DIRECTION
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
+          <div className="space-y-1 border-b border-slate-200 pb-4">
+            <span className="text-xs font-mono text-blue-600 font-bold uppercase tracking-wider block">
+              Purpose &amp; Principles
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-950">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
               Engineered for Enduring Energy Independence
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Mission Card */}
-            <div className="bg-white border border-slate-200 rounded-lg p-8 space-y-4 shadow-sm hover:border-amber-500/40 transition">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-                <span className="text-xs font-mono font-bold text-slate-400 uppercase tracking-widest">
-                  STRATEGIC MISSION
-                </span>
-                <div className="w-8 h-8 rounded bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600">
-                  <Compass className="w-4 h-4" />
+          {/* 3-Card Grid: Desktop (lg:grid-cols-3), Tablet (md:grid-cols-2), Mobile (grid-cols-1) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {/* Card 1: Strategic Mission */}
+            <div className="bg-white border border-slate-200 rounded-xl p-6 sm:p-7 space-y-4 shadow-sm hover:border-blue-400 hover:shadow-md transition flex flex-col justify-between">
+              <div className="space-y-3">
+                {/* Header: Title on Left, Clean Icon on Right */}
+                <div className="flex items-start justify-between gap-3 border-b border-slate-100 pb-3.5">
+                  <div>
+                    <span className="text-[11px] font-mono font-bold text-blue-700 uppercase tracking-widest block">
+                      Strategic Mission
+                    </span>
+                    <h3 className="text-lg font-bold text-slate-900 tracking-tight leading-snug">
+                      Accelerating Clean Power with Industrial Integrity
+                    </h3>
+                  </div>
+                  <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 shrink-0">
+                    <Compass className="w-5 h-5" />
+                  </div>
                 </div>
+
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  To accelerate the adoption of clean, reliable renewable energy across KPK by supplying
+                  genuine Tier-1 hardware at direct wholesale rates and executing flawless,
+                  PEC-standard installations. We eliminate distributor markups and verify every module
+                  at our Nowshera hub.
+                </p>
               </div>
-              <h3 className="text-xl font-bold text-slate-950 tracking-tight">
-                Accelerating Clean Power with Industrial Integrity
-              </h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                To accelerate the adoption of clean, reliable renewable energy across KPK by supplying
-                genuine Tier-1 hardware at direct wholesale rates and executing flawless,
-                PEC-standard installations. We eliminate distributor markups and verify every module
-                at our Nowshera hub.
-              </p>
-              <div className="pt-2 flex flex-wrap gap-2 text-xs font-mono text-slate-700">
-                <span className="px-2.5 py-1 bg-slate-100 rounded border border-slate-200">
-                  • Direct Factory Imports
-                </span>
-                <span className="px-2.5 py-1 bg-slate-100 rounded border border-slate-200">
-                  • PEC Certified EPC
-                </span>
-                <span className="px-2.5 py-1 bg-slate-100 rounded border border-slate-200">
-                  • Zero Compromise Testing
-                </span>
-              </div>
+
+              {/* Blue Tick-Bullets */}
+              <ul className="pt-3 border-t border-slate-100 space-y-2 text-xs font-medium text-slate-700">
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <span>Direct Factory Imports &amp; Container Tracking</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <span>PEC-Certified Turnkey EPC Execution</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <span>Zero-Compromise Hardware Verification</span>
+                </li>
+              </ul>
             </div>
 
-            {/* Vision Card */}
-            <div className="bg-white border border-slate-200 rounded-lg p-8 space-y-4 shadow-sm hover:border-amber-500/40 transition">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-                <span className="text-xs font-mono font-bold text-slate-400 uppercase tracking-widest">
-                  LONG-TERM VISION
-                </span>
-                <div className="w-8 h-8 rounded bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
-                  <Award className="w-4 h-4" />
+            {/* Card 2: Long-Term Vision */}
+            <div className="bg-white border border-slate-200 rounded-xl p-6 sm:p-7 space-y-4 shadow-sm hover:border-blue-400 hover:shadow-md transition flex flex-col justify-between">
+              <div className="space-y-3">
+                {/* Header: Title on Left, Clean Icon on Right */}
+                <div className="flex items-start justify-between gap-3 border-b border-slate-100 pb-3.5">
+                  <div>
+                    <span className="text-[11px] font-mono font-bold text-blue-700 uppercase tracking-widest block">
+                      Long-Term Vision
+                    </span>
+                    <h3 className="text-lg font-bold text-slate-900 tracking-tight leading-snug">
+                      Pakistan&apos;s Most Trusted Wholesaler &amp; EPC Partner
+                    </h3>
+                  </div>
+                  <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 shrink-0">
+                    <Award className="w-5 h-5" />
+                  </div>
                 </div>
+
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  To be Pakistan’s most trusted solar wholesaler and engineering partner, recognized for
+                  technical precision, transparent pricing, and unmatched local after-sales warranty
+                  backing. We envision an uninterrupted regional power ecosystem built on solid engineering.
+                </p>
               </div>
-              <h3 className="text-xl font-bold text-slate-950 tracking-tight">
-                Pakistan’s Most Trusted Wholesaler & Engineering Partner
-              </h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                To be Pakistan’s most trusted solar wholesaler and engineering partner, known for
-                technical precision, transparent pricing, and unmatched local after-sales warranty
-                support. We envision an uninterrupted regional power ecosystem built on solid engineering.
-              </p>
-              <div className="pt-2 flex flex-wrap gap-2 text-xs font-mono text-slate-700">
-                <span className="px-2.5 py-1 bg-slate-100 rounded border border-slate-200">
-                  • Regional Warranty Hub
-                </span>
-                <span className="px-2.5 py-1 bg-slate-100 rounded border border-slate-200">
-                  • Transparent B2B Margins
-                </span>
-                <span className="px-2.5 py-1 bg-slate-100 rounded border border-slate-200">
-                  • 25-Year Reliability
-                </span>
+
+              {/* Blue Tick-Bullets */}
+              <ul className="pt-3 border-t border-slate-100 space-y-2 text-xs font-medium text-slate-700">
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <span>Regional KPK Diagnostic &amp; Warranty Hub</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <span>Transparent B2B Wholesale Margins</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <span>25-Year Long-Term Asset Durability</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Card 3: Core Values */}
+            <div className="bg-white border border-slate-200 rounded-xl p-6 sm:p-7 space-y-4 shadow-sm hover:border-blue-400 hover:shadow-md transition flex flex-col justify-between">
+              <div className="space-y-3">
+                {/* Header: Title on Left, Clean Icon on Right */}
+                <div className="flex items-start justify-between gap-3 border-b border-slate-100 pb-3.5">
+                  <div>
+                    <span className="text-[11px] font-mono font-bold text-blue-700 uppercase tracking-widest block">
+                      Core Values
+                    </span>
+                    <h3 className="text-lg font-bold text-slate-900 tracking-tight leading-snug">
+                      Engineering Rigor &amp; Ethical Governance
+                    </h3>
+                  </div>
+                  <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 shrink-0">
+                    <ShieldCheck className="w-5 h-5" />
+                  </div>
+                </div>
+
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  We operate with absolute transparency, technical rigor, and commercial accountability.
+                  Every module barcode is verified against official factory manifests, and every installation
+                  is sized to withstand harsh northern Pakistani environmental conditions.
+                </p>
               </div>
+
+              {/* Blue Tick-Bullets */}
+              <ul className="pt-3 border-t border-slate-100 space-y-2 text-xs font-medium text-slate-700">
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <span>100% Genuine Barcode Traceability</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <span>Engineering-First Diagnostic Precision</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <span>Rapid GT Road Warehouse Logistics</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Section 2 — Managing Director & Executive Leadership Spotlight */}
+      {/* -------------------------------------------------------------------
+          3. MANAGING DIRECTOR & LEADERSHIP SPOTLIGHT
+      ------------------------------------------------------------------- */}
       <section className="bg-white py-16 sm:py-20 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-          <div>
-            <span className="text-xs font-mono text-amber-600 font-semibold uppercase tracking-wider block mb-1">
-              02 // EXECUTIVE LEADERSHIP & TECHNICAL GOVERNANCE
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
+          <div className="space-y-1 border-b border-slate-200 pb-4">
+            <span className="text-xs font-mono text-blue-600 font-bold uppercase tracking-wider block">
+              Executive Leadership
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-950">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
               Technical Rigor Meets Wholesale Supply Chain
             </h2>
           </div>
 
-          <div className="bg-slate-950 text-white border border-slate-800 rounded-lg overflow-hidden shadow-sm">
+          <div className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-sm">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-              {/* Executive Portrait */}
-              <div className="lg:col-span-5 relative min-h-[360px] lg:min-h-[460px] bg-slate-900">
+              {/* Executive Portrait Card */}
+              <div className="lg:col-span-5 relative min-h-[320px] sm:min-h-[380px] lg:min-h-[460px] bg-slate-900 border-b lg:border-b-0 lg:border-r border-slate-200">
                 <Image
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80"
                   alt="Zakir Ullah Khan — Managing Director & Technical Lead"
                   fill
-                  className="object-cover object-top"
+                  sizes="(max-width: 1024px) 100vw, 450px"
+                  className="object-cover object-top brightness-[0.95]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent lg:hidden" />
-                <div className="absolute bottom-4 left-4 lg:hidden bg-slate-950/90 backdrop-blur-sm px-3 py-1.5 rounded border border-slate-800">
-                  <span className="text-xs font-mono text-amber-400 font-bold block">
-                    MANAGING DIRECTOR
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent lg:hidden" />
+                <div className="absolute bottom-4 left-4 lg:hidden bg-slate-950/90 backdrop-blur-sm px-3.5 py-2 rounded-md border border-slate-700 text-white">
+                  <span className="text-[10px] font-mono text-blue-400 font-bold uppercase block">
+                    Managing Director
                   </span>
-                  <span className="text-sm font-bold text-white">Zakir Ullah Khan</span>
+                  <span className="text-sm font-bold">Zakir Ullah Khan</span>
                 </div>
               </div>
 
               {/* Bio & Professional Profile */}
-              <div className="lg:col-span-7 p-8 sm:p-10 flex flex-col justify-between space-y-6">
+              <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 flex flex-col justify-between space-y-6">
                 <div className="space-y-4">
                   <div className="hidden lg:block space-y-1">
-                    <span className="text-xs font-mono text-amber-500 font-bold tracking-widest uppercase">
-                      MANAGING DIRECTOR & TECHNICAL LEAD
+                    <span className="text-xs font-mono text-blue-600 font-bold tracking-widest uppercase block">
+                      Managing Director &amp; Technical Lead
                     </span>
-                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                    <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
                       Zakir Ullah Khan
                     </h3>
                   </div>
 
-                  <p className="text-sm text-slate-300 leading-relaxed">
+                  {/* Concise 2-Sentence Executive Summary */}
+                  <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
                     With an advanced background in computer science and commercial power systems,
                     Zakir Ullah Khan founded Nowshera Solar Solutions with a singular objective: to
                     replace speculative retail markups with transparent, data-driven wholesale
-                    distribution and precision engineering.
-                  </p>
-
-                  <p className="text-sm text-slate-300 leading-relaxed">
-                    Under his technical leadership, the company has established direct Tier-1 factory
-                    supply agreements with global PV giants (Longi, JA Solar, Jinko) and premier hybrid
-                    inverter manufacturers. Zakir oversees all EPC technical sizing, computerized string
-                    voltage matching, and PESCO net-metering synchronization protocols across northern Pakistan.
+                    distribution and precision engineering. Under his technical leadership, the company
+                    has established direct Tier-1 factory supply agreements with global manufacturers,
+                    stringent EPC execution standards, and localized diagnostic after-sales support across
+                    Khyber Pakhtunkhwa.
                   </p>
                 </div>
 
-                {/* Key Executive Pillars */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-800">
-                  <div className="bg-slate-900/80 p-3.5 rounded border border-slate-800">
-                    <span className="text-xs font-mono text-amber-400 font-bold block mb-0.5">
-                      DIRECT IMPORTS
+                {/* Small Professional Supporting Milestone Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-4 border-t border-slate-200">
+                  <div className="bg-white p-3.5 rounded-lg border border-slate-200 shadow-2xs">
+                    <span className="text-xs font-mono text-blue-600 font-bold block mb-1">
+                      Direct Imports
                     </span>
-                    <span className="text-xs text-slate-300">
-                      Tier-1 container tracking & bulk warehouse allocation.
-                    </span>
-                  </div>
-                  <div className="bg-slate-900/80 p-3.5 rounded border border-slate-800">
-                    <span className="text-xs font-mono text-emerald-400 font-bold block mb-0.5">
-                      EPC COMPLIANCE
-                    </span>
-                    <span className="text-xs text-slate-300">
-                      Strict adherence to PEC & AEDB safety standards.
+                    <span className="text-xs text-slate-600 leading-snug block">
+                      Tier-1 container tracking and bulk warehouse allocation on GT Road.
                     </span>
                   </div>
-                  <div className="bg-slate-900/80 p-3.5 rounded border border-slate-800">
-                    <span className="text-xs font-mono text-sky-400 font-bold block mb-0.5">
-                      LOCAL R&D
+
+                  <div className="bg-white p-3.5 rounded-lg border border-slate-200 shadow-2xs">
+                    <span className="text-xs font-mono text-blue-600 font-bold block mb-1">
+                      EPC Compliance
                     </span>
-                    <span className="text-xs text-slate-300">
-                      Pioneering local inverter diagnostics and testing.
+                    <span className="text-xs text-slate-600 leading-snug block">
+                      Strict adherence to PEC and AEDB safety and net-metering protocols.
+                    </span>
+                  </div>
+
+                  <div className="bg-white p-3.5 rounded-lg border border-slate-200 shadow-2xs">
+                    <span className="text-xs font-mono text-blue-600 font-bold block mb-1">
+                      Local Diagnostics
+                    </span>
+                    <span className="text-xs text-slate-600 leading-snug block">
+                      Dedicated electronic testing bench for prompt after-sales support.
                     </span>
                   </div>
                 </div>
@@ -273,109 +303,131 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 4. Section 3 — Certified Engineering & Installation Team */}
+      {/* -------------------------------------------------------------------
+          4. CERTIFIED ENGINEERING & INSTALLATION TEAM SECTION
+      ------------------------------------------------------------------- */}
       <section className="bg-slate-50 py-16 sm:py-20 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-          <div>
-            <span className="text-xs font-mono text-amber-600 font-semibold uppercase tracking-wider block mb-1">
-              03 // MULTIDISCIPLINARY EPC WORKFORCE
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
+          <div className="space-y-1 border-b border-slate-200 pb-4">
+            <span className="text-xs font-mono text-blue-600 font-bold uppercase tracking-wider block">
+              EPC Workforce
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-950">
-              Certified Engineering & Installation Leads
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
+              Certified Engineering &amp; Installation Leads
             </h2>
-            <p className="text-sm text-slate-600 mt-2 max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl leading-relaxed">
               Our in-house technical units handle every phase of deployment internally — from electrical
               string calculations and structural steel wind-load anchoring to regional container dispatch.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* 1. Electrical & Net-Metering */}
-            <div className="bg-white border border-slate-200 rounded-lg p-6 space-y-4 shadow-sm hover:border-amber-500/40 transition flex flex-col justify-between">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {/* 1. Electrical & Net-Metering Engineers */}
+            <div className="bg-white border border-slate-200 rounded-xl p-6 sm:p-7 space-y-4 shadow-sm hover:border-blue-400 hover:shadow-md transition flex flex-col justify-between">
               <div className="space-y-3">
-                <div className="w-10 h-10 rounded bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600">
-                  <Zap className="w-5 h-5" />
+                {/* Centered Icon with Uniform Blue Coloring */}
+                <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 mx-auto shadow-2xs">
+                  <Zap className="w-6 h-6" />
                 </div>
-                <h3 className="text-base font-bold text-slate-950 tracking-tight">
-                  Electrical & Net-Metering Engineers
+
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight text-center">
+                  Electrical &amp; Net-Metering Engineers
                 </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
+
+                {/* Justified Text */}
+                <p className="text-xs sm:text-sm text-slate-600 text-justify leading-relaxed">
                   Dedicated specialists managing PESCO green-meter grid synchronization, single and
                   three-phase hybrid inverter programming, lightning surge protection (SPD), and
-                  earthing resistance testing below 5 Ohms.
+                  earthing resistance testing certified below 5 Ohms for maximum safety.
                 </p>
               </div>
-              <ul className="text-xs font-mono text-slate-700 space-y-1.5 pt-3 border-t border-slate-100">
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                  <span>PESCO Net-Metering Dossiers</span>
+
+              {/* Blue Checkmark Ticks */}
+              <ul className="text-xs text-slate-700 space-y-1.5 pt-3 border-t border-slate-100 font-medium">
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                  <span>PESCO Net-Metering Synchronization</span>
                 </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                   <span>IP65 Inverter Firmware Flashing</span>
                 </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                  <span>Thermal String Sizing</span>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                  <span>Thermal String Sizing Calculations</span>
                 </li>
               </ul>
             </div>
 
             {/* 2. Site Survey & Structure Technicians */}
-            <div className="bg-white border border-slate-200 rounded-lg p-6 space-y-4 shadow-sm hover:border-amber-500/40 transition flex flex-col justify-between">
+            <div className="bg-white border border-slate-200 rounded-xl p-6 sm:p-7 space-y-4 shadow-sm hover:border-blue-400 hover:shadow-md transition flex flex-col justify-between">
               <div className="space-y-3">
-                <div className="w-10 h-10 rounded bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-900">
-                  <Wrench className="w-5 h-5 text-amber-600" />
+                {/* Centered Icon with Uniform Blue Coloring */}
+                <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 mx-auto shadow-2xs">
+                  <Wrench className="w-6 h-6" />
                 </div>
-                <h3 className="text-base font-bold text-slate-950 tracking-tight">
-                  Site Survey & Structure Technicians
+
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight text-center">
+                  Site Survey &amp; Structure Technicians
                 </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
+
+                {/* Justified Text */}
+                <p className="text-xs sm:text-sm text-slate-600 text-justify leading-relaxed">
                   Certified technicians executing customized rooftop and ground-mount solutions using
-                  hot-dipped galvanized iron (GI) and structural aluminum rated for 130 km/h wind loads.
+                  hot-dipped galvanized iron (GI) and structural aluminum frames engineered to withstand
+                  130 km/h wind gusts across northern valleys.
                 </p>
               </div>
-              <ul className="text-xs font-mono text-slate-700 space-y-1.5 pt-3 border-t border-slate-100">
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+
+              {/* Blue Checkmark Ticks */}
+              <ul className="text-xs text-slate-700 space-y-1.5 pt-3 border-t border-slate-100 font-medium">
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                   <span>Custom Elevated Structures (L2/L3)</span>
                 </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                   <span>Hilti Chemical Anchor Bolting</span>
                 </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                  <span>Azimuth & Shadow Analysis</span>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                  <span>Azimuth &amp; Shadow Modeling</span>
                 </li>
               </ul>
             </div>
 
             {/* 3. Logistics & Wholesale Dispatch */}
-            <div className="bg-white border border-slate-200 rounded-lg p-6 space-y-4 shadow-sm hover:border-amber-500/40 transition flex flex-col justify-between">
+            <div className="bg-white border border-slate-200 rounded-xl p-6 sm:p-7 space-y-4 shadow-sm hover:border-blue-400 hover:shadow-md transition flex flex-col justify-between">
               <div className="space-y-3">
-                <div className="w-10 h-10 rounded bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
-                  <Truck className="w-5 h-5" />
+                {/* Centered Icon with Uniform Blue Coloring */}
+                <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 mx-auto shadow-2xs">
+                  <Truck className="w-6 h-6" />
                 </div>
-                <h3 className="text-base font-bold text-slate-950 tracking-tight">
-                  Logistics & Wholesale Dispatch
+
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight text-center">
+                  Logistics &amp; Wholesale Dispatch
                 </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
+
+                {/* Justified Text */}
+                <p className="text-xs sm:text-sm text-slate-600 text-justify leading-relaxed">
                   Warehouse handling crew managing pallet integrity, container offloading, and rapid
-                  regional distribution across Peshawar, Mardan, Charsadda, Nowshera, and Swabi.
+                  regional distribution across Peshawar, Mardan, Charsadda, Nowshera, Swabi, and
+                  all surrounding commercial districts.
                 </p>
               </div>
-              <ul className="text-xs font-mono text-slate-700 space-y-1.5 pt-3 border-t border-slate-100">
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+
+              {/* Blue Checkmark Ticks */}
+              <ul className="text-xs text-slate-700 space-y-1.5 pt-3 border-t border-slate-100 font-medium">
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                   <span>Zero-Breakage Pallet Packaging</span>
                 </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                   <span>KPK Corridor Daily Dispatch</span>
                 </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                   <span>Barcode Warranty Registration</span>
                 </li>
               </ul>
@@ -384,200 +436,218 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 5. Section 4 — Dedicated Local Repair & Testing Center (In-House Diagnostics) */}
+      {/* -------------------------------------------------------------------
+          5. DEDICATED IN-HOUSE TESTING & REPAIR CENTER SECTION
+      ------------------------------------------------------------------- */}
       <section className="bg-white py-16 sm:py-20 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-          <div>
-            <span className="text-xs font-mono text-amber-600 font-semibold uppercase tracking-wider block mb-1">
-              04 // LOCAL WARRANTY & COMPONENT-LEVEL DIAGNOSTICS
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
+          {/* Header without upper badges */}
+          <div className="space-y-1 border-b border-slate-200 pb-4">
+            <span className="text-xs font-mono text-blue-600 font-bold uppercase tracking-wider block">
+              Diagnostic Workshop
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-950">
-              Dedicated In-House Testing & Repair Workshop
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
+              Dedicated In-House Testing &amp; Repair Workshop
             </h2>
-            <p className="text-sm text-slate-600 mt-2 max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl leading-relaxed">
               Unlike retail middlemen who ship faulty equipment abroad for months, Nowshera Solar Solutions
               maintains a fully equipped electronics repair bench right here on GT Road.
             </p>
           </div>
 
-          <div className="bg-slate-50 border border-slate-200 rounded-lg overflow-hidden shadow-sm">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-              {/* Workshop Bench Image */}
-              <div className="lg:col-span-5 relative min-h-[320px] lg:min-h-[420px] bg-slate-900 border-b lg:border-b-0 lg:border-r border-slate-200">
-                <Image
-                  src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80"
-                  alt="Solar Electronics Diagnostic Bench"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white text-xs font-mono">
-                  <span className="bg-slate-950/80 px-2.5 py-1 rounded border border-slate-700">
-                    LAB BENCH #01 — NOWSHERA
-                  </span>
-                  <span className="text-amber-400 font-bold">24-48h TURNAROUND</span>
-                </div>
+          {/* 4:3 Aspect Ratio Horizontal Workshop Image */}
+          <div className="relative aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] w-full bg-slate-900 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+            <Image
+              src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1600&q=80"
+              alt="Solar Electronics Diagnostic Bench"
+              fill
+              sizes="(max-width: 1200px) 100vw, 1200px"
+              className="object-cover brightness-[0.92]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white text-xs font-mono">
+              <span className="bg-slate-950/80 px-3 py-1.5 rounded-md border border-slate-700">
+                LAB BENCH #01 — NOWSHERA GT ROAD
+              </span>
+              <span className="text-blue-400 font-bold bg-slate-950/80 px-3 py-1.5 rounded-md border border-slate-700">
+                24–48h TURNAROUND
+              </span>
+            </div>
+          </div>
+
+          {/* 4 Structured Capability Cards in 4-column responsive grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+            {/* Capability 1 */}
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-2.5 shadow-2xs hover:border-blue-400 transition">
+              <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600">
+                <Cpu className="w-5 h-5" />
               </div>
+              <h4 className="text-sm font-bold text-slate-900 tracking-tight">
+                Component-Level Inverter Diagnostics
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed text-justify">
+                Mainboard trace repair, IGBT replacement, and manufacturer firmware re-flashing for pure sine wave reliability.
+              </p>
+            </div>
 
-              {/* Technical Capabilities List */}
-              <div className="lg:col-span-7 p-8 space-y-6 flex flex-col justify-between">
-                <div className="space-y-4">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-amber-500/10 border border-amber-500/30 rounded text-xs font-mono text-amber-700 uppercase font-semibold">
-                    <Activity className="w-3.5 h-3.5 text-amber-600" />
-                    <span>PRECISION HARDWARE VERIFICATION</span>
-                  </div>
-
-                  <h3 className="text-xl font-bold text-slate-950 tracking-tight">
-                    Zero Downtime Local After-Sales Warranty Backing
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    Our certified electrical technicians perform oscilloscope wave analysis, MOSFET
-                    replacement, BMS re-calibration, and DC load stress testing locally. Clients enjoy
-                    immediate diagnosis and prompt warranty fulfillment without prolonged downtime.
-                  </p>
-                </div>
-
-                {/* 4 Technical Capabilities */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-200">
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-2 text-xs font-bold text-slate-950">
-                      <Cpu className="w-4 h-4 text-amber-600 shrink-0" />
-                      <span>Component-Level Inverter Diagnostics</span>
-                    </div>
-                    <p className="text-xs text-slate-500 leading-relaxed">
-                      Mainboard trace repair, IGBT replacement, and manufacturer firmware re-flashing.
-                    </p>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-2 text-xs font-bold text-slate-950">
-                      <Gauge className="w-4 h-4 text-emerald-600 shrink-0" />
-                      <span>LiFePO4 BMS & Cell Balancing</span>
-                    </div>
-                    <p className="text-xs text-slate-500 leading-relaxed">
-                      Individual 3.2V prismatic cell impedance checks, active balancing, and SoC restoration.
-                    </p>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-2 text-xs font-bold text-slate-950">
-                      <Zap className="w-4 h-4 text-sky-600 shrink-0" />
-                      <span>MPPT & Surge Verification</span>
-                    </div>
-                    <p className="text-xs text-slate-500 leading-relaxed">
-                      Dual-MPPT tracking efficiency audits and high-voltage DC protection stress tests.
-                    </p>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-2 text-xs font-bold text-slate-950">
-                      <ShieldCheck className="w-4 h-4 text-purple-600 shrink-0" />
-                      <span>Original OEM Spare Parts</span>
-                    </div>
-                    <p className="text-xs text-slate-500 leading-relaxed">
-                      Stocked genuine cooling fans, relays, terminals, and communication boards.
-                    </p>
-                  </div>
-                </div>
+            {/* Capability 2 */}
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-2.5 shadow-2xs hover:border-blue-400 transition">
+              <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600">
+                <Gauge className="w-5 h-5" />
               </div>
+              <h4 className="text-sm font-bold text-slate-900 tracking-tight">
+                LiFePO4 BMS &amp; Cell Balancing
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed text-justify">
+                Individual 3.2V prismatic cell impedance checks, active high-current balancing, and state-of-charge restoration.
+              </p>
+            </div>
+
+            {/* Capability 3 */}
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-2.5 shadow-2xs hover:border-blue-400 transition">
+              <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600">
+                <Zap className="w-5 h-5" />
+              </div>
+              <h4 className="text-sm font-bold text-slate-900 tracking-tight">
+                MPPT &amp; Surge Verification
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed text-justify">
+                Dual-MPPT tracking efficiency audits, DC disconnect isolation tests, and high-voltage lightning surge protection checks.
+              </p>
+            </div>
+
+            {/* Capability 4 */}
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-2.5 shadow-2xs hover:border-blue-400 transition">
+              <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <h4 className="text-sm font-bold text-slate-900 tracking-tight">
+                Original OEM Spare Parts
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed text-justify">
+                Stocked authentic cooling fans, control relays, DC terminal blocks, and smart communication cards directly from Tier-1 suppliers.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 6. Section 5 — Why KPK Businesses & Homeowners Trust Us (Trust Badges & Standards) */}
-      <section className="bg-slate-50 py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-          <div>
-            <span className="text-xs font-mono text-amber-600 font-semibold uppercase tracking-wider block mb-1">
-              05 // QUALITY ASSURANCE & MARKET AUTHORITY
+      {/* -------------------------------------------------------------------
+          6. TRUST & RELIABILITY SECTION ("Why Northern Pakistan Relies on Us")
+      ------------------------------------------------------------------- */}
+      <section className="bg-slate-50 py-16 sm:py-20 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
+          <div className="space-y-1 border-b border-slate-200 pb-4">
+            <span className="text-xs font-mono text-blue-600 font-bold uppercase tracking-wider block">
+              Market Authority
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-950">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
               Why Northern Pakistan Relies on Nowshera Solar
             </h2>
-            <p className="text-sm text-slate-600 mt-2 max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl leading-relaxed">
               We stand apart through authentic manufacturer traceability, engineering certifications, and
               direct wholesale commercial pricing with zero hidden margins.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Tile 1 */}
-            <div className="bg-white border border-slate-200 rounded-lg p-6 space-y-3 shadow-sm hover:border-amber-500/50 transition">
-              <div className="w-10 h-10 rounded bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600">
-                <FileCheck className="w-5 h-5" />
+            {/* Tile 1: AEDB & PEC Standards */}
+            <div className="bg-white border border-slate-200 rounded-xl p-6 space-y-3.5 shadow-sm hover:border-blue-400 hover:shadow-md transition flex flex-col justify-between">
+              <div className="space-y-3">
+                {/* Centered Icon with Corporate Blue Coloring */}
+                <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 mx-auto shadow-2xs">
+                  <FileCheck className="w-6 h-6" />
+                </div>
+                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide text-center">
+                  AEDB &amp; PEC Standards
+                </h3>
+                {/* Justified Text */}
+                <p className="text-xs text-slate-600 text-justify leading-relaxed">
+                  Full compliance with Alternative Energy Development Board (AEDB) guidelines and Pakistan
+                  Engineering Council standards for seamless PESCO green-meter grid interconnection.
+                </p>
               </div>
-              <h3 className="text-sm font-bold text-slate-950 uppercase tracking-wide">
-                AEDB & PEC Standards
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Full compliance with Alternative Energy Development Board (AEDB) guidelines and Pakistan
-                Engineering Council standards for seamless PESCO green-meter grid interconnection.
-              </p>
             </div>
 
-            {/* Tile 2 */}
-            <div className="bg-white border border-slate-200 rounded-lg p-6 space-y-3 shadow-sm hover:border-amber-500/50 transition">
-              <div className="w-10 h-10 rounded bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
-                <ShieldCheck className="w-5 h-5" />
+            {/* Tile 2: 10–25 Year Warranty */}
+            <div className="bg-white border border-slate-200 rounded-xl p-6 space-y-3.5 shadow-sm hover:border-blue-400 hover:shadow-md transition flex flex-col justify-between">
+              <div className="space-y-3">
+                {/* Centered Icon with Corporate Blue Coloring */}
+                <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 mx-auto shadow-2xs">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
+                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide text-center">
+                  10–25 Year Warranty
+                </h3>
+                {/* Justified Text */}
+                <p className="text-xs text-slate-600 text-justify leading-relaxed">
+                  Direct factory warranty documentation providing 12-year hardware replacement and 25-30
+                  year linear power generation yield guarantees on all Tier-1 N-Type modules.
+                </p>
               </div>
-              <h3 className="text-sm font-bold text-slate-950 uppercase tracking-wide">
-                10–25 Year Warranty
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Direct factory warranty documentation providing 12-year hardware replacement and 25-30
-                year linear power generation yield guarantees on all Tier-1 N-Type modules.
-              </p>
             </div>
 
-            {/* Tile 3 */}
-            <div className="bg-white border border-slate-200 rounded-lg p-6 space-y-3 shadow-sm hover:border-amber-500/50 transition">
-              <div className="w-10 h-10 rounded bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600">
-                <Building2 className="w-5 h-5" />
+            {/* Tile 3: Transparent Wholesale */}
+            <div className="bg-white border border-slate-200 rounded-xl p-6 space-y-3.5 shadow-sm hover:border-blue-400 hover:shadow-md transition flex flex-col justify-between">
+              <div className="space-y-3">
+                {/* Centered Icon with Corporate Blue Coloring */}
+                <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 mx-auto shadow-2xs">
+                  <Building2 className="w-6 h-6" />
+                </div>
+                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide text-center">
+                  Transparent Wholesale
+                </h3>
+                {/* Justified Text */}
+                <p className="text-xs text-slate-600 text-justify leading-relaxed">
+                  Genuine container and pallet wholesale rates for contractors, installers, and corporate
+                  clients with published daily price transparency and zero deceptive markups.
+                </p>
               </div>
-              <h3 className="text-sm font-bold text-slate-950 uppercase tracking-wide">
-                Transparent Wholesale
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Genuine container and pallet wholesale rates for contractors, installers, and corporate
-                clients with published daily price transparency and zero deceptive markups.
-              </p>
             </div>
 
-            {/* Tile 4 */}
-            <div className="bg-white border border-slate-200 rounded-lg p-6 space-y-3 shadow-sm hover:border-amber-500/50 transition">
-              <div className="w-10 h-10 rounded bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-900">
-                <PhoneCall className="w-5 h-5 text-amber-600" />
+            {/* Tile 4: 24/7 Hotline Support */}
+            <div className="bg-white border border-slate-200 rounded-xl p-6 space-y-3.5 shadow-sm hover:border-blue-400 hover:shadow-md transition flex flex-col justify-between">
+              <div className="space-y-3">
+                {/* Centered Icon with Corporate Blue Coloring */}
+                <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 mx-auto shadow-2xs">
+                  <PhoneCall className="w-6 h-6" />
+                </div>
+                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide text-center">
+                  24/7 Hotline Support
+                </h3>
+                {/* Justified Text */}
+                <p className="text-xs text-slate-600 text-justify leading-relaxed">
+                  Direct access to our Nowshera technical sales and emergency engineering support line for
+                  rapid fault-finding, system maintenance, and warranty dispatch.
+                </p>
               </div>
-              <h3 className="text-sm font-bold text-slate-950 uppercase tracking-wide">
-                24/7 Hotline Support
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Direct access to our Nowshera technical sales and emergency engineering support line for
-                rapid fault-finding, system maintenance, and warranty dispatch.
-              </p>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Direct CTA Bar */}
-          <div className="bg-slate-950 text-white border border-slate-800 rounded-lg p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm">
-            <div className="space-y-1 text-center sm:text-left">
-              <span className="text-xs font-mono text-amber-400 font-bold uppercase tracking-wider block">
-                PARTNER WITH NOWSHERA SOLAR SOLUTIONS
+      {/* -------------------------------------------------------------------
+          7. CTA BANNER (Corporate Blue Theme Alignment)
+      ------------------------------------------------------------------- */}
+      <section className="bg-white py-12 sm:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-slate-950 text-white border border-slate-800 rounded-xl p-6 sm:p-8 lg:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+            <div className="space-y-2 text-center md:text-left">
+              <span className="text-xs font-mono text-blue-400 font-bold uppercase tracking-wider block">
+                Partner with Nowshera Solar Solutions
               </span>
-              <h3 className="text-lg sm:text-xl font-bold tracking-tight text-white">
+              <h3 className="text-xl sm:text-2xl font-black tracking-tight text-white">
                 Ready to engineer your residential or commercial solar project?
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs sm:text-sm text-slate-400 max-w-xl">
                 Consult with our engineering team for free site surveys, bill-of-materials analysis, and PESCO net-metering feasibility.
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 shrink-0">
+            <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
               <Link
                 href="/packages"
-                className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-mono text-xs font-semibold rounded border border-slate-700 transition"
+                className="px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white font-mono text-xs font-semibold rounded-lg border border-slate-700 transition"
               >
                 Browse Turnkey Packages
               </Link>
@@ -585,10 +655,10 @@ export default function AboutPage() {
                 href="https://wa.me/923000000000?text=Hello%20Nowshera%20Solar%20Solutions,%20I%20would%20like%20to%20consult%20with%20your%20engineering%20team%20regarding%20a%20solar%20system%20installation."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-5 py-2.5 bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs rounded transition flex items-center gap-2"
+                className="px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm rounded-lg transition flex items-center gap-2 shadow-xs hover:shadow-sm active:scale-95"
               >
                 <span>Consult on WhatsApp</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-4 h-4" />
               </a>
             </div>
           </div>

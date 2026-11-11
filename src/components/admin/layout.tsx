@@ -18,14 +18,14 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex">
       <AdminSidebar
         role={profile.role}
         fullName={profile.full_name}
         email={profile.email}
         signOutAction={handleSignOut}
       />
-      <main className="flex-1 min-w-0 p-8 overflow-y-auto">{children}</main>
+      <main className="flex-1 min-w-0 p-8 overflow-y-auto bg-slate-50 text-slate-900">{children}</main>
     </div>
   );
 }

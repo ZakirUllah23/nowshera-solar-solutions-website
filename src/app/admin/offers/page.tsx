@@ -89,24 +89,24 @@ export default async function AdminOffersPage(props: PageProps) {
     if (!offer.is_enabled) {
       return {
         label: "Disabled",
-        badge: "bg-slate-800 text-slate-400 border-slate-700",
+        badge: "bg-slate-100 text-slate-600 border-slate-200",
       };
     }
     if (now < start) {
       return {
         label: "Scheduled",
-        badge: "bg-sky-500/10 text-sky-400 border-sky-500/30",
+        badge: "bg-sky-50 text-sky-700 border-sky-200",
       };
     }
     if (now >= start && now < end) {
       return {
         label: "Active Now",
-        badge: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+        badge: "bg-emerald-50 text-emerald-700 border-emerald-200",
       };
     }
     return {
       label: "Expired Automatically",
-      badge: "bg-rose-500/10 text-rose-400 border-rose-500/30",
+      badge: "bg-rose-50 text-rose-700 border-rose-200",
     };
   }
 
@@ -329,18 +329,18 @@ export default async function AdminOffersPage(props: PageProps) {
   }
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8 text-slate-100">
+    <div className="max-w-7xl mx-auto space-y-8 text-slate-900">
       {/* Header */}
       <div>
-        <div className="flex items-center gap-2 text-xs font-mono text-amber-500 uppercase tracking-widest mb-1">
+        <div className="flex items-center gap-2 text-xs font-mono text-blue-600 uppercase tracking-widest mb-1">
           <Tag className="w-3.5 h-3.5" />
-          <span>PROMOTIONAL CAMPAIGNS & BUNDLE ENGINE</span>
+          <span>PROMOTIONAL CAMPAIGNS &amp; BUNDLE ENGINE</span>
         </div>
-        <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2.5">
-          <Percent className="w-6 h-6 text-amber-500" />
-          Promotional Offers & Bundle Discounts
+        <h1 className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2.5">
+          <Percent className="w-6 h-6 text-blue-600" />
+          Promotional Offers &amp; Bundle Discounts
         </h1>
-        <p className="text-sm text-slate-400 mt-1">
+        <p className="text-sm text-slate-600 mt-1">
           Configure automated percentage, fixed amount, and special price markdown campaigns.
           Discounts are automatically synchronized to public catalog cards and turnkey packages.
         </p>
@@ -348,10 +348,10 @@ export default async function AdminOffersPage(props: PageProps) {
 
       {/* Prominent Error / Trigger Warning Box */}
       {errorMessage && (
-        <div className="bg-rose-500/10 border border-rose-500/30 rounded-md p-4 flex items-start gap-3 text-rose-300">
-          <AlertCircle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
+        <div className="bg-rose-50 border border-rose-200 rounded-md p-4 flex items-start gap-3 text-rose-800">
+          <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
           <div className="text-sm">
-            <span className="font-semibold block text-rose-200 mb-0.5">
+            <span className="font-semibold block text-rose-900 mb-0.5">
               Validation / Database Rule Notice
             </span>
             <p>{errorMessage}</p>
@@ -363,22 +363,22 @@ export default async function AdminOffersPage(props: PageProps) {
       {canEdit && (
         <form
           action={createOffer}
-          className="bg-slate-900 border border-slate-800 rounded-lg p-6 space-y-5"
+          className="bg-white border border-slate-200 rounded-xl p-6 space-y-5 shadow-sm"
         >
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <h2 className="text-sm font-semibold text-white flex items-center gap-2 uppercase tracking-wide">
-              <Plus className="w-4 h-4 text-amber-500" />
+          <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+            <h2 className="text-sm font-semibold text-slate-900 flex items-center gap-2 uppercase tracking-wide">
+              <Plus className="w-4 h-4 text-blue-600" />
               Create New Promotional Offer
             </h2>
-            <span className="text-xs font-mono text-slate-400 flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5 text-amber-500" />
-              Automated Start & Expiry (PKT UTC+5)
+            <span className="text-xs font-mono text-slate-500 flex items-center gap-1">
+              <Clock className="w-3.5 h-3.5 text-blue-600" />
+              Automated Start &amp; Expiry (PKT UTC+5)
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-2">
-              <label className="block text-xs font-medium text-slate-300 mb-1.5">
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
                 Offer Title *
               </label>
               <input
@@ -386,30 +386,30 @@ export default async function AdminOffersPage(props: PageProps) {
                 name="title"
                 required
                 placeholder="e.g. Monsoon Mega Sale — 10% OFF Tier-1 Inverters"
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-md text-sm text-white focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1.5">
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
                 Banner Image (Optional)
               </label>
               <input
                 type="file"
                 name="banner"
                 accept="image/*"
-                className="w-full text-xs text-slate-400 file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-medium file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-700 cursor-pointer"
+                className="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-medium file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1.5">
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
                 Discount Type *
               </label>
               <select
                 name="discount_type"
                 required
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-md text-sm text-white focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white"
               >
                 <option value="percentage">Percentage Discount (%)</option>
                 <option value="fixed_amount">Fixed Amount Discount (PKR)</option>
@@ -418,7 +418,7 @@ export default async function AdminOffersPage(props: PageProps) {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1.5">
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
                 Discount Value *
               </label>
               <input
@@ -428,43 +428,43 @@ export default async function AdminOffersPage(props: PageProps) {
                 name="discount_value"
                 required
                 placeholder="e.g. 15 for 15% or 10000 for PKR"
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-md text-sm text-white font-mono focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 font-mono focus:outline-none focus:border-blue-600 focus:bg-white"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1.5">
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
                 Start Timestamp *
               </label>
               <input
                 type="datetime-local"
                 name="start_time"
                 required
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-md text-sm text-white font-mono focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 font-mono focus:outline-none focus:border-blue-600 focus:bg-white"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1.5">
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
                 End Timestamp (Expiry) *
               </label>
               <input
                 type="datetime-local"
                 name="end_time"
                 required
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-md text-sm text-white font-mono focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 font-mono focus:outline-none focus:border-blue-600 focus:bg-white"
               />
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-xs font-medium text-slate-300 mb-1.5">
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
                 Offer Description / Terms (Optional)
               </label>
               <input
                 type="text"
                 name="description"
                 placeholder="Applicable while promotional warehouse stock lasts or during current billing cycle..."
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-md text-sm text-white focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white"
               />
             </div>
           </div>
@@ -472,7 +472,7 @@ export default async function AdminOffersPage(props: PageProps) {
           <div className="flex justify-end pt-2">
             <button
               type="submit"
-              className="px-5 py-2.5 bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold rounded-md text-sm transition"
+              className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-sm transition shadow-sm"
             >
               Publish Scheduled Offer
             </button>
@@ -482,14 +482,14 @@ export default async function AdminOffersPage(props: PageProps) {
 
       {/* Offers List */}
       <div className="space-y-6">
-        <h2 className="text-base font-semibold text-white flex items-center justify-between uppercase tracking-wide">
+        <h2 className="text-base font-semibold text-slate-900 flex items-center justify-between uppercase tracking-wide">
           <span>Configured Promotional Offers ({offers.length})</span>
         </h2>
 
         {offers.length === 0 ? (
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-12 text-center text-slate-400">
-            <Percent className="w-12 h-12 mx-auto text-slate-600 mb-3" />
-            <p className="font-semibold text-slate-300">
+          <div className="bg-white border border-slate-200 rounded-xl p-12 text-center text-slate-500 shadow-sm">
+            <Percent className="w-12 h-12 mx-auto text-slate-400 mb-3" />
+            <p className="font-semibold text-slate-700">
               No promotional offers configured yet.
             </p>
             <p className="text-xs text-slate-500 mt-1">
@@ -499,9 +499,9 @@ export default async function AdminOffersPage(props: PageProps) {
         ) : (
           <>
             {/* Industrial Offers Overview Table */}
-            <div className="w-full overflow-x-auto rounded-xl border border-slate-800 bg-slate-900 shadow-sm">
-              <table className="w-full text-left text-xs text-slate-300 min-w-[850px]">
-                <thead className="bg-slate-950/80 text-slate-400 uppercase font-mono tracking-wider border-b border-slate-800">
+            <div className="w-full overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-xs">
+              <table className="w-full text-left text-xs text-slate-700 min-w-[850px]">
+                <thead className="bg-slate-50 text-slate-600 uppercase font-mono tracking-wider border-b border-slate-200">
                   <tr>
                     <th className="py-3 px-4 font-semibold whitespace-nowrap">Campaign Title</th>
                     <th className="py-3 px-4 font-semibold whitespace-nowrap">Discount Value</th>
@@ -512,7 +512,7 @@ export default async function AdminOffersPage(props: PageProps) {
                     <th className="py-3 px-4 font-semibold whitespace-nowrap text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60">
+                <tbody className="divide-y divide-slate-100">
                   {offers.map((offer) => {
                     const status = getOfferStatus(offer);
                     const prodCount = (offerProductsData ?? []).filter(
@@ -523,11 +523,11 @@ export default async function AdminOffersPage(props: PageProps) {
                     ).length;
 
                     return (
-                      <tr key={`table-${offer.id}`} className="hover:bg-slate-800/40 transition">
-                        <td className="py-3 px-4 font-semibold text-white whitespace-nowrap">
+                      <tr key={`table-${offer.id}`} className="hover:bg-slate-50 transition">
+                        <td className="py-3 px-4 font-semibold text-slate-900 whitespace-nowrap">
                           {offer.title}
                         </td>
-                        <td className="py-3 px-4 font-mono font-bold text-amber-400 whitespace-nowrap">
+                        <td className="py-3 px-4 font-mono font-bold text-blue-600 whitespace-nowrap">
                           {offer.discount_type === "percentage" && `${offer.discount_value}% OFF`}
                           {offer.discount_type === "fixed_amount" && `${formatPrice(offer.discount_value)} OFF`}
                           {offer.discount_type === "special_price" && `Special: ${formatPrice(offer.discount_value)}`}
@@ -539,7 +539,7 @@ export default async function AdminOffersPage(props: PageProps) {
                             {status.label}
                           </span>
                         </td>
-                        <td className="py-3 px-4 font-mono text-slate-400 whitespace-nowrap">
+                        <td className="py-3 px-4 font-mono text-slate-600 whitespace-nowrap">
                           {new Date(offer.start_time).toLocaleString("en-PK", {
                             timeZone: "Asia/Karachi",
                             dateStyle: "short",
@@ -547,7 +547,7 @@ export default async function AdminOffersPage(props: PageProps) {
                           })}{" "}
                           PKT
                         </td>
-                        <td className="py-3 px-4 font-mono text-slate-400 whitespace-nowrap">
+                        <td className="py-3 px-4 font-mono text-slate-600 whitespace-nowrap">
                           {new Date(offer.end_time).toLocaleString("en-PK", {
                             timeZone: "Asia/Karachi",
                             dateStyle: "short",
@@ -555,7 +555,7 @@ export default async function AdminOffersPage(props: PageProps) {
                           })}{" "}
                           PKT
                         </td>
-                        <td className="py-3 px-4 whitespace-nowrap font-mono text-xs text-slate-300">
+                        <td className="py-3 px-4 whitespace-nowrap font-mono text-xs text-slate-600">
                           {prodCount} Products • {pkgCount} Packages
                         </td>
                         <td className="py-3 px-4 text-right whitespace-nowrap">
@@ -572,8 +572,8 @@ export default async function AdminOffersPage(props: PageProps) {
                                   type="submit"
                                   className={`px-2 py-0.5 rounded text-[11px] font-mono border transition ${
                                     offer.is_enabled
-                                      ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20"
-                                      : "bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700"
+                                      ? "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
+                                      : "bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200"
                                   }`}
                                 >
                                   {offer.is_enabled ? "Enabled" : "Disabled"}
@@ -583,7 +583,7 @@ export default async function AdminOffersPage(props: PageProps) {
                                 <button
                                   type="submit"
                                   title="Delete Offer"
-                                  className="p-1 rounded text-slate-500 hover:text-rose-400 transition"
+                                  className="p-1 rounded text-slate-400 hover:text-rose-600 transition"
                                 >
                                   <Trash2 className="w-3.5 h-3.5" />
                                 </button>
@@ -617,30 +617,30 @@ export default async function AdminOffersPage(props: PageProps) {
               return (
                 <div
                   key={offer.id}
-                  className="bg-slate-900 border border-slate-800 rounded-lg p-6 space-y-6 relative overflow-hidden"
+                  className="bg-white border border-slate-200 rounded-xl p-6 space-y-6 relative overflow-hidden shadow-sm"
                 >
                   {/* Banner Preview if available */}
                   {offer.banner_image_url && (
-                    <div className="relative w-full h-36 bg-slate-950 border border-slate-800 rounded-md overflow-hidden">
+                    <div className="relative w-full h-36 bg-slate-100 border border-slate-200 rounded-lg overflow-hidden">
                       <Image
                         src={offer.banner_image_url}
                         alt={offer.title}
                         fill
-                        className="object-cover opacity-85"
+                        className="object-cover"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
-                      <div className="absolute bottom-3 left-4 flex items-center gap-2 text-xs font-mono text-amber-400 bg-slate-950/80 px-2.5 py-1 rounded border border-slate-800">
-                        <ImageIcon className="w-3.5 h-3.5 text-amber-500" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
+                      <div className="absolute bottom-3 left-4 flex items-center gap-2 text-xs font-mono text-white bg-slate-900/80 px-2.5 py-1 rounded border border-white/20">
+                        <ImageIcon className="w-3.5 h-3.5 text-blue-400" />
                         <span>CAMPAIGN BANNER ATTACHED</span>
                       </div>
                     </div>
                   )}
 
                   {/* Top Bar */}
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
                     <div>
                       <div className="flex items-center gap-3">
-                        <h3 className="text-lg font-bold text-white tracking-tight">
+                        <h3 className="text-lg font-bold text-slate-900 tracking-tight">
                           {offer.title}
                         </h3>
                         <span
@@ -650,7 +650,7 @@ export default async function AdminOffersPage(props: PageProps) {
                         </span>
                       </div>
                       {offer.description && (
-                        <p className="text-xs text-slate-400 mt-1">
+                        <p className="text-xs text-slate-600 mt-1">
                           {offer.description}
                         </p>
                       )}
@@ -658,8 +658,8 @@ export default async function AdminOffersPage(props: PageProps) {
 
                     <div className="flex items-center gap-3">
                       {/* Discount Value Badge */}
-                      <div className="px-3 py-1.5 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-sm font-bold font-mono flex items-center gap-1.5">
-                        <Sparkles className="w-4 h-4 text-amber-500 shrink-0" />
+                      <div className="px-3 py-1.5 rounded-lg bg-blue-50 border border-blue-200 text-blue-700 text-sm font-bold font-mono flex items-center gap-1.5">
+                        <Sparkles className="w-4 h-4 text-blue-600 shrink-0" />
                         {offer.discount_type === "percentage" &&
                           `${offer.discount_value}% OFF`}
                         {offer.discount_type === "fixed_amount" &&
@@ -685,10 +685,10 @@ export default async function AdminOffersPage(props: PageProps) {
                                   ? "Disable Offer"
                                   : "Enable Offer"
                               }
-                              className={`p-2 rounded-md border transition text-xs font-mono flex items-center gap-1.5 ${
+                              className={`p-2 rounded-lg border transition text-xs font-mono flex items-center gap-1.5 ${
                                 offer.is_enabled
-                                  ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20"
-                                  : "bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700"
+                                  ? "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
+                                  : "bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200"
                               }`}
                             >
                               <Power className="w-3.5 h-3.5" />
@@ -702,7 +702,7 @@ export default async function AdminOffersPage(props: PageProps) {
                             <button
                               type="submit"
                               title="Delete Offer"
-                              className="p-2 rounded-md bg-slate-950 border border-slate-800 text-slate-400 hover:text-rose-400 hover:border-rose-500/30 transition"
+                              className="p-2 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-rose-600 hover:border-rose-300 hover:bg-rose-50 transition"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>
@@ -713,11 +713,11 @@ export default async function AdminOffersPage(props: PageProps) {
                   </div>
 
                   {/* Dates Schedule */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono text-slate-400 bg-slate-950 p-3.5 rounded-md border border-slate-800">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono text-slate-600 bg-slate-50 p-3.5 rounded-lg border border-slate-200">
                     <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-amber-500" />
+                      <Calendar className="w-4 h-4 text-blue-600" />
                       <span>
-                        <strong className="text-slate-200">STARTS:</strong>{" "}
+                        <strong className="text-slate-900">STARTS:</strong>{" "}
                         {new Date(offer.start_time).toLocaleString("en-PK", {
                           timeZone: "Asia/Karachi",
                           dateStyle: "medium",
@@ -727,9 +727,9 @@ export default async function AdminOffersPage(props: PageProps) {
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-rose-500" />
+                      <Calendar className="w-4 h-4 text-rose-600" />
                       <span>
-                        <strong className="text-slate-200">EXPIRES:</strong>{" "}
+                        <strong className="text-slate-900">EXPIRES:</strong>{" "}
                         {new Date(offer.end_time).toLocaleString("en-PK", {
                           timeZone: "Asia/Karachi",
                           dateStyle: "medium",
@@ -743,10 +743,10 @@ export default async function AdminOffersPage(props: PageProps) {
                   {/* Assigned Products & Packages Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
                     {/* Products Target */}
-                    <div className="space-y-3 min-w-0 bg-slate-950/60 p-4 rounded-md border border-slate-800">
-                      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-                        <span className="text-xs font-semibold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-                          <Package className="w-3.5 h-3.5 text-amber-500" />
+                    <div className="space-y-3 min-w-0 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                      <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-slate-900 flex items-center gap-1.5">
+                          <Package className="w-3.5 h-3.5 text-blue-600" />
                           Attached Products ({assignedProducts.length})
                         </span>
                       </div>
@@ -765,7 +765,7 @@ export default async function AdminOffersPage(props: PageProps) {
                           <select
                             name="product_id"
                             required
-                            className="flex-1 min-w-0 px-3 py-2 bg-slate-950 border border-slate-800 rounded-md text-xs text-white focus:outline-none focus:border-amber-500 truncate"
+                            className="flex-1 min-w-0 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600 truncate"
                           >
                             <option value="">Select published product...</option>
                             {publishedProducts.map((prod) => (
@@ -777,7 +777,7 @@ export default async function AdminOffersPage(props: PageProps) {
                           </select>
                           <button
                             type="submit"
-                            className="px-3.5 py-2 bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold rounded-md text-xs transition shrink-0"
+                            className="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs transition shrink-0 shadow-xs"
                           >
                             Assign Product
                           </button>
@@ -794,12 +794,12 @@ export default async function AdminOffersPage(props: PageProps) {
                           assignedProducts.map((item) => (
                             <span
                               key={item.product_id}
-                              className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-slate-900 border border-slate-800 text-xs text-slate-200"
+                              className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 text-xs text-slate-800 shadow-xs"
                             >
                               <span className="font-medium">
                                 {item.product?.name ?? "Hardware Product"}
                               </span>
-                              <span className="text-slate-400 font-mono text-[11px]">
+                              <span className="text-slate-500 font-mono text-[11px]">
                                 ({item.product?.sku ?? "N/A"})
                               </span>
                               {canEdit && (
@@ -814,7 +814,7 @@ export default async function AdminOffersPage(props: PageProps) {
                                   <button
                                     type="submit"
                                     title="Remove from offer"
-                                    className="text-slate-400 hover:text-rose-400 transition"
+                                    className="text-slate-400 hover:text-rose-600 transition"
                                   >
                                     <X className="w-3.5 h-3.5" />
                                   </button>
@@ -827,10 +827,10 @@ export default async function AdminOffersPage(props: PageProps) {
                     </div>
 
                     {/* Solar Packages Target */}
-                    <div className="space-y-3 min-w-0 bg-slate-950/60 p-4 rounded-md border border-slate-800">
-                      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-                        <span className="text-xs font-semibold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-                          <Layers className="w-3.5 h-3.5 text-amber-500" />
+                    <div className="space-y-3 min-w-0 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                      <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-slate-900 flex items-center gap-1.5">
+                          <Layers className="w-3.5 h-3.5 text-blue-600" />
                           Attached Solar Packages ({assignedPackages.length})
                         </span>
                       </div>
@@ -849,7 +849,7 @@ export default async function AdminOffersPage(props: PageProps) {
                           <select
                             name="package_id"
                             required
-                            className="flex-1 min-w-0 px-3 py-2 bg-slate-950 border border-slate-800 rounded-md text-xs text-white focus:outline-none focus:border-amber-500 truncate"
+                            className="flex-1 min-w-0 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600 truncate"
                           >
                             <option value="">Select published package...</option>
                             {publishedPackages.map((pkg) => (
@@ -860,7 +860,7 @@ export default async function AdminOffersPage(props: PageProps) {
                           </select>
                           <button
                             type="submit"
-                            className="px-3.5 py-2 bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold rounded-md text-xs transition shrink-0"
+                            className="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs transition shrink-0 shadow-xs"
                           >
                             Assign Package
                           </button>
@@ -877,12 +877,12 @@ export default async function AdminOffersPage(props: PageProps) {
                           assignedPackages.map((item) => (
                             <span
                               key={item.package_id}
-                              className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-slate-900 border border-slate-800 text-xs text-slate-200"
+                              className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 text-xs text-slate-800 shadow-xs"
                             >
                               <span className="font-medium">
                                 {item.package?.name ?? "Solar Package"}
                               </span>
-                              <span className="text-amber-400 font-mono text-[11px]">
+                              <span className="text-blue-600 font-mono text-[11px] font-semibold">
                                 {item.package?.capacity_kw}kW
                               </span>
                               {canEdit && (
@@ -897,7 +897,7 @@ export default async function AdminOffersPage(props: PageProps) {
                                   <button
                                     type="submit"
                                     title="Remove from offer"
-                                    className="text-slate-400 hover:text-rose-400 transition"
+                                    className="text-slate-400 hover:text-rose-600 transition"
                                   >
                                     <X className="w-3.5 h-3.5" />
                                   </button>

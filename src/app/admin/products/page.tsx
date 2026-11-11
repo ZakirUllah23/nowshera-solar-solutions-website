@@ -206,11 +206,11 @@ export default async function AdminProductsPage() {
     const filePath = `${productId}/${crypto.randomUUID()}.${ext}`;
 
     const { error: uploadErr } = await supabaseServer.storage
-      .from("product-images")
-      .upload(filePath, imageFile, {
-        contentType: imageFile.type,
-        upsert: false,
-      });
+        .from("product-images")
+        .upload(filePath, imageFile, {
+          contentType: imageFile.type,
+          upsert: false,
+        });
 
     if (!uploadErr) {
       const { data: pubUrl } = supabaseServer.storage
@@ -248,15 +248,17 @@ export default async function AdminProductsPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 text-slate-100">
+    <div className="max-w-6xl mx-auto space-y-8 text-slate-900">
       <div>
-        <h1 className="text-2xl font-bold text-white flex items-center gap-2.5">
-          <Package className="w-6 h-6 text-amber-400" />
+        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600">
+            <Package className="w-5 h-5" />
+          </div>
           Products, Stock &amp; Public Catalogue Management
         </h1>
-        <p className="text-sm text-slate-400 mt-1">
+        <p className="text-sm text-slate-600 mt-1">
           Add and edit hardware cards, upload images to Supabase Storage, customize wattage/kW variant pills, adjust stock levels, and set PKR prices. All changes sync live to the public{" "}
-          <code className="text-amber-400 font-mono">/products</code> page.
+          <code className="text-blue-600 font-mono font-bold">/products</code> page.
         </p>
       </div>
 
@@ -264,14 +266,14 @@ export default async function AdminProductsPage() {
       {canEdit && (
         <form
           action={createProduct}
-          className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-5"
+          className="bg-white border border-slate-200 rounded-xl p-6 space-y-5 shadow-sm"
         >
-          <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
-            <h2 className="text-base font-semibold text-white flex items-center gap-2">
-              <Plus className="w-4 h-4 text-amber-400" />
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <Plus className="w-4 h-4 text-blue-600" />
               Create New Hardware Product
             </h2>
-            <span className="text-xs font-mono text-slate-400">
+            <span className="text-xs font-mono font-bold text-slate-400">
               SUPABASE DB SYNC
             </span>
           </div>
@@ -279,36 +281,36 @@ export default async function AdminProductsPage() {
           {/* Row 1: Core Identifiers */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs text-slate-400 mb-1">
+              <label className="block text-xs font-medium text-slate-700 mb-1">
                 Product Title (Card Heading) *
               </label>
               <input
                 name="name"
                 required
                 placeholder="e.g. Canadian Solar TOPBiHiKu7"
-                className="w-full px-3.5 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition"
               />
             </div>
             <div>
-              <label className="block text-xs text-slate-400 mb-1">
+              <label className="block text-xs font-medium text-slate-700 mb-1">
                 SKU (Unique Code) *
               </label>
               <input
                 name="sku"
                 required
                 placeholder="e.g. PNL-CS-700W"
-                className="w-full px-3.5 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white font-mono uppercase focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 font-mono uppercase focus:outline-none focus:border-blue-600 focus:bg-white transition"
               />
             </div>
             <div>
-              <label className="block text-xs text-slate-400 mb-1">
+              <label className="block text-xs font-medium text-slate-700 mb-1">
                 URL Slug *
               </label>
               <input
                 name="slug"
                 required
                 placeholder="e.g. canadian-solar-topbihiku7"
-                className="w-full px-3.5 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white font-mono focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 font-mono focus:outline-none focus:border-blue-600 focus:bg-white transition"
               />
             </div>
           </div>
@@ -316,13 +318,13 @@ export default async function AdminProductsPage() {
           {/* Row 2: Category, Brand, Price */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs text-slate-400 mb-1">
+              <label className="block text-xs font-medium text-slate-700 mb-1">
                 Category *
               </label>
               <select
                 name="category_id"
                 required
-                className="w-full px-3.5 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition"
               >
                 {categories?.map((c) => (
                   <option key={c.id} value={c.id}>
@@ -333,10 +335,10 @@ export default async function AdminProductsPage() {
             </div>
 
             <div>
-              <label className="block text-xs text-slate-400 mb-1">Brand</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Brand</label>
               <select
                 name="brand_id"
-                className="w-full px-3.5 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition"
               >
                 <option value="">— Select Brand —</option>
                 {brands?.map((b) => (
@@ -348,7 +350,7 @@ export default async function AdminProductsPage() {
             </div>
 
             <div>
-              <label className="block text-xs text-slate-400 mb-1">
+              <label className="block text-xs font-medium text-slate-700 mb-1">
                 Regular Selling Price (PKR) *
               </label>
               <input
@@ -358,7 +360,7 @@ export default async function AdminProductsPage() {
                 min="0"
                 required
                 placeholder="e.g. 32000"
-                className="w-full px-3.5 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-emerald-400 font-semibold focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-blue-600 font-bold font-mono focus:outline-none focus:border-blue-600 focus:bg-white transition"
               />
             </div>
           </div>
@@ -366,64 +368,64 @@ export default async function AdminProductsPage() {
           {/* Row 3: Public Card Content & Spec Pills */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs text-slate-400 mb-1 flex items-center gap-1">
-                <Tag className="w-3.5 h-3.5 text-amber-400" />
+              <label className="block text-xs font-medium text-slate-700 mb-1 flex items-center gap-1">
+                <Tag className="w-3.5 h-3.5 text-blue-600" />
                 <span>Card Badge / Tag</span>
               </label>
               <input
                 name="tag"
                 placeholder="e.g. Tier-1 Top Yield or IP65 Hybrid"
-                className="w-full px-3.5 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition"
               />
             </div>
 
             <div>
-              <label className="block text-xs text-slate-400 mb-1">
+              <label className="block text-xs font-medium text-slate-700 mb-1">
                 Card Subtitle (Short Description)
               </label>
               <input
                 name="short_description"
                 placeholder="e.g. N-Type TOPCon Bifacial Series"
-                className="w-full px-3.5 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition"
               />
             </div>
 
             <div>
-              <label className="block text-xs text-slate-400 mb-1 flex items-center gap-1">
-                <Layers className="w-3.5 h-3.5 text-sky-400" />
+              <label className="block text-xs font-medium text-slate-700 mb-1 flex items-center gap-1">
+                <Layers className="w-3.5 h-3.5 text-sky-600" />
                 <span>Wattage / Capacity Pills (Comma-separated)</span>
               </label>
               <input
                 name="variants"
                 placeholder="e.g. 330W, 555W, 580W, 620W, 700W"
-                className="w-full px-3.5 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white font-mono focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 font-mono focus:outline-none focus:border-blue-600 focus:bg-white transition"
               />
             </div>
           </div>
 
           {/* Row 4: Card Context Description */}
           <div>
-            <label className="block text-xs text-slate-400 mb-1">
+            <label className="block text-xs font-medium text-slate-700 mb-1">
               Card Description (Technical Details &amp; Engineering Context)
             </label>
             <textarea
               name="description"
               rows={2}
               placeholder="e.g. High-efficiency monocrystalline bifacial dual-glass module with SMBB half-cut technology and anti-PID resistance. 25-year official warranty."
-              className="w-full px-3.5 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+              className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition"
             />
           </div>
 
           {/* Row 5: Stock Status, Visibility & Image */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs text-slate-400 mb-1">
+              <label className="block text-xs font-medium text-slate-700 mb-1">
                 Stock Status
               </label>
               <select
                 name="inventory_status"
                 defaultValue="in_stock"
-                className="w-full px-3.5 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition"
               >
                 <option value="in_stock">In Stock</option>
                 <option value="out_of_stock">Out of Stock</option>
@@ -432,13 +434,13 @@ export default async function AdminProductsPage() {
             </div>
 
             <div>
-              <label className="block text-xs text-slate-400 mb-1">
+              <label className="block text-xs font-medium text-slate-700 mb-1">
                 Publication Status
               </label>
               <select
                 name="publication_status"
                 defaultValue="published"
-                className="w-full px-3.5 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition"
               >
                 <option value="published">Published (Visible on /products)</option>
                 <option value="draft">Draft (Hidden)</option>
@@ -447,31 +449,31 @@ export default async function AdminProductsPage() {
             </div>
 
             <div>
-              <label className="block text-xs text-slate-400 mb-1">
+              <label className="block text-xs font-medium text-slate-700 mb-1">
                 Primary Hardware Image (JPEG/PNG/WebP)
               </label>
               <input
                 name="image"
                 type="file"
                 accept="image/jpeg,image/png,image/webp,image/avif"
-                className="w-full text-xs text-slate-300 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:bg-slate-800 file:text-amber-400 hover:file:bg-slate-700"
+                className="w-full text-xs text-slate-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
               />
             </div>
           </div>
 
           <div className="flex items-center justify-between pt-2">
-            <label className="flex items-center gap-2 text-xs text-slate-300">
+            <label className="flex items-center gap-2 text-xs text-slate-700 font-medium">
               <input
                 type="checkbox"
                 name="is_featured"
-                className="rounded border-slate-700"
+                className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
               />
               Feature this product on Homepage
             </label>
 
             <button
               type="submit"
-              className="px-5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold text-sm rounded-lg transition cursor-pointer"
+              className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm rounded-lg transition shadow-xs cursor-pointer active:scale-95"
             >
               Add Product to Catalogue
             </button>
@@ -481,19 +483,19 @@ export default async function AdminProductsPage() {
 
       {/* Product List with Full Inline Card & Spec Editor */}
       <div className="space-y-6">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-          <h2 className="text-base font-bold text-white">
+        <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+          <h2 className="text-base font-bold text-slate-900">
             Existing Products ({products?.length || 0})
           </h2>
-          <span className="text-xs font-mono text-slate-400">
+          <span className="text-xs font-mono font-bold text-slate-500">
             EDIT FIELDS BELOW TO INSTANTLY UPDATE /PRODUCTS
           </span>
         </div>
 
         {/* Industrial Products Table Overview */}
-        <div className="w-full overflow-x-auto rounded-xl border border-slate-800 bg-slate-900 shadow-sm">
-          <table className="w-full text-left text-xs text-slate-300 min-w-[950px]">
-            <thead className="bg-slate-950/80 text-slate-400 uppercase font-mono tracking-wider border-b border-slate-800">
+        <div className="w-full overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+          <table className="w-full text-left text-xs text-slate-700 min-w-[950px]">
+            <thead className="bg-slate-50 text-slate-600 uppercase font-mono tracking-wider border-b border-slate-200">
               <tr>
                 <th className="py-3 px-4 font-semibold whitespace-nowrap">Product</th>
                 <th className="py-3 px-4 font-semibold whitespace-nowrap">SKU</th>
@@ -505,17 +507,17 @@ export default async function AdminProductsPage() {
                 <th className="py-3 px-4 font-semibold whitespace-nowrap text-right">Quick Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-slate-100">
               {products?.map((prod) => {
                 const primaryImage =
                   prod.product_images?.find((img) => img.is_primary) ||
                   prod.product_images?.[0];
 
                 return (
-                  <tr key={`table-${prod.id}`} className="hover:bg-slate-800/40 transition">
+                  <tr key={`table-${prod.id}`} className="hover:bg-slate-50/80 transition">
                     <td className="py-2.5 px-4 whitespace-nowrap">
                       <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-lg bg-slate-950 border border-slate-800 overflow-hidden shrink-0 flex items-center justify-center">
+                        <div className="w-9 h-9 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden shrink-0 flex items-center justify-center">
                           {primaryImage ? (
                             <img
                               src={primaryImage.image_url}
@@ -523,34 +525,34 @@ export default async function AdminProductsPage() {
                               className="w-full h-full object-cover"
                             />
                           ) : (
-                            <ImageIcon className="w-4 h-4 text-slate-600" />
+                            <ImageIcon className="w-4 h-4 text-slate-400" />
                           )}
                         </div>
-                        <span className="font-semibold text-white max-w-[200px] truncate">
+                        <span className="font-semibold text-slate-900 max-w-[200px] truncate">
                           {prod.name}
                         </span>
                       </div>
                     </td>
-                    <td className="py-2.5 px-4 font-mono font-bold text-amber-400 whitespace-nowrap">
+                    <td className="py-2.5 px-4 font-mono font-bold text-blue-600 whitespace-nowrap">
                       {prod.sku}
                     </td>
-                    <td className="py-2.5 px-4 text-slate-300 whitespace-nowrap">
+                    <td className="py-2.5 px-4 text-slate-600 whitespace-nowrap">
                       {prod.categories?.name || "—"}
                     </td>
-                    <td className="py-2.5 px-4 text-slate-300 whitespace-nowrap">
+                    <td className="py-2.5 px-4 text-slate-600 whitespace-nowrap">
                       {prod.brands?.name || "Unbranded"}
                     </td>
-                    <td className="py-2.5 px-4 font-mono font-semibold text-white whitespace-nowrap">
+                    <td className="py-2.5 px-4 font-mono font-semibold text-slate-900 whitespace-nowrap">
                       {formatPrice(prod.regular_price)}
                     </td>
                     <td className="py-2.5 px-4 whitespace-nowrap">
                       <span
-                        className={`text-[11px] px-2 py-0.5 rounded font-mono font-medium border ${
+                        className={`text-[11px] px-2.5 py-0.5 rounded-full font-mono font-semibold border ${
                           prod.inventory_status === "in_stock"
-                            ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                            ? "bg-emerald-50 text-emerald-700 border-emerald-200"
                             : prod.inventory_status === "available_on_order"
-                            ? "bg-amber-500/10 text-amber-400 border-amber-500/30"
-                            : "bg-rose-500/10 text-rose-400 border-rose-500/30"
+                            ? "bg-amber-50 text-amber-700 border-amber-200"
+                            : "bg-rose-50 text-rose-700 border-rose-200"
                         }`}
                       >
                         {prod.inventory_status}
@@ -558,10 +560,10 @@ export default async function AdminProductsPage() {
                     </td>
                     <td className="py-2.5 px-4 whitespace-nowrap">
                       <span
-                        className={`text-[11px] px-2 py-0.5 rounded font-mono font-medium border ${
+                        className={`text-[11px] px-2.5 py-0.5 rounded-full font-mono font-semibold border ${
                           prod.publication_status === "published"
-                            ? "bg-sky-500/10 text-sky-400 border-sky-500/30"
-                            : "bg-slate-800 text-slate-400 border-slate-700"
+                            ? "bg-blue-50 text-blue-700 border-blue-200"
+                            : "bg-slate-100 text-slate-600 border-slate-200"
                         }`}
                       >
                         {prod.publication_status}
@@ -570,7 +572,7 @@ export default async function AdminProductsPage() {
                     <td className="py-2.5 px-4 text-right whitespace-nowrap">
                       <a
                         href={`#product-${prod.id}`}
-                        className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition"
+                        className="px-2.5 py-1 rounded-md bg-white hover:bg-slate-50 text-blue-700 border border-slate-200 text-xs font-semibold transition shadow-2xs"
                       >
                         Edit Card ↓
                       </a>
@@ -595,12 +597,12 @@ export default async function AdminProductsPage() {
             <div
               id={`product-${prod.id}`}
               key={prod.id}
-              className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm"
+              className="bg-white border border-slate-200 rounded-xl p-5 sm:p-6 space-y-4 shadow-sm"
             >
               {/* Product Header Row: Thumbnail, SKU & Upload */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center overflow-hidden shrink-0">
+                  <div className="w-16 h-16 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center overflow-hidden shrink-0">
                     {primaryImage ? (
                       <img
                         src={primaryImage.image_url}
@@ -608,21 +610,21 @@ export default async function AdminProductsPage() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <ImageIcon className="w-6 h-6 text-slate-600" />
+                      <ImageIcon className="w-6 h-6 text-slate-400" />
                     )}
                   </div>
 
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-mono text-xs px-2 py-0.5 rounded bg-slate-950 text-amber-400 border border-slate-800 font-bold">
+                      <span className="font-mono text-xs px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200 font-bold">
                         {prod.sku}
                       </span>
-                      <span className="text-xs text-slate-400">
+                      <span className="text-xs text-slate-500">
                         {prod.categories?.name} •{" "}
                         {prod.brands?.name || "Unbranded"}
                       </span>
                     </div>
-                    <h3 className="text-base font-bold text-white mt-1">
+                    <h3 className="text-base font-bold text-slate-900 mt-1">
                       {prod.name}
                     </h3>
                   </div>
@@ -646,11 +648,11 @@ export default async function AdminProductsPage() {
                         name="image"
                         required
                         accept="image/jpeg,image/png,image/webp,image/avif"
-                        className="text-xs text-slate-400 file:mr-2 file:py-1 file:px-2.5 file:rounded file:border-0 file:bg-slate-800 file:text-slate-200 file:text-xs"
+                        className="text-xs text-slate-600 file:mr-2 file:py-1 file:px-2.5 file:rounded file:border-0 file:bg-blue-50 file:text-blue-700 file:text-xs hover:file:bg-blue-100"
                       />
                       <button
                         type="submit"
-                        className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs text-amber-400 font-medium cursor-pointer"
+                        className="px-3 py-1.5 rounded-md bg-white hover:bg-slate-50 text-xs text-blue-700 font-bold border border-slate-200 shadow-2xs cursor-pointer transition"
                       >
                         Upload Photo
                       </button>
@@ -660,7 +662,7 @@ export default async function AdminProductsPage() {
                       <button
                         type="submit"
                         title="Delete Product"
-                        className="p-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 cursor-pointer transition"
+                        className="p-2 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 shadow-2xs cursor-pointer transition"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -677,38 +679,38 @@ export default async function AdminProductsPage() {
                   {/* Grid 1: Name, Subtitle, Tag */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div>
-                      <label className="block text-[10px] font-mono uppercase text-slate-400 mb-1">
+                      <label className="block text-[10px] font-mono uppercase font-bold text-slate-500 mb-1">
                         Card Title (Name)
                       </label>
                       <input
                         name="name"
                         defaultValue={prod.name}
                         required
-                        className="w-full px-3 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500 font-medium"
+                        className="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white font-semibold transition"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[10px] font-mono uppercase text-slate-400 mb-1">
+                      <label className="block text-[10px] font-mono uppercase font-bold text-slate-500 mb-1">
                         Card Subtitle
                       </label>
                       <input
                         name="short_description"
                         defaultValue={prod.short_description || ""}
                         placeholder="e.g. N-Type TOPCon Bifacial Series"
-                        className="w-full px-3 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                        className="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[10px] font-mono uppercase text-slate-400 mb-1">
+                      <label className="block text-[10px] font-mono uppercase font-bold text-slate-500 mb-1">
                         Badge / Tag
                       </label>
                       <input
                         name="tag"
                         defaultValue={tagStr}
                         placeholder="e.g. Tier-1 or IP65 Hybrid"
-                        className="w-full px-3 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-xs text-amber-400 focus:outline-none focus:border-amber-500"
+                        className="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-blue-700 font-semibold focus:outline-none focus:border-blue-600 focus:bg-white transition"
                       />
                     </div>
                   </div>
@@ -716,19 +718,19 @@ export default async function AdminProductsPage() {
                   {/* Grid 2: Variants Pills, Price, Stock & Status */}
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                     <div className="md:col-span-1">
-                      <label className="block text-[10px] font-mono uppercase text-slate-400 mb-1">
+                      <label className="block text-[10px] font-mono uppercase font-bold text-slate-500 mb-1">
                         Variants Pills (Comma-separated)
                       </label>
                       <input
                         name="variants"
                         defaultValue={variantsStr}
                         placeholder="550W, 580W, 700W"
-                        className="w-full px-3 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-xs text-sky-400 font-mono focus:outline-none focus:border-amber-500"
+                        className="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 font-mono focus:outline-none focus:border-blue-600 focus:bg-white transition"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[10px] font-mono uppercase text-slate-400 mb-1">
+                      <label className="block text-[10px] font-mono uppercase font-bold text-slate-500 mb-1">
                         Price (PKR)
                       </label>
                       <input
@@ -736,18 +738,18 @@ export default async function AdminProductsPage() {
                         name="regular_price"
                         step="0.01"
                         defaultValue={prod.regular_price}
-                        className="w-full px-3 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-xs text-emerald-400 font-bold focus:outline-none focus:border-amber-500"
+                        className="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-blue-600 font-mono font-bold focus:outline-none focus:border-blue-600 focus:bg-white transition"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[10px] font-mono uppercase text-slate-400 mb-1">
+                      <label className="block text-[10px] font-mono uppercase font-bold text-slate-500 mb-1">
                         Stock Status
                       </label>
                       <select
                         name="inventory_status"
                         defaultValue={prod.inventory_status}
-                        className="w-full px-3 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                        className="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition"
                       >
                         <option value="in_stock">In Stock</option>
                         <option value="out_of_stock">Out of Stock</option>
@@ -756,13 +758,13 @@ export default async function AdminProductsPage() {
                     </div>
 
                     <div>
-                      <label className="block text-[10px] font-mono uppercase text-slate-400 mb-1">
+                      <label className="block text-[10px] font-mono uppercase font-bold text-slate-500 mb-1">
                         Visibility Status
                       </label>
                       <select
                         name="publication_status"
                         defaultValue={prod.publication_status}
-                        className="w-full px-3 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                        className="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition"
                       >
                         <option value="published">Published (Public)</option>
                         <option value="draft">Draft (Hidden)</option>
@@ -774,20 +776,20 @@ export default async function AdminProductsPage() {
                   {/* Row 3: Card Context Description + Save Button */}
                   <div className="flex flex-col sm:flex-row items-end gap-3 pt-1">
                     <div className="flex-1 w-full">
-                      <label className="block text-[10px] font-mono uppercase text-slate-400 mb-1">
+                      <label className="block text-[10px] font-mono uppercase font-bold text-slate-500 mb-1">
                         Card Description (Context / Technical Features)
                       </label>
                       <input
                         name="description"
                         defaultValue={prod.description || ""}
                         placeholder="e.g. High-efficiency module with SMBB half-cut technology and anti-PID resistance."
-                        className="w-full px-3 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-xs text-slate-300 focus:outline-none focus:border-amber-500"
+                        className="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-blue-600 focus:bg-white transition"
                       />
                     </div>
 
                     <button
                       type="submit"
-                      className="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-lg transition flex items-center gap-1.5 shrink-0 cursor-pointer shadow-sm"
+                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-lg transition flex items-center gap-1.5 shrink-0 cursor-pointer shadow-xs active:scale-95"
                     >
                       <Save className="w-3.5 h-3.5" />
                       Save Changes
@@ -796,10 +798,10 @@ export default async function AdminProductsPage() {
                 </form>
               ) : (
                 <div className="flex items-center justify-between pt-2">
-                  <p className="text-sm text-slate-400">
+                  <p className="text-sm text-slate-600">
                     {prod.short_description || prod.description}
                   </p>
-                  <p className="text-base font-bold text-emerald-400 font-mono">
+                  <p className="text-base font-bold text-blue-600 font-mono">
                     PKR {Number(prod.regular_price).toLocaleString()}
                   </p>
                 </div>

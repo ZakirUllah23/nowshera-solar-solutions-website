@@ -46,7 +46,7 @@ export default function InquiryForm() {
 
         <div className="p-4 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono text-slate-600 space-y-1">
           <div className="flex items-center gap-1.5 text-slate-900 font-bold">
-            <Building className="w-3.5 h-3.5 text-amber-600" />
+            <Building className="w-3.5 h-3.5 text-blue-600" />
             <span>Nowshera Solar Solutions — Desk Reference</span>
           </div>
           <p>Location: Main GT Road, Nowshera Cantt, Khyber Pakhtunkhwa</p>
@@ -80,11 +80,11 @@ export default function InquiryForm() {
   return (
     <div className="bg-white border border-slate-200 rounded-lg p-6 sm:p-8 space-y-6 shadow-sm">
       <div className="border-b border-slate-100 pb-4">
-        <span className="text-xs font-mono text-amber-600 font-semibold uppercase tracking-wider block mb-1">
-          FORM // DIRECT ENGINEERING INQUIRY
+        <span className="text-xs font-mono text-blue-600 font-semibold uppercase tracking-wider block mb-1">
+          Direct Engineering Inquiry
         </span>
         <h3 className="text-xl font-bold text-slate-950 tracking-tight">
-          Request a Quotation & Site Survey
+          Request a Quotation &amp; Site Survey
         </h3>
         <p className="text-xs text-slate-500 mt-1">
           Submit your hardware bill of materials or turnkey system load details for a transparent
@@ -115,7 +115,7 @@ export default function InquiryForm() {
                 name="customer_name"
                 required
                 placeholder="e.g. Engr. Ahmad Khan"
-                className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white transition"
+                className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs text-slate-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:bg-white transition"
               />
               <User className="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5" />
             </div>
@@ -132,7 +132,7 @@ export default function InquiryForm() {
                 name="phone"
                 required
                 placeholder="e.g. 0300 1234567"
-                className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs text-slate-900 font-mono focus:outline-none focus:border-amber-600 focus:bg-white transition"
+                className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs text-slate-900 font-mono focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:bg-white transition"
               />
               <Phone className="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5" />
             </div>
@@ -150,7 +150,7 @@ export default function InquiryForm() {
                 type="email"
                 name="email"
                 placeholder="ahmad@company.com"
-                className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white transition"
+                className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs text-slate-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:bg-white transition"
               />
               <Mail className="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5" />
             </div>
@@ -166,7 +166,7 @@ export default function InquiryForm() {
                 name="city"
                 required
                 defaultValue="Nowshera"
-                className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white transition"
+                className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs text-slate-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:bg-white transition"
               >
                 <option value="Nowshera">Nowshera (Cantt, City, Risalpur)</option>
                 <option value="Peshawar">Peshawar (Hayatabad, City, Ring Road)</option>
@@ -191,14 +191,14 @@ export default function InquiryForm() {
             type="text"
             name="address"
             placeholder="e.g. Near Hakimabad, Main GT Road, Nowshera"
-            className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white transition"
+            className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs text-slate-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:bg-white transition"
           />
         </div>
 
         {/* Project Details */}
         <div>
           <label className="block text-xs font-medium text-slate-700 mb-1">
-            Project Details & System Requirements *
+            Project Details &amp; System Requirements *
           </label>
           <div className="relative">
             <textarea
@@ -206,7 +206,7 @@ export default function InquiryForm() {
               required
               rows={4}
               placeholder="e.g. Looking for a 10kW three-phase hybrid solar system for my residence with PESCO net-metering. Please include 15kWh LiFePO4 battery storage and Tier-1 N-Type TOPCon panels."
-              className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs text-slate-900 focus:outline-none focus:border-amber-600 focus:bg-white transition"
+              className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs text-slate-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:bg-white transition"
             />
             <FileText className="w-4 h-4 text-slate-400 absolute left-2.5 top-3" />
           </div>
@@ -215,17 +215,17 @@ export default function InquiryForm() {
         <button
           type="submit"
           disabled={isPending}
-          className="w-full py-2.5 px-4 bg-amber-600 hover:bg-amber-500 disabled:bg-slate-300 disabled:cursor-not-allowed text-slate-950 font-bold rounded-md text-xs transition flex items-center justify-center gap-2 shadow-sm"
+          className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-xs hover:shadow-sm active:scale-95"
         >
           {isPending ? (
             <>
-              <span className="w-3.5 h-3.5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+              <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
               <span>Transmitting Request to Engineering Desk...</span>
             </>
           ) : (
             <>
               <Send className="w-3.5 h-3.5" />
-              <span>Submit Site Survey & Quotation Request</span>
+              <span>Submit Site Survey &amp; Quotation Request</span>
             </>
           )}
         </button>

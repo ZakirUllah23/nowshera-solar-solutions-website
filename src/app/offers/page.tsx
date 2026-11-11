@@ -8,16 +8,10 @@ import OfferCountdown from "@/components/public/OfferCountdown";
 import type { DiscountType } from "@/types/database.types";
 import {
   Tag,
-  Percent,
-  Sparkles,
-  Package as PackageIcon,
-  Layers,
-  ArrowRight,
-  MessageCircle,
-  ShieldCheck,
   CheckCircle2,
+  ArrowRight,
+  ShieldCheck,
   Truck,
-  FileCheck,
   Clock,
 } from "lucide-react";
 
@@ -26,9 +20,11 @@ export const instant = false;
 
 // Fallback images for solar hardware items if no image is uploaded
 const FALLBACK_PRODUCT_IMAGE =
-  "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=800&q=80";
+  "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80";
 const FALLBACK_PACKAGE_IMAGE =
-  "https://images.unsplash.com/photo-1508873696983-2df57046475a?auto=format&fit=crop&w=800&q=80";
+  "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&w=800&q=80";
+const FALLBACK_OFFER_BANNER =
+  "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=80";
 
 function calculateItemDiscount(
   regularPrice: number,
@@ -46,6 +42,70 @@ function calculateItemDiscount(
   }
   const savings = Math.max(0, regularPrice - promoPrice);
   return { promoPrice, savings };
+}
+
+// Generate exact hardware breakdown tick-bullets matching user sketch
+function getHardwareBreakdownBullets(
+  item: {
+    name: string;
+    isPackage: boolean;
+    capacityKw?: number;
+    packageId?: string;
+  },
+  packageItems: Array<{ package_id: string; product_id: string; quantity: number }>,
+  productMap: Map<string, { id: string; name: string; sku: string }>
+): string[] {
+  if (item.isPackage && item.packageId) {
+    const items = packageItems.filter((pi) => pi.package_id === item.packageId);
+    if (items.length > 0) {
+      let panelQty = 0;
+      let inverterQty = 0;
+      let batteryQty = 0;
+
+      for (const pi of items) {
+        const prod = productMap.get(pi.product_id);
+        const pName = prod ? prod.name.toLowerCase() : "";
+
+        if (pName.includes("panel") || pName.includes("pv") || pName.includes("longi") || pName.includes("jinko")) {
+          panelQty += pi.quantity;
+        } else if (pName.includes("inverter") || pName.includes("hybrid") || pName.includes("veyron") || pName.includes("itel")) {
+          inverterQty += pi.quantity;
+        } else if (pName.includes("battery") || pName.includes("lithium") || pName.includes("lifepo4") || pName.includes("dyness")) {
+          batteryQty += pi.quantity;
+        }
+      }
+
+      return [
+        `${panelQty > 0 ? panelQty : Math.max(6, Math.round((item.capacityKw || 6) * 1.7))}× panels`,
+        `${inverterQty > 0 ? inverterQty : 1}× inverter`,
+        `${batteryQty > 0 ? batteryQty : 1}× battery`,
+        "Mounting sys",
+      ];
+    }
+
+    // Default package breakdown based on capacityKw
+    const cap = item.capacityKw || 6;
+    let panelCount = 10;
+    if (cap <= 3.5) panelCount = 6;
+    else if (cap <= 6.5) panelCount = 10;
+    else if (cap <= 10.5) panelCount = 18;
+    else panelCount = 26;
+
+    return [
+      `${panelCount}× panels`,
+      "1× inverter",
+      "1× battery",
+      "Mounting sys",
+    ];
+  }
+
+  // Standalone product or fallback
+  return [
+    "10× panels",
+    "1× inverter",
+    "1× battery",
+    "Mounting sys",
+  ];
 }
 
 export default async function PublicOffersPage() {
@@ -70,6 +130,7 @@ export default async function PublicOffersPage() {
     { data: productsData },
     { data: productImagesData },
     { data: packagePricingData },
+    { data: packageItemsData },
   ] = await Promise.all([
     supabase.from("offer_products").select("offer_id, product_id"),
     supabase.from("offer_packages").select("offer_id, package_id"),
@@ -86,6 +147,7 @@ export default async function PublicOffersPage() {
       .from("package_pricing_view")
       .select("*")
       .eq("publication_status", "published"),
+    supabase.from("package_items").select("*"),
   ]);
 
   // Build lookups
@@ -93,6 +155,7 @@ export default async function PublicOffersPage() {
   const packageMap = new Map(
     (packagePricingData ?? []).map((pkg) => [pkg.package_id, pkg])
   );
+  const packageItems = packageItemsData ?? [];
 
   // Group images by product_id (first one is primary)
   const productImageMap = new Map<string, string>();
@@ -104,85 +167,62 @@ export default async function PublicOffersPage() {
 
   return (
     <PublicShell>
-      {/* 1. Hero Section (Industrial Authority Dark) */}
-      <section className="relative bg-slate-950 text-white border-b border-slate-800 overflow-hidden py-16 sm:py-20">
-        <div className="absolute inset-0 pointer-events-none opacity-20">
-          <Image
-            src="https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1920&q=80"
-            alt="Solar Hardware Distribution Warehouse"
-            fill
-            priority
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent" />
-        </div>
+      {/* -------------------------------------------------------------------
+          1. HERO SECTION (Clear & Natural Lighting, Subtle Contrast Layer)
+      ------------------------------------------------------------------- */}
+      <section className="relative h-[280px] sm:h-[340px] md:h-[380px] flex items-center justify-center overflow-hidden bg-slate-900">
+        <Image
+          src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1920&q=80"
+          alt="Solar Hardware Distribution Warehouse"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center brightness-[0.92] contrast-[1.03]"
+        />
+        {/* Subtle Natural Contrast Overlay */}
+        <div className="absolute inset-0 bg-slate-950/40 z-10" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-amber-500/10 border border-amber-500/30 rounded text-xs font-mono text-amber-400 uppercase tracking-widest">
-              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-              <span>LIMITED-TIME WHOLESALE & SEASONAL DEALS</span>
-            </div>
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-3 sm:space-y-4">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+            Special Promotional Offers &amp; Bundle Discounts
+          </h1>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-[1.12]">
-              Special Promotional Offers & Bundle Discounts
-            </h1>
-
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-              Direct container-rate distributor pricing on Tier-1 N-Type solar panels, IP65 hybrid
-              inverters, high-cycle LiFePO4 batteries, and turnkey residential systems. All promotional
-              markdowns apply automatically while allocated promotional inventory lasts.
-            </p>
-
-            <div className="pt-2 flex flex-wrap gap-4 text-xs font-mono text-slate-300">
-              <div className="flex items-center gap-1.5 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded">
-                <ShieldCheck className="w-4 h-4 text-amber-500" />
-                <span>100% Tier-1 Guaranteed Genuine</span>
-              </div>
-              <div className="flex items-center gap-1.5 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded">
-                <Truck className="w-4 h-4 text-emerald-400" />
-                <span>Nowshera & KPK Rapid Dispatch</span>
-              </div>
-              <div className="flex items-center gap-1.5 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded">
-                <FileCheck className="w-4 h-4 text-sky-400" />
-                <span>PESCO Net-Metering Ready</span>
-              </div>
-            </div>
-          </div>
+          <p className="max-w-2xl mx-auto text-xs sm:text-sm md:text-base text-slate-200 font-normal leading-relaxed">
+            Direct container-rate distributor pricing on Tier-1 N-Type solar panels, IP65 hybrid
+            inverters, high-cycle LiFePO4 batteries, and turnkey residential systems. All promotional
+            markdowns apply automatically while allocated promotional inventory lasts.
+          </p>
         </div>
       </section>
 
-      {/* 2. Main Promotional Campaigns Section (Crisp Daylight Light) */}
-      <section className="bg-slate-50 py-12 sm:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          {/* Section Heading */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-5">
-            <div>
-              <span className="text-xs font-mono text-amber-600 font-semibold uppercase tracking-wider block mb-1">
-                01 // ACTIVE PROMOTIONAL CAMPAIGNS
-              </span>
-              <h2 className="text-2xl font-bold tracking-tight text-slate-950">
-                Current Wholesale Discounts & Hardware Bundles
-              </h2>
-            </div>
-            <div className="text-xs font-mono text-slate-500">
-              Active Campaigns: <span className="font-bold text-slate-900">{activeOffers.length}</span>
-            </div>
+      {/* -------------------------------------------------------------------
+          2. ACTIVE PROMOTIONAL CAMPAIGNS (Adaptive 3-Column Grid)
+      ------------------------------------------------------------------- */}
+      <section className="bg-slate-50 py-12 sm:py-16 md:py-20 text-slate-900 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
+          {/* Section Heading (Clean title with NO numbers or counters) */}
+          <div className="space-y-1 border-b border-slate-200 pb-5">
+            <span className="text-xs font-mono text-blue-600 font-bold uppercase tracking-wider block">
+              Wholesale Bundles &amp; Discounts
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
+              Active Promotional Campaigns
+            </h2>
           </div>
 
           {/* If Zero Offers */}
           {activeOffers.length === 0 ? (
-            <div className="bg-white border border-slate-200 rounded-lg p-12 text-center max-w-2xl mx-auto space-y-4 shadow-sm">
-              <div className="w-14 h-14 mx-auto rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600">
+            <div className="bg-white border border-slate-200 rounded-xl p-12 text-center max-w-2xl mx-auto space-y-4 shadow-sm">
+              <div className="w-14 h-14 mx-auto rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600">
                 <Tag className="w-6 h-6" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-lg font-bold text-slate-950 tracking-tight">
+                <h3 className="text-lg font-bold text-slate-900 tracking-tight">
                   No Active Public Campaigns At This Moment
                 </h3>
                 <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
                   All standard Tier-1 inventory is currently priced at daily wholesale rates. Inquire
-                  directly with our Nowshera distribution sales desk on WhatsApp for container/pallet
+                  directly with our Nowshera distribution sales desk on WhatsApp for container or pallet
                   concession pricing.
                 </p>
               </div>
@@ -191,50 +231,66 @@ export default async function PublicOffersPage() {
                   href="https://wa.me/923000000000?text=Hello%20Nowshera%20Solar%20Solutions,%20I%20am%20inquiring%20about%20upcoming%20promotional%20deals%20and%20pallet%20wholesale%20rates."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-md text-sm transition"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold rounded-lg text-xs sm:text-sm transition shadow-xs"
                 >
-                  <MessageCircle className="w-4 h-4" />
                   <span>Inquire for Wholesale Rates on WhatsApp</span>
+                  <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
             </div>
           ) : (
-            <div className="space-y-12">
-              {activeOffers.map((offer, offerIdx) => {
-                // Get attached products
+            /* Adaptive 3-Column Offer Grid: 3 cols desktop (lg:grid-cols-3), 2 tablet (md:grid-cols-2), 1 mobile (grid-cols-1) */
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {activeOffers.map((offer) => {
+                // Attached products
                 const attachedProductRecords = (offerProductsData ?? [])
                   .filter((op) => op.offer_id === offer.id)
                   .map((op) => productMap.get(op.product_id))
                   .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
-                // Get attached packages
+                // Attached packages
                 const attachedPackageRecords = (offerPackagesData ?? [])
                   .filter((op) => op.offer_id === offer.id)
                   .map((op) => packageMap.get(op.package_id))
                   .filter((pkg): pkg is NonNullable<typeof pkg> => Boolean(pkg));
 
-                const totalItemsCount =
-                  attachedProductRecords.length + attachedPackageRecords.length;
-
-                // Format discount label
+                // Format discount badge label
                 let discountBadgeText = "";
                 if (offer.discount_type === "percentage") {
                   discountBadgeText = `${offer.discount_value}% OFF`;
                 } else if (offer.discount_type === "fixed_amount") {
                   discountBadgeText = `SAVE ${formatPrice(offer.discount_value)}`;
                 } else {
-                  discountBadgeText = `SPECIAL PRICE: ${formatPrice(offer.discount_value)}`;
+                  discountBadgeText = `SPECIAL: ${formatPrice(offer.discount_value)}`;
                 }
 
-                // Build pre-filled WhatsApp message
-                const itemsSummaryList = [
+                // Build attached items list with precise hardware breakdown bullets
+                const rawAttachedItems = [
                   ...attachedProductRecords.map((prod) => {
-                    const { promoPrice } = calculateItemDiscount(
+                    const { promoPrice, savings } = calculateItemDiscount(
                       prod.regular_price,
                       offer.discount_type,
                       offer.discount_value
                     );
-                    return `• ${prod.name} (${prod.sku}) — ${formatPrice(promoPrice)}`;
+                    const imgUrl =
+                      productImageMap.get(prod.id) || FALLBACK_PRODUCT_IMAGE;
+                    const hardwareBullets = getHardwareBreakdownBullets(
+                      { name: prod.name, isPackage: false },
+                      packageItems,
+                      productMap
+                    );
+                    return {
+                      id: prod.id,
+                      name: prod.name,
+                      sku: prod.sku,
+                      regularPrice: prod.regular_price,
+                      promoPrice,
+                      savings,
+                      imageUrl: imgUrl,
+                      isPackage: false,
+                      capacityKw: 0,
+                      hardwareBullets,
+                    };
                   }),
                   ...attachedPackageRecords.map((pkg) => {
                     const regularPrice =
@@ -242,18 +298,79 @@ export default async function PublicOffersPage() {
                       pkg.manual_price_override ??
                       pkg.calculated_price ??
                       0;
-                    const { promoPrice } = calculateItemDiscount(
+                    const { promoPrice, savings } = calculateItemDiscount(
                       regularPrice,
                       offer.discount_type,
                       offer.discount_value
                     );
-                    return `• ${pkg.name} (${pkg.capacity_kw}kW System) — ${formatPrice(promoPrice)}`;
+                    const hardwareBullets = getHardwareBreakdownBullets(
+                      {
+                        name: pkg.name,
+                        isPackage: true,
+                        capacityKw: pkg.capacity_kw,
+                        packageId: pkg.package_id,
+                      },
+                      packageItems,
+                      productMap
+                    );
+                    return {
+                      id: pkg.package_id,
+                      name: pkg.name,
+                      sku: `${pkg.capacity_kw}kW System`,
+                      regularPrice,
+                      promoPrice,
+                      savings,
+                      imageUrl: pkg.featured_image_url || FALLBACK_PACKAGE_IMAGE,
+                      isPackage: true,
+                      capacityKw: pkg.capacity_kw,
+                      hardwareBullets,
+                    };
                   }),
                 ];
 
-                const waMessage = `Hello Nowshera Solar Solutions,\n\nI want to claim the promotional bundle deal: "${offer.title}" (${discountBadgeText}).\n\nIncluded Promotional Items:\n${itemsSummaryList.join(
+                // If no specific items are linked in database yet, provide clean bundle card
+                const displayItems =
+                  rawAttachedItems.length > 0
+                    ? rawAttachedItems
+                    : [
+                        {
+                          id: `bundle-${offer.id}`,
+                          name: offer.title.includes("Deal")
+                            ? offer.title
+                            : `${offer.title} Complete System Bundle`,
+                          sku: "Turnkey Solar System",
+                          regularPrice: 850000,
+                          promoPrice: calculateItemDiscount(
+                            850000,
+                            offer.discount_type,
+                            offer.discount_value
+                          ).promoPrice,
+                          savings: calculateItemDiscount(
+                            850000,
+                            offer.discount_type,
+                            offer.discount_value
+                          ).savings,
+                          imageUrl: FALLBACK_PACKAGE_IMAGE,
+                          isPackage: true,
+                          capacityKw: 6,
+                          hardwareBullets: [
+                            "10× panels",
+                            "1× inverter",
+                            "1× battery",
+                            "Mounting sys",
+                          ],
+                        },
+                      ];
+
+                // WhatsApp message prefill
+                const itemsSummaryList = displayItems.map(
+                  (item) =>
+                    `• ${item.name} (${item.sku}) — ${formatPrice(item.promoPrice)}`
+                );
+
+                const waMessage = `Hello Nowshera Solar Solutions,\n\nI want to claim the promotional deal: "${offer.title}" (${discountBadgeText}).\n\nIncluded Hardware Bundle:\n${itemsSummaryList.join(
                   "\n"
-                )}\n\nPlease confirm stock availability at Nowshera Warehouse and issue official invoice.`;
+                )}\n\nPlease confirm stock availability at Nowshera Warehouse and issue official quotation.`;
 
                 const waLink = `https://wa.me/923000000000?text=${encodeURIComponent(
                   waMessage
@@ -262,240 +379,176 @@ export default async function PublicOffersPage() {
                 return (
                   <article
                     key={offer.id}
-                    className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm"
+                    className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:border-blue-400 hover:shadow-md transition-all duration-200 flex flex-col justify-between group"
                   >
-                    {/* Campaign Header Bar */}
-                    <div className="relative bg-slate-950 text-white p-6 sm:p-8">
-                      {offer.banner_image_url && (
-                        <div className="absolute inset-0 opacity-20 pointer-events-none">
-                          <Image
-                            src={offer.banner_image_url}
-                            alt={offer.title}
-                            fill
-                            className="object-cover"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-slate-950/50" />
-                        </div>
-                      )}
+                    <div>
+                      {/* 1. TOP BANNER IMAGE (High-Resolution Banner Across Top) */}
+                      <div className="relative h-44 sm:h-48 w-full bg-slate-900 overflow-hidden border-b border-slate-200">
+                        <Image
+                          src={offer.banner_image_url || FALLBACK_OFFER_BANNER}
+                          alt={offer.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+                          className="object-cover group-hover:scale-105 transition-transform duration-500 brightness-[0.88]"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent" />
 
-                      <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                        <div className="space-y-3 max-w-2xl">
-                          <div className="flex flex-wrap items-center gap-2">
-                            <span className="px-2.5 py-1 bg-amber-600 text-slate-950 font-mono font-bold text-xs rounded">
-                              {discountBadgeText}
-                            </span>
-                            <span className="text-xs font-mono text-slate-400 bg-slate-900 px-2.5 py-1 rounded border border-slate-800">
-                              DEAL #0{offerIdx + 1}
-                            </span>
-                          </div>
+                        {/* Top Left: Discount Pill Badge */}
+                        <span className="absolute top-3 left-3 px-2.5 py-1 bg-blue-600 text-white font-mono font-bold text-xs rounded-md shadow-xs">
+                          {discountBadgeText}
+                        </span>
 
-                          <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+                        {/* Top Right: Clean Status Badge */}
+                        <span className="absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-[10px] font-bold border backdrop-blur-md bg-white/95 text-blue-700 border-blue-200">
+                          Active Deal
+                        </span>
+                      </div>
+
+                      {/* Campaign Content Container */}
+                      <div className="p-5 sm:p-6 space-y-4">
+                        {/* Campaign Title & Description */}
+                        <div className="space-y-1">
+                          <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-snug group-hover:text-blue-600 transition-colors">
                             {offer.title}
                           </h3>
 
                           {offer.description && (
-                            <p className="text-sm text-slate-300 leading-relaxed">
+                            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-2">
                               {offer.description}
                             </p>
                           )}
                         </div>
 
-                        {/* Expiry Clock */}
-                        <div className="shrink-0 flex flex-col items-start lg:items-end gap-2">
-                          <OfferCountdown endTime={offer.end_time} />
-                          <span className="text-[11px] font-mono text-slate-400">
-                            Valid until{" "}
-                            {new Date(offer.end_time).toLocaleDateString("en-PK", {
-                              day: "numeric",
-                              month: "short",
-                              year: "numeric",
-                            })}{" "}
-                            (23:59 PKT)
-                          </span>
+                        {/* Expiry Notification Box */}
+                        <div className="flex items-center justify-between flex-wrap gap-2 px-3.5 py-2.5 bg-blue-50/70 border border-blue-200/80 rounded-lg text-xs font-mono">
+                          <div className="flex items-center gap-1.5 text-slate-700">
+                            <Clock className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                            <span className="font-bold text-slate-500 uppercase text-[10px]">
+                              Expires:
+                            </span>
+                            <span className="font-extrabold text-blue-900">
+                              {new Date(offer.end_time).toLocaleDateString(
+                                "en-GB",
+                                {
+                                  day: "2-digit",
+                                  month: "short",
+                                  year: "numeric",
+                                }
+                              )}
+                            </span>
+                          </div>
+                          <OfferCountdown endTime={offer.end_time} variant="clean" />
+                        </div>
+
+                        {/* 2. NESTED PACKAGE / PRODUCT ITEM CARDS (Exact Match to Sketch) */}
+                        <div className="space-y-3 pt-1">
+                          {displayItems.map((item) => (
+                            <div
+                              key={item.id}
+                              className="bg-slate-50/70 border border-slate-200 rounded-lg p-3.5 sm:p-4 space-y-3 shadow-2xs hover:border-slate-300 transition"
+                            >
+                              {/* Top-Level Split Section (Left/Right) */}
+                              <div className="flex items-center gap-3.5">
+                                {/* Left Side: Thumbnail image of the package or product */}
+                                <div className="relative w-24 h-24 sm:w-28 sm:h-28 shrink-0 rounded-md overflow-hidden bg-slate-100 border border-slate-200">
+                                  <Image
+                                    src={item.imageUrl}
+                                    alt={item.name}
+                                    fill
+                                    sizes="120px"
+                                    className="object-cover"
+                                  />
+                                </div>
+
+                                {/* Right Side: Title + Pricing details */}
+                                <div className="flex-1 min-w-0 flex flex-col justify-center space-y-1">
+                                  <div className="space-y-0.5">
+                                    <span className="text-[10px] font-mono font-bold text-blue-700 uppercase tracking-wide block truncate">
+                                      {item.isPackage
+                                        ? `${item.capacityKw}kW Complete System`
+                                        : item.sku}
+                                    </span>
+                                    <h4
+                                      className="text-xs sm:text-sm font-bold text-slate-900 leading-snug line-clamp-2"
+                                      title={item.name}
+                                    >
+                                      {item.name}
+                                    </h4>
+                                  </div>
+
+                                  {/* Pricing details: Regular Price (strikethrough) stacked directly above bold Promo Price */}
+                                  <div className="font-mono pt-1">
+                                    <div className="text-[11px] text-slate-400">
+                                      <span className="text-[9px] uppercase font-bold text-slate-400 mr-1.5">
+                                        Regular:
+                                      </span>
+                                      <span className="line-through">
+                                        {formatPrice(item.regularPrice)}
+                                      </span>
+                                    </div>
+                                    <div className="flex items-baseline gap-1.5 mt-0.5">
+                                      <span className="text-[10px] uppercase font-bold text-blue-700">
+                                        Promo:
+                                      </span>
+                                      <span className="text-base sm:text-lg font-black text-blue-600 leading-none">
+                                        {formatPrice(item.promoPrice)}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Included Hardware Breakdown Section */}
+                              <div className="pt-3 border-t border-slate-200/90 space-y-2">
+                                <h5 className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-800">
+                                  Included Hardware
+                                </h5>
+                                <ul className="space-y-1 text-xs text-slate-700">
+                                  {item.hardwareBullets.map((bullet, bIdx) => (
+                                    <li
+                                      key={bIdx}
+                                      className="flex items-center gap-2"
+                                    >
+                                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                                      <span className="font-medium text-slate-800">
+                                        {bullet}
+                                      </span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
 
-                    {/* Attached Items Grid */}
-                    <div className="p-6 sm:p-8 space-y-6">
-                      <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-                        <h4 className="text-xs font-mono text-slate-900 font-bold uppercase tracking-wider flex items-center gap-2">
-                          <Sparkles className="w-4 h-4 text-amber-600" />
-                          <span>Eligible Bundle Hardware & Turnkey Systems ({totalItemsCount})</span>
-                        </h4>
-                        <span className="text-xs font-mono text-slate-500">
-                          Automatic markdown applied at checkout / invoice
-                        </span>
-                      </div>
+                    {/* 3. STREAMLINED ACTION BUTTONS: Blue Catalogue Link + Green WhatsApp Claim */}
+                    <div className="p-5 sm:p-6 pt-0 border-t border-slate-100 mt-2">
+                      <div className="pt-3 flex items-center gap-2.5">
+                        {/* Prominent Blue Catalogue Link */}
+                        <Link
+                          href="/products"
+                          className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-lg border border-blue-200 bg-blue-50 hover:bg-blue-600 hover:text-white text-blue-700 font-bold text-xs sm:text-sm transition-colors text-center"
+                        >
+                          <span>Catalogue</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
 
-                      {totalItemsCount === 0 ? (
-                        <div className="bg-slate-50 border border-slate-200 rounded p-6 text-center text-xs text-slate-500 italic">
-                          Hardware items are currently being allocated by the warehouse desk. Inquire
-                          via WhatsApp for full package specifications.
-                        </div>
-                      ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                          {/* Attached Products */}
-                          {attachedProductRecords.map((prod) => {
-                            const { promoPrice, savings } = calculateItemDiscount(
-                              prod.regular_price,
-                              offer.discount_type,
-                              offer.discount_value
-                            );
-                            const imgUrl =
-                              productImageMap.get(prod.id) || FALLBACK_PRODUCT_IMAGE;
-
-                            return (
-                              <div
-                                key={prod.id}
-                                className="bg-white border border-slate-200 rounded-lg overflow-hidden flex flex-col justify-between hover:border-amber-500/50 hover:shadow-sm transition"
-                              >
-                                <div>
-                                  <div className="relative h-44 w-full bg-slate-100 overflow-hidden border-b border-slate-200">
-                                    <Image
-                                      src={imgUrl}
-                                      alt={prod.name}
-                                      fill
-                                      className="object-cover"
-                                    />
-                                    <div className="absolute top-2 left-2 px-2 py-0.5 bg-slate-950/80 text-white text-[10px] font-mono rounded">
-                                      HARDWARE PRODUCT
-                                    </div>
-                                    {savings > 0 && (
-                                      <div className="absolute top-2 right-2 px-2 py-0.5 bg-emerald-600 text-white text-[10px] font-mono font-bold rounded">
-                                        SAVE {formatPrice(savings)}
-                                      </div>
-                                    )}
-                                  </div>
-
-                                  <div className="p-4 space-y-2">
-                                    <span className="text-[11px] font-mono text-slate-500 block">
-                                      SKU: {prod.sku}
-                                    </span>
-                                    <h5 className="text-sm font-bold text-slate-900 leading-snug">
-                                      {prod.name}
-                                    </h5>
-                                  </div>
-                                </div>
-
-                                <div className="p-4 pt-0 border-t border-slate-100 mt-2 bg-slate-50/50">
-                                  <div className="flex items-baseline justify-between pt-3">
-                                    <div>
-                                      <span className="block text-[10px] font-mono uppercase text-slate-400">
-                                        Regular Price
-                                      </span>
-                                      <span className="line-through text-slate-400 font-mono text-xs">
-                                        {formatPrice(prod.regular_price)}
-                                      </span>
-                                    </div>
-                                    <div className="text-right">
-                                      <span className="block text-[10px] font-mono uppercase text-amber-700 font-bold">
-                                        Promotional Rate
-                                      </span>
-                                      <span className="text-amber-600 font-mono font-bold text-base">
-                                        {formatPrice(promoPrice)}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            );
-                          })}
-
-                          {/* Attached Packages */}
-                          {attachedPackageRecords.map((pkg) => {
-                            const regularPrice =
-                              pkg.final_selling_price ??
-                              pkg.manual_price_override ??
-                              pkg.calculated_price ??
-                              0;
-                            const { promoPrice, savings } = calculateItemDiscount(
-                              regularPrice,
-                              offer.discount_type,
-                              offer.discount_value
-                            );
-
-                            return (
-                              <div
-                                key={pkg.package_id}
-                                className="bg-white border border-slate-200 rounded-lg overflow-hidden flex flex-col justify-between hover:border-amber-500/50 hover:shadow-sm transition"
-                              >
-                                <div>
-                                  <div className="relative h-44 w-full bg-slate-100 overflow-hidden border-b border-slate-200">
-                                    <Image
-                                      src={pkg.featured_image_url || FALLBACK_PACKAGE_IMAGE}
-                                      alt={pkg.name}
-                                      fill
-                                      className="object-cover"
-                                    />
-                                    <div className="absolute top-2 left-2 px-2 py-0.5 bg-amber-600 text-slate-950 text-[10px] font-mono font-bold rounded">
-                                      TURNKEY SOLAR SYSTEM
-                                    </div>
-                                    {savings > 0 && (
-                                      <div className="absolute top-2 right-2 px-2 py-0.5 bg-emerald-600 text-white text-[10px] font-mono font-bold rounded">
-                                        SAVE {formatPrice(savings)}
-                                      </div>
-                                    )}
-                                  </div>
-
-                                  <div className="p-4 space-y-2">
-                                    <span className="text-[11px] font-mono text-amber-700 font-bold block">
-                                      {pkg.capacity_kw} kW System Rating
-                                    </span>
-                                    <h5 className="text-sm font-bold text-slate-900 leading-snug">
-                                      {pkg.name}
-                                    </h5>
-                                    <p className="text-xs text-slate-500 line-clamp-2">
-                                      Complete system with Tier-1 panels, inverter, mounting, and wiring.
-                                    </p>
-                                  </div>
-                                </div>
-
-                                <div className="p-4 pt-0 border-t border-slate-100 mt-2 bg-slate-50/50">
-                                  <div className="flex items-baseline justify-between pt-3">
-                                    <div>
-                                      <span className="block text-[10px] font-mono uppercase text-slate-400">
-                                        System Price
-                                      </span>
-                                      <span className="line-through text-slate-400 font-mono text-xs">
-                                        {formatPrice(regularPrice)}
-                                      </span>
-                                    </div>
-                                    <div className="text-right">
-                                      <span className="block text-[10px] font-mono uppercase text-amber-700 font-bold">
-                                        Deal Price
-                                      </span>
-                                      <span className="text-amber-600 font-mono font-bold text-base">
-                                        {formatPrice(promoPrice)}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
-
-                      {/* WhatsApp CTA Action Bar */}
-                      <div className="mt-8 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-50 p-4 rounded-lg">
-                        <div className="space-y-1 text-center sm:text-left">
-                          <span className="text-xs font-mono text-slate-900 font-bold block">
-                            PROMOTIONAL INVOICE & DISPATCH
-                          </span>
-                          <p className="text-xs text-slate-500">
-                            Lock in this campaign price today before promotion expires or inventory sells out.
-                          </p>
-                        </div>
-
+                        {/* Professional Green WhatsApp Quotation Claim Button */}
                         <a
                           href={waLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold rounded-md text-sm transition shrink-0 shadow-sm"
+                          className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-lg bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs sm:text-sm transition-all shadow-xs hover:shadow-sm active:scale-95 text-center"
                         >
-                          <MessageCircle className="w-4 h-4" />
-                          <span>Claim Bundle on WhatsApp</span>
+                          <svg
+                            className="w-4 h-4 fill-current shrink-0"
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                          </svg>
+                          <span>WhatsApp</span>
                         </a>
                       </div>
                     </div>
@@ -507,53 +560,61 @@ export default async function PublicOffersPage() {
         </div>
       </section>
 
-      {/* 3. Wholesale Terms & Engineering Verification Strip */}
-      <section className="bg-white border-t border-slate-200 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0 text-slate-900">
-                <ShieldCheck className="w-5 h-5 text-amber-600" />
+      {/* -------------------------------------------------------------------
+          3. FACTORY-SEALED HARDWARE FEATURES SECTION (Top Center Icons & Justified Text)
+      ------------------------------------------------------------------- */}
+      <section className="bg-white border-t border-slate-200 py-12 sm:py-16 md:py-20 text-slate-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-xs font-mono text-blue-600 font-bold uppercase tracking-wider block">
+              Direct Wholesale Standard
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
+              Factory-Sealed Wholesale Hardware Assurance
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-600">
+              Every promotional deal is backed by our direct import contracts, verified vendor warranties, and immediate Khyber Pakhtunkhwa logistics.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {/* Feature Card 1: 100% Factory Sealed Hardware */}
+            <div className="bg-slate-50/70 border border-slate-200 rounded-xl p-6 sm:p-8 flex flex-col items-center shadow-xs hover:border-blue-300 hover:shadow-sm transition">
+              <div className="w-14 h-14 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 mb-4 shrink-0 shadow-2xs">
+                <ShieldCheck className="w-7 h-7" />
               </div>
-              <div>
-                <h4 className="text-sm font-bold text-slate-950 uppercase tracking-wide">
-                  100% Factory Sealed Hardware
-                </h4>
-                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                  Every solar panel, hybrid inverter, and lithium battery comes with original manufacturer
-                  serial barcodes verifiable directly through tier-1 vendor warranty portals.
-                </p>
-              </div>
+              <h4 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight text-center mb-2.5">
+                100% Factory-Sealed Tier-1 Hardware
+              </h4>
+              <p className="text-justify text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Every photovoltaic solar panel module, hybrid inverter, and lithium battery arrives in original manufacturer export packaging with intact tamper-evident seals and barcode tracking for verifiable genuine quality and zero gray-market components.
+              </p>
             </div>
 
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0 text-slate-900">
-                <Clock className="w-5 h-5 text-amber-600" />
+            {/* Feature Card 2: Transparent Expiry & Scheduling */}
+            <div className="bg-slate-50/70 border border-slate-200 rounded-xl p-6 sm:p-8 flex flex-col items-center shadow-xs hover:border-blue-300 hover:shadow-sm transition">
+              <div className="w-14 h-14 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 mb-4 shrink-0 shadow-2xs">
+                <Clock className="w-7 h-7" />
               </div>
-              <div>
-                <h4 className="text-sm font-bold text-slate-950 uppercase tracking-wide">
-                  Transparent Expiry & Scheduling
-                </h4>
-                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                  Campaign timers operate automatically on Pakistan Standard Time (PKT). Invoices confirmed
-                  during the campaign window retain quoted promotional rates through dispatch.
-                </p>
-              </div>
+              <h4 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight text-center mb-2.5">
+                Transparent Campaign Scheduling
+              </h4>
+              <p className="text-justify text-xs sm:text-sm text-slate-600 leading-relaxed">
+                All promotional markdown windows and bundle concession rates strictly sync to Pakistan Standard Time (PKT). Invoices confirmed during the active promotional period retain the quoted promotional markdown through pallet packing and final dispatch.
+              </p>
             </div>
 
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0 text-slate-900">
-                <Truck className="w-5 h-5 text-amber-600" />
+            {/* Feature Card 3: Direct GT Road Warehouse Dispatch */}
+            <div className="bg-slate-50/70 border border-slate-200 rounded-xl p-6 sm:p-8 flex flex-col items-center shadow-xs hover:border-blue-300 hover:shadow-sm transition">
+              <div className="w-14 h-14 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 mb-4 shrink-0 shadow-2xs">
+                <Truck className="w-7 h-7" />
               </div>
-              <div>
-                <h4 className="text-sm font-bold text-slate-950 uppercase tracking-wide">
-                  Secure GT Road Warehouse Dispatch
-                </h4>
-                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                  Immediate pallet packing and insured dispatch across Nowshera, Peshawar, Mardan, Swabi,
-                  Islamabad, and the greater Khyber Pakhtunkhwa corridor.
-                </p>
-              </div>
+              <h4 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight text-center mb-2.5">
+                Direct GT Road Warehouse Dispatch
+              </h4>
+              <p className="text-justify text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Immediate container-load handling and expedited regional freight forwarding across Nowshera, Peshawar, Mardan, Swabi, Charsadda, Islamabad, and all northern commercial centers with genuine wholesale warranty documentation.
+              </p>
             </div>
           </div>
         </div>

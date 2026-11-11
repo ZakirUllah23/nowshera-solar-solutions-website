@@ -315,25 +315,25 @@ export default async function AdminPackagesPage(props: PageProps) {
   }
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8 text-slate-100">
+    <div className="max-w-7xl mx-auto space-y-8 text-slate-900">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white flex items-center gap-2.5">
-          <Layers className="w-6 h-6 text-amber-400" />
+        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2.5">
+          <Layers className="w-6 h-6 text-blue-600" />
           Solar Packages &amp; Hybrid BOM Management
         </h1>
-        <p className="text-sm text-slate-400 mt-1">
+        <p className="text-sm text-slate-600 mt-1">
           Create and configure turnkey solar systems. Changes sync immediately to
-          the public <code className="text-amber-400 font-mono">/packages</code> page.
+          the public <code className="text-blue-600 font-mono">/packages</code> page.
         </p>
       </div>
 
       {/* Prominent Success Banner */}
       {successMessage && (
-        <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 flex items-start gap-3 text-emerald-300">
-          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex items-start gap-3 text-emerald-800">
+          <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
           <div className="text-sm">
-            <span className="font-semibold block text-emerald-200 mb-0.5">
+            <span className="font-semibold block text-emerald-900 mb-0.5">
               Success
             </span>
             <p>{successMessage}</p>
@@ -343,10 +343,10 @@ export default async function AdminPackagesPage(props: PageProps) {
 
       {/* Prominent Error / Trigger Warning Box */}
       {errorMessage && (
-        <div className="bg-rose-500/10 border border-rose-500/30 rounded-xl p-4 flex items-start gap-3 text-rose-300">
-          <AlertCircle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
+        <div className="bg-rose-50 border border-rose-200 rounded-xl p-4 flex items-start gap-3 text-rose-800">
+          <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
           <div className="text-sm">
-            <span className="font-semibold block text-rose-200 mb-0.5">
+            <span className="font-semibold block text-rose-900 mb-0.5">
               Notice / Validation Message
             </span>
             <p>{errorMessage}</p>
@@ -358,22 +358,22 @@ export default async function AdminPackagesPage(props: PageProps) {
       {canEdit && (
         <form
           action={createPackage}
-          className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-5"
+          className="bg-white border border-slate-200 rounded-2xl p-6 space-y-5 shadow-sm"
         >
-          <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
-            <h2 className="text-base font-semibold text-white flex items-center gap-2">
-              <Plus className="w-4 h-4 text-amber-400" />
+          <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+            <h2 className="text-base font-semibold text-slate-900 flex items-center gap-2">
+              <Plus className="w-4 h-4 text-blue-600" />
               Create New Solar Package
             </h2>
-            <span className="text-xs font-mono text-slate-400 flex items-center gap-1">
-              <Calculator className="w-3.5 h-3.5 text-amber-400" />
+            <span className="text-xs font-mono text-slate-500 flex items-center gap-1">
+              <Calculator className="w-3.5 h-3.5 text-blue-600" />
               HYBRID BOM PRICING
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
                 Package Name *
               </label>
               <input
@@ -381,12 +381,12 @@ export default async function AdminPackagesPage(props: PageProps) {
                 name="name"
                 required
                 placeholder="e.g. 6kW Complete Hybrid Residential Solar System"
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
                 URL Slug *
               </label>
               <input
@@ -394,12 +394,12 @@ export default async function AdminPackagesPage(props: PageProps) {
                 name="slug"
                 required
                 placeholder="e.g. 6kw-hybrid-residential-solar-package"
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-amber-500 font-mono"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white font-mono"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
                 Capacity (kW) *
               </label>
               <input
@@ -409,12 +409,12 @@ export default async function AdminPackagesPage(props: PageProps) {
                 name="capacity_kw"
                 required
                 placeholder="e.g. 6.0"
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-amber-500 font-mono"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white font-mono"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
                 Installation &amp; Wiring Cost (PKR)
               </label>
               <input
@@ -423,12 +423,12 @@ export default async function AdminPackagesPage(props: PageProps) {
                 min="0"
                 name="installation_cost"
                 defaultValue={45000}
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-amber-500 font-mono"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white font-mono"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
                 Additional / Net-Metering Costs (PKR)
               </label>
               <input
@@ -437,12 +437,12 @@ export default async function AdminPackagesPage(props: PageProps) {
                 min="0"
                 name="additional_costs"
                 defaultValue={35000}
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-amber-500 font-mono"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white font-mono"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
                 Manual Override Price (Optional PKR)
               </label>
               <input
@@ -451,18 +451,18 @@ export default async function AdminPackagesPage(props: PageProps) {
                 min="0"
                 name="manual_price_override"
                 placeholder="Leave blank for dynamic calculated sum"
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-amber-500 font-mono"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white font-mono"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
                 Publication Status (Default: Published)
               </label>
               <select
                 name="publication_status"
                 defaultValue="published"
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white"
               >
                 <option value="published">Published (Visible on /packages)</option>
                 <option value="draft">Draft (Staff only)</option>
@@ -471,13 +471,13 @@ export default async function AdminPackagesPage(props: PageProps) {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
                 Stock Status
               </label>
               <select
                 name="inventory_status"
                 defaultValue="in_stock"
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white"
               >
                 <option value="in_stock">In Stock</option>
                 <option value="available_on_order">Available on Order</option>
@@ -486,43 +486,43 @@ export default async function AdminPackagesPage(props: PageProps) {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
                 Package Photo (Optional)
               </label>
               <input
                 type="file"
                 name="image"
                 accept="image/*"
-                className="w-full text-xs text-slate-400 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-slate-800 file:text-slate-200 hover:file:bg-slate-700 cursor-pointer"
+                className="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer"
               />
             </div>
 
             <div className="md:col-span-3">
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
                 Description / Technical Scope
               </label>
               <textarea
                 name="description"
                 rows={2}
                 placeholder="Ideal for standard homes running 2x 1.5-Ton Inverter ACs, water pump, and lights with lithium battery backup."
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white"
               ></textarea>
             </div>
           </div>
 
           <div className="flex items-center justify-between pt-2">
-            <label className="flex items-center gap-2 text-xs font-medium text-slate-300 cursor-pointer">
+            <label className="flex items-center gap-2 text-xs font-medium text-slate-700 cursor-pointer">
               <input
                 type="checkbox"
                 name="is_featured"
-                className="w-4 h-4 rounded text-amber-500 bg-slate-950 border-slate-800 focus:ring-amber-500"
+                className="w-4 h-4 rounded text-blue-600 bg-white border-slate-300 focus:ring-blue-500"
               />
               <span>Feature on Public Homepage</span>
             </label>
 
             <button
               type="submit"
-              className="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold rounded-xl text-sm transition"
+              className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-sm transition shadow-sm"
             >
               Create Package
             </button>
@@ -532,14 +532,14 @@ export default async function AdminPackagesPage(props: PageProps) {
 
       {/* Packages List */}
       <div className="space-y-6">
-        <h2 className="text-lg font-semibold text-white">
+        <h2 className="text-lg font-semibold text-slate-900">
           Configured Solar Packages ({packages.length})
         </h2>
 
         {packages.length === 0 ? (
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400">
-            <Layers className="w-12 h-12 mx-auto text-slate-600 mb-3" />
-            <p className="font-medium text-slate-300">
+          <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center text-slate-500 shadow-sm">
+            <Layers className="w-12 h-12 mx-auto text-slate-400 mb-3" />
+            <p className="font-medium text-slate-700">
               No solar packages created yet.
             </p>
             <p className="text-xs text-slate-500 mt-1">
@@ -571,28 +571,28 @@ export default async function AdminPackagesPage(props: PageProps) {
               return (
                 <div
                   key={pkg.id}
-                  className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6 shadow-sm"
+                  className="bg-white border border-slate-200 rounded-2xl p-6 space-y-6 shadow-sm"
                 >
                   {/* Top Bar */}
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
                     <div className="flex items-center gap-3">
-                      <span className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center shrink-0">
-                        <Zap className="w-4 h-4 text-amber-400" />
+                      <span className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0">
+                        <Zap className="w-4 h-4 text-blue-600" />
                       </span>
                       <div>
                         <div className="flex items-center gap-2">
-                          <h3 className="text-lg font-bold text-white">
+                          <h3 className="text-lg font-bold text-slate-900">
                             {pkg.name}
                           </h3>
                           {pkg.is_featured && (
-                            <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-bold flex items-center gap-1">
+                            <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 font-bold flex items-center gap-1">
                               <Sparkles className="w-3 h-3" />
                               FEATURED
                             </span>
                           )}
                         </div>
-                        <div className="flex items-center gap-2 mt-0.5 text-xs text-slate-400">
-                          <span className="font-semibold text-amber-400 font-mono">
+                        <div className="flex items-center gap-2 mt-0.5 text-xs text-slate-600">
+                          <span className="font-semibold text-blue-600 font-mono">
                             {pkg.capacity_kw} kW System
                           </span>
                           <span>•</span>
@@ -603,16 +603,16 @@ export default async function AdminPackagesPage(props: PageProps) {
                           <span
                             className={`px-2 py-0.5 rounded text-[11px] font-medium border font-mono ${
                               pkg.publication_status === "published"
-                                ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                                ? "bg-emerald-50 text-emerald-700 border-emerald-200"
                                 : pkg.publication_status === "draft"
-                                ? "bg-amber-500/10 text-amber-400 border-amber-500/30"
-                                : "bg-slate-800 text-slate-400 border-slate-700"
+                                ? "bg-amber-50 text-amber-700 border-amber-200"
+                                : "bg-slate-100 text-slate-600 border-slate-200"
                             }`}
                           >
                             {pkg.publication_status.toUpperCase()}
                           </span>
                           <span>•</span>
-                          <span className="font-mono text-[11px] text-slate-400 uppercase">
+                          <span className="font-mono text-[11px] text-slate-500 uppercase">
                             {pkg.inventory_status.replace(/_/g, " ")}
                           </span>
                         </div>
@@ -625,7 +625,7 @@ export default async function AdminPackagesPage(props: PageProps) {
                         <button
                           type="submit"
                           title="Delete Package"
-                          className="p-2 rounded-lg bg-slate-950 border border-slate-800 text-slate-400 hover:text-rose-400 hover:border-rose-500/30 transition text-xs flex items-center gap-1.5"
+                          className="p-2 rounded-lg bg-white border border-slate-200 text-slate-500 hover:text-rose-600 hover:border-rose-300 hover:bg-rose-50 transition text-xs flex items-center gap-1.5 shadow-xs"
                         >
                           <Trash2 className="w-4 h-4" />
                           <span>Delete Package</span>
@@ -635,58 +635,58 @@ export default async function AdminPackagesPage(props: PageProps) {
                   </div>
 
                   {/* Hybrid Pricing Metric Cards */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 bg-slate-950 p-4 rounded-xl border border-slate-800/80">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
                     <div>
-                      <span className="text-[11px] uppercase tracking-wider text-slate-400 block font-medium">
+                      <span className="text-[11px] uppercase tracking-wider text-slate-500 block font-medium">
                         Components Total (BOM)
                       </span>
-                      <span className="text-base font-bold text-white font-mono mt-0.5 block">
+                      <span className="text-base font-bold text-slate-900 font-mono mt-0.5 block">
                         {formatPrice(componentTotal)}
                       </span>
-                      <span className="text-[10px] text-slate-400">
+                      <span className="text-[10px] text-slate-500">
                         {items.length} items linked
                       </span>
                     </div>
 
                     <div>
-                      <span className="text-[11px] uppercase tracking-wider text-slate-400 block font-medium">
+                      <span className="text-[11px] uppercase tracking-wider text-slate-500 block font-medium">
                         Labor &amp; Extra Costs
                       </span>
-                      <span className="text-base font-bold text-white font-mono mt-0.5 block">
+                      <span className="text-base font-bold text-slate-900 font-mono mt-0.5 block">
                         {formatPrice(fixedCosts)}
                       </span>
-                      <span className="text-[10px] text-slate-400">
+                      <span className="text-[10px] text-slate-500">
                         {formatPrice(pkg.installation_cost)} +{" "}
                         {formatPrice(pkg.additional_costs)}
                       </span>
                     </div>
 
                     <div>
-                      <span className="text-[11px] uppercase tracking-wider text-slate-400 block font-medium">
+                      <span className="text-[11px] uppercase tracking-wider text-slate-500 block font-medium">
                         Calculated Sum
                       </span>
-                      <span className="text-base font-bold text-slate-300 font-mono mt-0.5 block">
+                      <span className="text-base font-bold text-slate-900 font-mono mt-0.5 block">
                         {formatPrice(calculatedPrice)}
                       </span>
-                      <span className="text-[10px] text-slate-400">
+                      <span className="text-[10px] text-slate-500">
                         BOM + Installation
                       </span>
                     </div>
 
-                    <div className="border-l border-slate-800/80 pl-3">
-                      <span className="text-[11px] uppercase tracking-wider text-amber-400 block font-semibold">
+                    <div className="border-l border-slate-200 pl-3">
+                      <span className="text-[11px] uppercase tracking-wider text-blue-600 block font-semibold">
                         Final Selling Price
                       </span>
-                      <span className="text-lg font-extrabold text-amber-400 font-mono mt-0.5 block">
+                      <span className="text-lg font-extrabold text-blue-600 font-mono mt-0.5 block">
                         {formatPrice(finalSellingPrice)}
                       </span>
-                      <span className="text-[10px] text-slate-400">
+                      <span className="text-[10px] text-slate-500">
                         {isOverridden ? (
-                          <span className="text-purple-400 font-medium">
+                          <span className="text-purple-600 font-medium">
                             Manual Override Active
                           </span>
                         ) : (
-                          <span className="text-emerald-400 font-medium">
+                          <span className="text-emerald-600 font-medium">
                             Using Dynamic Calculated Sum
                           </span>
                         )}
@@ -697,16 +697,16 @@ export default async function AdminPackagesPage(props: PageProps) {
                   {/* Bill of Materials (BOM) Component Table */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-300 flex items-center gap-1.5 font-mono">
-                        <PackageIcon className="w-4 h-4 text-amber-400" />
+                      <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-900 flex items-center gap-1.5 font-mono">
+                        <PackageIcon className="w-4 h-4 text-blue-600" />
                         Bill of Materials Component Products ({items.length})
                       </h4>
                     </div>
 
                     {/* Component Items List */}
-                    <div className="w-full overflow-x-auto rounded-xl border border-slate-800 bg-slate-900 shadow-sm">
-                      <table className="w-full text-left text-xs text-slate-300 min-w-[650px]">
-                        <thead className="bg-slate-950/70 text-slate-400 uppercase tracking-wider border-b border-slate-800 font-mono">
+                    <div className="w-full overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-xs">
+                      <table className="w-full text-left text-xs text-slate-700 min-w-[650px]">
+                        <thead className="bg-slate-50 text-slate-600 uppercase tracking-wider border-b border-slate-200 font-mono">
                           <tr>
                             <th className="py-2.5 px-3 font-medium whitespace-nowrap">Product</th>
                             <th className="py-2.5 px-3 font-medium whitespace-nowrap">SKU</th>
@@ -721,7 +721,7 @@ export default async function AdminPackagesPage(props: PageProps) {
                             )}
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-800/60">
+                        <tbody className="divide-y divide-slate-100">
                           {items.length === 0 ? (
                             <tr>
                               <td
@@ -741,24 +741,24 @@ export default async function AdminPackagesPage(props: PageProps) {
                               return (
                                 <tr
                                   key={item.id}
-                                  className="hover:bg-slate-800/40 transition"
+                                  className="hover:bg-slate-50 transition"
                                 >
-                                  <td className="py-2.5 px-3 font-medium text-white whitespace-nowrap">
+                                  <td className="py-2.5 px-3 font-medium text-slate-900 whitespace-nowrap">
                                     {item.product?.name ?? "Unknown Product"}
                                   </td>
-                                  <td className="py-2.5 px-3 font-mono text-slate-400 whitespace-nowrap">
+                                  <td className="py-2.5 px-3 font-mono text-slate-500 whitespace-nowrap">
                                     {item.product?.sku ?? "—"}
                                   </td>
-                                  <td className="py-2.5 px-3 font-mono font-semibold text-amber-400 whitespace-nowrap">
+                                  <td className="py-2.5 px-3 font-mono font-semibold text-blue-600 whitespace-nowrap">
                                     {item.quantity}×
                                   </td>
-                                  <td className="py-2.5 px-3 font-mono text-slate-400 whitespace-nowrap">
+                                  <td className="py-2.5 px-3 font-mono text-slate-600 whitespace-nowrap">
                                     {formatPrice(unitPrice)}
                                   </td>
-                                  <td className="py-2.5 px-3 font-mono font-semibold text-white whitespace-nowrap">
+                                  <td className="py-2.5 px-3 font-mono font-semibold text-slate-900 whitespace-nowrap">
                                     {formatPrice(subtotal)}
                                   </td>
-                                  <td className="py-2.5 px-3 text-slate-400 whitespace-nowrap">
+                                  <td className="py-2.5 px-3 text-slate-500 whitespace-nowrap">
                                     {item.notes ?? "—"}
                                   </td>
                                   {canEdit && (
@@ -773,7 +773,7 @@ export default async function AdminPackagesPage(props: PageProps) {
                                         <button
                                           type="submit"
                                           title="Remove from BOM"
-                                          className="text-slate-500 hover:text-rose-400 transition"
+                                          className="text-slate-400 hover:text-rose-600 transition"
                                         >
                                           <Trash2 className="w-3.5 h-3.5" />
                                         </button>
@@ -792,14 +792,14 @@ export default async function AdminPackagesPage(props: PageProps) {
                     {canEdit && (
                       <form
                         action={addPackageItem}
-                        className="bg-slate-950 p-3.5 rounded-xl border border-slate-800/80 flex flex-wrap items-center gap-3 text-xs"
+                        className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex flex-wrap items-center gap-3 text-xs"
                       >
                         <input type="hidden" name="package_id" value={pkg.id} />
                         <div className="flex-1 min-w-[200px]">
                           <select
                             name="product_id"
                             required
-                            className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white focus:outline-none focus:border-amber-500"
+                            className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:border-blue-600"
                           >
                             <option value="">
                               Select published product to add...
@@ -820,7 +820,7 @@ export default async function AdminPackagesPage(props: PageProps) {
                             defaultValue={1}
                             required
                             placeholder="Qty"
-                            className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white focus:outline-none focus:border-amber-500 font-mono"
+                            className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:border-blue-600 font-mono"
                           />
                         </div>
 
@@ -829,13 +829,13 @@ export default async function AdminPackagesPage(props: PageProps) {
                             type="text"
                             name="notes"
                             placeholder="Optional notes (e.g. 10x 580W panels array)"
-                            className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white focus:outline-none focus:border-amber-500"
+                            className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:border-blue-600"
                           />
                         </div>
 
                         <button
                           type="submit"
-                          className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-amber-400 font-semibold rounded-lg transition shrink-0 flex items-center gap-1.5"
+                          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition shrink-0 flex items-center gap-1.5 shadow-xs"
                         >
                           <Plus className="w-3.5 h-3.5" />
                           Add to BOM
@@ -848,10 +848,10 @@ export default async function AdminPackagesPage(props: PageProps) {
                   {canEdit && (
                     <form
                       action={updatePackage}
-                      className="bg-slate-950 p-4 rounded-xl border border-slate-800/80 space-y-4"
+                      className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-4"
                     >
                       <input type="hidden" name="package_id" value={pkg.id} />
-                      <div className="flex items-center justify-between text-xs font-semibold text-slate-300 border-b border-slate-800/60 pb-2">
+                      <div className="flex items-center justify-between text-xs font-semibold text-slate-900 border-b border-slate-200 pb-2">
                         <span>Edit Package Parameters &amp; Pricing</span>
                         <span className="text-[11px] text-slate-500 font-normal">
                           Leave manual override blank to use calculated BOM sum.
@@ -860,7 +860,7 @@ export default async function AdminPackagesPage(props: PageProps) {
 
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div>
-                          <label className="block text-[11px] text-slate-400 mb-1 font-medium">
+                          <label className="block text-[11px] text-slate-600 mb-1 font-medium">
                             Package Name
                           </label>
                           <input
@@ -868,12 +868,12 @@ export default async function AdminPackagesPage(props: PageProps) {
                             name="name"
                             defaultValue={pkg.name}
                             required
-                            className="w-full px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600"
                           />
                         </div>
 
                         <div>
-                          <label className="block text-[11px] text-slate-400 mb-1 font-medium">
+                          <label className="block text-[11px] text-slate-600 mb-1 font-medium">
                             Capacity (kW)
                           </label>
                           <input
@@ -882,12 +882,12 @@ export default async function AdminPackagesPage(props: PageProps) {
                             name="capacity_kw"
                             defaultValue={pkg.capacity_kw}
                             required
-                            className="w-full px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500 font-mono"
+                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600 font-mono"
                           />
                         </div>
 
                         <div>
-                          <label className="block text-[11px] text-slate-400 mb-1 font-medium">
+                          <label className="block text-[11px] text-slate-600 mb-1 font-medium">
                             Manual Override Price (PKR)
                           </label>
                           <input
@@ -896,12 +896,12 @@ export default async function AdminPackagesPage(props: PageProps) {
                             defaultValue={pkg.manual_price_override ?? ""}
                             placeholder="Empty = Calculated"
                             min="0"
-                            className="w-full px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs text-amber-400 focus:outline-none focus:border-amber-500 font-mono font-bold"
+                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-blue-600 focus:outline-none focus:border-blue-600 font-mono font-bold"
                           />
                         </div>
 
                         <div>
-                          <label className="block text-[11px] text-slate-400 mb-1 font-medium">
+                          <label className="block text-[11px] text-slate-600 mb-1 font-medium">
                             Installation Cost (PKR)
                           </label>
                           <input
@@ -909,12 +909,12 @@ export default async function AdminPackagesPage(props: PageProps) {
                             name="installation_cost"
                             defaultValue={pkg.installation_cost}
                             min="0"
-                            className="w-full px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500 font-mono"
+                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600 font-mono"
                           />
                         </div>
 
                         <div>
-                          <label className="block text-[11px] text-slate-400 mb-1 font-medium">
+                          <label className="block text-[11px] text-slate-600 mb-1 font-medium">
                             Additional Costs (PKR)
                           </label>
                           <input
@@ -922,18 +922,18 @@ export default async function AdminPackagesPage(props: PageProps) {
                             name="additional_costs"
                             defaultValue={pkg.additional_costs}
                             min="0"
-                            className="w-full px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500 font-mono"
+                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600 font-mono"
                           />
                         </div>
 
                         <div>
-                          <label className="block text-[11px] text-slate-400 mb-1 font-medium">
+                          <label className="block text-[11px] text-slate-600 mb-1 font-medium">
                             Stock Status
                           </label>
                           <select
                             name="inventory_status"
                             defaultValue={pkg.inventory_status}
-                            className="w-full px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600"
                           >
                             <option value="in_stock">In Stock</option>
                             <option value="available_on_order">On Order</option>
@@ -942,25 +942,25 @@ export default async function AdminPackagesPage(props: PageProps) {
                         </div>
 
                         <div className="sm:col-span-2">
-                          <label className="block text-[11px] text-slate-400 mb-1 font-medium">
+                          <label className="block text-[11px] text-slate-600 mb-1 font-medium">
                             Description / Appliances Scope
                           </label>
                           <input
                             type="text"
                             name="description"
                             defaultValue={pkg.description || ""}
-                            className="w-full px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600"
                           />
                         </div>
 
                         <div>
-                          <label className="block text-[11px] text-slate-400 mb-1 font-medium">
+                          <label className="block text-[11px] text-slate-600 mb-1 font-medium">
                             Publication Status
                           </label>
                           <select
                             name="publication_status"
                             defaultValue={pkg.publication_status}
-                            className="w-full px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600"
                           >
                             <option value="published">Published</option>
                             <option value="draft">Draft</option>
@@ -970,19 +970,19 @@ export default async function AdminPackagesPage(props: PageProps) {
                       </div>
 
                       <div className="flex items-center justify-between pt-2">
-                        <label className="flex items-center gap-2 text-xs font-medium text-slate-300 cursor-pointer">
+                        <label className="flex items-center gap-2 text-xs font-medium text-slate-700 cursor-pointer">
                           <input
                             type="checkbox"
                             name="is_featured"
                             defaultChecked={pkg.is_featured}
-                            className="w-4 h-4 rounded text-amber-500 bg-slate-900 border-slate-800 focus:ring-amber-500"
+                            className="w-4 h-4 rounded text-blue-600 bg-white border-slate-300 focus:ring-blue-500"
                           />
                           <span>Feature on Public Homepage</span>
                         </label>
 
                         <button
                           type="submit"
-                          className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold rounded-lg text-xs transition flex items-center gap-1.5 shadow-sm"
+                          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg text-xs transition flex items-center gap-1.5 shadow-sm"
                         >
                           <Save className="w-3.5 h-3.5" />
                           Save Package Changes
