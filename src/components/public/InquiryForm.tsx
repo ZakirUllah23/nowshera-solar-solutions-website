@@ -55,7 +55,7 @@ export default function InquiryForm() {
 
         <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
           <a
-            href="https://wa.me/923000000000?text=Assalam%20o%20Alaikum,%20I%20just%20submitted%20a%20solar%20site%20survey%20inquiry%20on%20your%20website.%20Please%20review%20it."
+            href="https://wa.me/923195092003?text=Assalam%20o%20Alaikum,%20I%20just%20submitted%20a%20solar%20site%20survey%20inquiry%20on%20your%20website.%20Please%20review%20it."
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-md text-xs transition"

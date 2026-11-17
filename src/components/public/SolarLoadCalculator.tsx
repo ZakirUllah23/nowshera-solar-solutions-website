@@ -394,7 +394,7 @@ Expected Monthly Output: ${recommendation.generation}
 
 Please share a custom turnkey quotation with today's hardware prices and survey schedule.`;
 
-    return `https://wa.me/923000000000?text=${encodeURIComponent(message)}`;
+    return `https://wa.me/923195092003?text=${encodeURIComponent(message)}`;
   }, [
     currentAppliances,
     currentTabQuantities,

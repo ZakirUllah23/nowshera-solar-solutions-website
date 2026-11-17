@@ -228,7 +228,7 @@ export default async function PublicOffersPage() {
               </div>
               <div className="pt-2">
                 <a
-                  href="https://wa.me/923000000000?text=Hello%20Nowshera%20Solar%20Solutions,%20I%20am%20inquiring%20about%20upcoming%20promotional%20deals%20and%20pallet%20wholesale%20rates."
+                  href="https://wa.me/923195092003?text=Hello%20Nowshera%20Solar%20Solutions,%20I%20am%20inquiring%20about%20upcoming%20promotional%20deals%20and%20pallet%20wholesale%20rates."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold rounded-lg text-xs sm:text-sm transition shadow-xs"
@@ -372,7 +372,7 @@ export default async function PublicOffersPage() {
                   "\n"
                 )}\n\nPlease confirm stock availability at Nowshera Warehouse and issue official quotation.`;
 
-                const waLink = `https://wa.me/923000000000?text=${encodeURIComponent(
+                const waLink = `https://wa.me/923195092003?text=${encodeURIComponent(
                   waMessage
                 )}`;
 

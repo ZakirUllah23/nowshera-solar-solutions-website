@@ -358,7 +358,7 @@ export default async function PublicPackagesPage() {
 
                 // Pre-fill WhatsApp message
                 const waMessage = `Hello Nowshera Solar Solutions, I am interested in booking the ${shortTitle} (${pkg.capacity_kw}kW System) listed at PKR ${effectivePrice.toLocaleString()}. Please provide turnkey installation schedule and site survey details.`;
-                const waUrl = `https://wa.me/923000000000?text=${encodeURIComponent(
+                const waUrl = `https://wa.me/923195092003?text=${encodeURIComponent(
                   waMessage
                 )}`;
 
@@ -566,7 +566,7 @@ export default async function PublicPackagesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {VERTICAL_COMPARISON_CARDS.map((card) => {
               const waCardMsg = `Hello Nowshera Solar Solutions, I would like to inquire about your ${card.capacity} (${card.role}) package generating ${card.generation}. Please share current hardware prices and survey availability.`;
-              const waCardUrl = `https://wa.me/923000000000?text=${encodeURIComponent(
+              const waCardUrl = `https://wa.me/923195092003?text=${encodeURIComponent(
                 waCardMsg
               )}`;
 

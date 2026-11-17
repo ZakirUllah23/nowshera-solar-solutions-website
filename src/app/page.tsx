@@ -325,7 +325,7 @@ const CLIENT_FEEDBACK = [
 
 export default function HomePage() {
   const whatsappUrl =
-    "https://wa.me/923000000000?text=Hello%20Nowshera%20Solar%20Solutions,%20I%20would%20like%20to%20request%20today%27s%20pallet%20rates%20and%20hardware%20quote.";
+    "https://wa.me/923195092003?text=Hello%20Nowshera%20Solar%20Solutions,%20I%20would%20like%20to%20request%20today%27s%20pallet%20rates%20and%20hardware%20quote.";
 
   return (
     <PublicShell>

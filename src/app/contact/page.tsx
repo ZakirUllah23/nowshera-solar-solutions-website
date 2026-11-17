@@ -81,7 +81,14 @@ export default function ContactPage() {
                     Headquarters &amp; Showroom
                   </span>
                   <h3 className="text-sm sm:text-base font-bold text-slate-900 leading-snug">
-                    Main GT Road, Near Nowshera Cantt
+                    <a
+                      href="https://www.google.com/search?kgmid=%2Fg%2F11z8r752bn&hl=en-PK&q=Nowshera%20Solar%20solution&shem=epsd1%2Cltae%2Crimspwouoe&shndl=30&source=sh%2Fx%2Floc%2Fosrp%2Fm1%2F4&kgs=5ae9bfab95735fc4"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-blue-600 transition underline-offset-2 hover:underline"
+                    >
+                      Main GT Road, Near Nowshera Cantt
+                    </a>
                   </h3>
                   <p className="text-xs text-slate-600 leading-relaxed">
                     Nowshera, Khyber Pakhtunkhwa, Pakistan (Direct GT Road corridor access with commercial truck loading bay).
@@ -100,17 +107,19 @@ export default function ContactPage() {
                   </span>
                   <div className="flex flex-wrap gap-x-3 gap-y-1 text-sm font-mono font-bold text-slate-900">
                     <a
-                      href="tel:+923000000000"
+                      href="tel:+923195092003"
                       className="hover:text-blue-600 transition"
                     >
-                      +92 (300) 0000000
+                      +92 (319) 5092003
                     </a>
                     <span className="text-slate-300">|</span>
                     <a
-                      href="tel:+92923000000"
-                      className="hover:text-blue-600 transition"
+                      href="https://wa.me/923195092003"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-emerald-600 hover:text-emerald-700 transition"
                     >
-                      +92 (923) 000000
+                      WhatsApp Desk
                     </a>
                   </div>
                   <p className="text-xs text-slate-500">
@@ -178,9 +187,14 @@ export default function ContactPage() {
                   <MapPin className="w-4 h-4 text-blue-600 shrink-0" />
                   <span className="truncate">Nowshera Solar Solutions — GT Road Showroom</span>
                 </div>
-                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 shrink-0">
-                  Interactive Map
-                </span>
+                <a
+                  href="https://www.google.com/search?kgmid=%2Fg%2F11z8r752bn&hl=en-PK&q=Nowshera%20Solar%20solution&shem=epsd1%2Cltae%2Crimspwouoe&shndl=30&source=sh%2Fx%2Floc%2Fosrp%2Fm1%2F4&kgs=5ae9bfab95735fc4"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 shrink-0 transition"
+                >
+                  View on Google Maps →
+                </a>
               </div>
               <div className="flex-1 w-full relative min-h-[320px]">
                 <iframe
@@ -247,7 +261,7 @@ export default function ContactPage() {
                 </div>
 
                 <a
-                  href="https://wa.me/923000000000?text=Assalam%20o%20Alaikum,%20I%20would%20like%20to%20request%20a%20solar%20site%20survey%20and%20quotation."
+                  href="https://wa.me/923195092003?text=Assalam%20o%20Alaikum,%20I%20would%20like%20to%20request%20a%20solar%20site%20survey%20and%20quotation."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-lg bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs sm:text-sm transition-all shadow-xs hover:shadow-sm active:scale-95 text-center"

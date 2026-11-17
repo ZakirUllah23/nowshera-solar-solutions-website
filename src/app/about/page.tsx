@@ -652,7 +652,7 @@ export default function AboutPage() {
                 Browse Turnkey Packages
               </Link>
               <a
-                href="https://wa.me/923000000000?text=Hello%20Nowshera%20Solar%20Solutions,%20I%20would%20like%20to%20consult%20with%20your%20engineering%20team%20regarding%20a%20solar%20system%20installation."
+                href="https://wa.me/923195092003?text=Hello%20Nowshera%20Solar%20Solutions,%20I%20would%20like%20to%20consult%20with%20your%20engineering%20team%20regarding%20a%20solar%20system%20installation."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm rounded-lg transition flex items-center gap-2 shadow-xs hover:shadow-sm active:scale-95"
