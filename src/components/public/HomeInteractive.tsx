@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { SITE_IMAGES } from "@/config/siteImages";
 
 /* -------------------------------------------------------------------------
    1. HERO CAROUSEL WITH TYPEWRITER EFFECT (Mobile-First Blue Theme)
@@ -16,26 +17,22 @@ interface Slide {
 const HERO_SLIDES: Slide[] = [
   {
     id: 1,
-    imageUrl:
-      "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1920&q=80",
+    imageUrl: SITE_IMAGES.homeShowcase[0],
     alt: "Utility-scale monocrystalline solar panel arrays under sunlight",
   },
   {
     id: 2,
-    imageUrl:
-      "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&w=1920&q=80",
+    imageUrl: SITE_IMAGES.homeShowcase[1],
     alt: "Commercial rooftop solar installation in Pakistan",
   },
   {
     id: 3,
-    imageUrl:
-      "https://images.unsplash.com/photo-1613665813446-82a78c468a1d?auto=format&fit=crop&w=1920&q=80",
+    imageUrl: SITE_IMAGES.homeShowcase[2],
     alt: "High-voltage hybrid inverters and lithium battery bank storage",
   },
   {
     id: 4,
-    imageUrl:
-      "https://images.unsplash.com/photo-1497440001374-f26997328c1b?auto=format&fit=crop&w=1920&q=80",
+    imageUrl: SITE_IMAGES.homeShowcase[3],
     alt: "Industrial warehouse solar power system installation",
   },
 ];

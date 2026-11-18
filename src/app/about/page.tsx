@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import PublicShell from "@/components/public/PublicShell";
 import AboutStatsCounter from "@/components/public/AboutStatsCounter";
+import { SITE_IMAGES } from "@/config/siteImages";
 import {
   ShieldCheck,
   Zap,
@@ -34,7 +35,7 @@ export default function AboutPage() {
       <section className="relative bg-slate-900 text-white border-b border-slate-800 overflow-hidden py-16 sm:py-20 md:py-24">
         {/* High-Resolution Engineering Background with Natural Lighting */}
         <Image
-          src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1920&q=80"
+          src={SITE_IMAGES.heroes.about}
           alt="Solar Hardware Distribution Facility"
           fill
           priority
@@ -229,7 +230,7 @@ export default function AboutPage() {
               {/* Executive Portrait Card */}
               <div className="lg:col-span-5 relative min-h-[320px] sm:min-h-[380px] lg:min-h-[460px] bg-slate-900 border-b lg:border-b-0 lg:border-r border-slate-200">
                 <Image
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80"
+                  src={SITE_IMAGES.about.owner}
                   alt="Zakir Ullah Khan — Managing Director & Technical Lead"
                   fill
                   sizes="(max-width: 1024px) 100vw, 450px"
@@ -458,7 +459,7 @@ export default function AboutPage() {
           {/* 4:3 Aspect Ratio Horizontal Workshop Image */}
           <div className="relative aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] w-full bg-slate-900 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
             <Image
-              src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1600&q=80"
+              src={SITE_IMAGES.about.repairCenter}
               alt="Solar Electronics Diagnostic Bench"
               fill
               sizes="(max-width: 1200px) 100vw, 1200px"

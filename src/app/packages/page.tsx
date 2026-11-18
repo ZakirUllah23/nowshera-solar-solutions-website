@@ -4,6 +4,7 @@ import PublicShell from "@/components/public/PublicShell";
 import SolarLoadCalculator from "@/components/public/SolarLoadCalculator";
 import { createClient } from "@/lib/supabase/server";
 import { formatPrice } from "@/lib/utils";
+import { SITE_IMAGES } from "@/config/siteImages";
 import {
   CheckCircle2,
   Package as PackageIcon,
@@ -275,7 +276,7 @@ export default async function PublicPackagesPage() {
       ------------------------------------------------------------------- */}
       <section className="relative h-[280px] sm:h-[340px] md:h-[380px] flex items-center justify-center overflow-hidden bg-slate-900">
         <Image
-          src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1920&q=80"
+          src={SITE_IMAGES.heroes.packages}
           alt="Photovoltaic solar panels and clean commercial rooftop arrays"
           fill
           priority

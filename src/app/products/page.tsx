@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import PublicShell from "@/components/public/PublicShell";
 import { createClient } from "@/lib/supabase/server";
+import { SITE_IMAGES } from "@/config/siteImages";
 import {
   MessageCircle,
   Sliders,
@@ -205,7 +206,7 @@ export default async function ProductsPage() {
       ------------------------------------------------------------------- */}
       <section className="relative h-[280px] sm:h-[340px] md:h-[380px] flex items-center justify-center overflow-hidden bg-slate-900">
         <Image
-          src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1920&q=80"
+          src={SITE_IMAGES.heroes.products}
           alt="Solar hardware and monocrystalline panels warehouse"
           fill
           priority

@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { formatPrice } from "@/lib/utils";
 import OfferCountdown from "@/components/public/OfferCountdown";
 import type { DiscountType } from "@/types/database.types";
+import { SITE_IMAGES } from "@/config/siteImages";
 import {
   Tag,
   CheckCircle2,
@@ -172,7 +173,7 @@ export default async function PublicOffersPage() {
       ------------------------------------------------------------------- */}
       <section className="relative h-[280px] sm:h-[340px] md:h-[380px] flex items-center justify-center overflow-hidden bg-slate-900">
         <Image
-          src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1920&q=80"
+          src={SITE_IMAGES.heroes.offers}
           alt="Solar Hardware Distribution Warehouse"
           fill
           priority

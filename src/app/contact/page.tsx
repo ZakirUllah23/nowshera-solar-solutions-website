@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import PublicShell from "@/components/public/PublicShell";
 import InquiryForm from "@/components/public/InquiryForm";
+import { SITE_IMAGES } from "@/config/siteImages";
 import {
   MapPin,
   Phone,
@@ -25,7 +26,7 @@ export default function ContactPage() {
       <section className="relative bg-slate-900 text-white border-b border-slate-800 overflow-hidden py-16 sm:py-20 md:py-24">
         {/* Exact same high-resolution solar system & panel array image as Packages/Offers */}
         <Image
-          src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1920&q=80"
+          src={SITE_IMAGES.heroes.contact}
           alt="Tier-1 Solar System and Monocrystalline PV Arrays"
           fill
           priority
