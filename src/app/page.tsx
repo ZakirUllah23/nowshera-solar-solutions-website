@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import PublicShell from "@/components/public/PublicShell";
+import { SITE_IMAGES } from "@/config/siteImages";
 import {
   HeroCarouselWithTypewriter,
   AnimatedStatsCounter,
@@ -202,8 +203,7 @@ const PRIMARY_DIVISIONS = [
     title: "Solar Panels",
     description:
       "Direct pallet and container imports of Tier-1 monocrystalline N-Type modules.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80",
+    imageUrl: SITE_IMAGES.divisions.panels,
     specs: ["N-Type Bifacial", "Tier-1 Grade", "25-Year Warranty"],
     ctaHref: "/products#solar-panels",
   },
@@ -211,8 +211,7 @@ const PRIMARY_DIVISIONS = [
     title: "Inverters",
     description:
       "Single-phase and three-phase hybrid inverters with net-metering compatibility.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1558441719-8b489c63f7d1?auto=format&fit=crop&w=800&q=80",
+    imageUrl: SITE_IMAGES.divisions.inverters,
     specs: ["Hybrid & On-Grid", "Dual MPPT Trackers", "Net-Metering Ready"],
     ctaHref: "/products#solar-inverters",
   },
@@ -220,58 +219,57 @@ const PRIMARY_DIVISIONS = [
     title: "Batteries",
     description:
       "High-cycle Lithium Iron Phosphate (LiFePO4) storage banks and tubular batteries.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1613665813446-82a78c468a1d?auto=format&fit=crop&w=800&q=80",
+    imageUrl: SITE_IMAGES.divisions.batteries,
     specs: ["LiFePO4 Lithium Cells", "6000+ Deep Cycles", "Smart BMS Built-in"],
     ctaHref: "/products#lithium-batteries",
   },
 ];
 
 /* -------------------------------------------------------------------------
-   RECENT FIELD PROJECTS
+   RECENT FIELD PROJECTS (7 Showcase Installations)
 ------------------------------------------------------------------------- */
 const FIELD_PROJECTS = [
   {
     title: "10kW Hybrid System",
     location: "Nowshera Cantt",
     specs: "16× LONGi 585W + GoodWe 10kW + Dyness Lithium",
-    imageUrl:
-      "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&w=800&q=80",
+    imageUrl: SITE_IMAGES.installations[0],
   },
   {
     title: "25kW Commercial Rooftop",
     location: "GT Road Nowshera",
     specs: "42× Jinko 580W + Solis 25kW 3-Phase Net-Metering",
-    imageUrl:
-      "https://images.unsplash.com/photo-1497440001374-f26997328c1b?auto=format&fit=crop&w=800&q=80",
+    imageUrl: SITE_IMAGES.installations[1],
   },
   {
     title: "6kW Residential Backup",
     location: "Hakimabad Nowshera",
     specs: "10× Canadian Solar 550W + Inverex 6kW Hybrid",
-    imageUrl:
-      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
+    imageUrl: SITE_IMAGES.installations[2],
   },
   {
     title: "15kW Industrial Warehouse",
     location: "Mardan Industrial Zone",
     specs: "26× JA Solar 575W + Growatt 15kW MAX Shed",
-    imageUrl:
-      "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=800&q=80",
+    imageUrl: SITE_IMAGES.installations[3],
   },
   {
     title: "30kW Agricultural Tube-Well",
     location: "Charsadda",
     specs: "50× Trina Solar 600W + 30kW Heavy-Duty VFD Pump",
-    imageUrl:
-      "https://images.unsplash.com/photo-1542332213-9b5a5a3fad35?auto=format&fit=crop&w=800&q=80",
+    imageUrl: SITE_IMAGES.installations[4],
   },
   {
     title: "12kW Turnkey Net-Metering",
     location: "Peshawar Ring Road",
     specs: "20× LONGi 585W + Solis 12kW Grid-Tie Green Meter",
-    imageUrl:
-      "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80",
+    imageUrl: SITE_IMAGES.installations[5],
+  },
+  {
+    title: "20kW Industrial On-Grid",
+    location: "Risalpur Industrial Zone",
+    specs: "34× Jinko 580W + Sungrow 20kW Net-Metering",
+    imageUrl: SITE_IMAGES.installations[6],
   },
 ];
 

@@ -498,15 +498,19 @@ export default async function AdminPackagesPage(props: PageProps) {
             </div>
 
             <div className="md:col-span-3">
-              <label className="block text-xs font-medium text-slate-700 mb-1.5">
-                Description / Technical Scope
+              <label className="block text-xs font-semibold text-slate-800 mb-1.5 flex items-center justify-between">
+                <span>Appliance Load Bullets & Features (One per line)</span>
+                <span className="text-[11px] font-normal text-slate-500">Editable • Displays on /packages</span>
               </label>
               <textarea
                 name="description"
-                rows={2}
-                placeholder="Ideal for standard homes running 2x 1.5-Ton Inverter ACs, water pump, and lights with lithium battery backup."
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white"
+                rows={4}
+                placeholder={"1x 1.5-Ton Inverter AC\n1x Refrigerator & Ceiling Fans\n0.5 HP – 1.0 HP Water Pump\nWi-Fi & Home LED Lighting"}
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white font-mono leading-relaxed"
               ></textarea>
+              <p className="text-[11px] text-slate-500 mt-1">
+                Each line will be displayed as a green checkmark bullet on the package card. Leave empty to use system kW capacity defaults.
+              </p>
             </div>
           </div>
 
@@ -694,6 +698,39 @@ export default async function AdminPackagesPage(props: PageProps) {
                     </div>
                   </div>
 
+                  {/* Appliance Load & Feature Bullets Preview */}
+                  <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />
+                        Card Header &amp; Appliance Bullets (Public /packages)
+                      </span>
+                      <span className="text-[10px] text-slate-500 font-mono">
+                        {pkg.description?.trim()
+                          ? "Custom Bullets Active"
+                          : `Default Loads for ${pkg.capacity_kw}kW`}
+                      </span>
+                    </div>
+                    {pkg.description?.trim() ? (
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-slate-700 font-mono">
+                        {pkg.description
+                          .split("\n")
+                          .map((b) => b.trim())
+                          .filter(Boolean)
+                          .map((bullet, idx) => (
+                            <li key={idx} className="flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0" />
+                              <span>{bullet}</span>
+                            </li>
+                          ))}
+                      </ul>
+                    ) : (
+                      <p className="text-xs text-slate-500 italic">
+                        No custom bullets specified. The public card displays default appliance loads based on {pkg.capacity_kw}kW system capacity. Edit below to add custom bullets.
+                      </p>
+                    )}
+                  </div>
+
                   {/* Bill of Materials (BOM) Component Table */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -861,7 +898,7 @@ export default async function AdminPackagesPage(props: PageProps) {
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div>
                           <label className="block text-[11px] text-slate-600 mb-1 font-medium">
-                            Package Name
+                            Package Name / Header Title
                           </label>
                           <input
                             type="text"
@@ -941,18 +978,6 @@ export default async function AdminPackagesPage(props: PageProps) {
                           </select>
                         </div>
 
-                        <div className="sm:col-span-2">
-                          <label className="block text-[11px] text-slate-600 mb-1 font-medium">
-                            Description / Appliances Scope
-                          </label>
-                          <input
-                            type="text"
-                            name="description"
-                            defaultValue={pkg.description || ""}
-                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600"
-                          />
-                        </div>
-
                         <div>
                           <label className="block text-[11px] text-slate-600 mb-1 font-medium">
                             Publication Status
@@ -966,6 +991,23 @@ export default async function AdminPackagesPage(props: PageProps) {
                             <option value="draft">Draft</option>
                             <option value="archived">Archived</option>
                           </select>
+                        </div>
+
+                        <div className="sm:col-span-3">
+                          <label className="block text-[11px] text-slate-700 mb-1 font-semibold flex items-center justify-between">
+                            <span>Appliance Load Bullets &amp; Technical Scope (One per line)</span>
+                            <span className="text-[10px] font-normal text-slate-500 font-mono">Each line = 1 checkmark bullet on /packages</span>
+                          </label>
+                          <textarea
+                            name="description"
+                            rows={4}
+                            defaultValue={pkg.description || ""}
+                            placeholder={"1x 1.5-Ton Inverter AC\n1x Refrigerator & Ceiling Fans\n0.5 HP – 1.0 HP Water Pump\nWi-Fi & Home LED Lighting"}
+                            className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600 font-mono leading-relaxed"
+                          />
+                          <p className="text-[10px] text-slate-500 mt-1">
+                            Add, edit, or remove lines above. Each line is displayed with a green checkmark on the public package card. Leave empty to use kW defaults.
+                          </p>
                         </div>
                       </div>
 

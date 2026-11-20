@@ -265,6 +265,14 @@ export default async function PublicOffersPage() {
                   discountBadgeText = `SPECIAL: ${formatPrice(offer.discount_value)}`;
                 }
 
+                // Parse custom bullets configured directly on this promotional offer
+                const customOfferBullets = offer.description
+                  ? offer.description
+                      .split("\n")
+                      .map((line) => line.trim())
+                      .filter((line) => line.length > 0)
+                  : [];
+
                 // Build attached items list with precise hardware breakdown bullets
                 const rawAttachedItems = [
                   ...attachedProductRecords.map((prod) => {
@@ -275,11 +283,14 @@ export default async function PublicOffersPage() {
                     );
                     const imgUrl =
                       productImageMap.get(prod.id) || FALLBACK_PRODUCT_IMAGE;
-                    const hardwareBullets = getHardwareBreakdownBullets(
-                      { name: prod.name, isPackage: false },
-                      packageItems,
-                      productMap
-                    );
+                    const hardwareBullets =
+                      customOfferBullets.length > 0
+                        ? customOfferBullets
+                        : getHardwareBreakdownBullets(
+                            { name: prod.name, isPackage: false },
+                            packageItems,
+                            productMap
+                          );
                     return {
                       id: prod.id,
                       name: prod.name,
@@ -304,16 +315,31 @@ export default async function PublicOffersPage() {
                       offer.discount_type,
                       offer.discount_value
                     );
-                    const hardwareBullets = getHardwareBreakdownBullets(
-                      {
-                        name: pkg.name,
-                        isPackage: true,
-                        capacityKw: pkg.capacity_kw,
-                        packageId: pkg.package_id,
-                      },
-                      packageItems,
-                      productMap
-                    );
+
+                    // If offer has custom bullets, use them; else check package's custom bullets; else default breakdown
+                    const customPkgBullets = pkg.description
+                      ? pkg.description
+                          .split("\n")
+                          .map((l) => l.trim())
+                          .filter((l) => l.length > 0)
+                      : [];
+
+                    const hardwareBullets =
+                      customOfferBullets.length > 0
+                        ? customOfferBullets
+                        : customPkgBullets.length > 0
+                        ? customPkgBullets
+                        : getHardwareBreakdownBullets(
+                            {
+                              name: pkg.name,
+                              isPackage: true,
+                              capacityKw: pkg.capacity_kw,
+                              packageId: pkg.package_id,
+                            },
+                            packageItems,
+                            productMap
+                          );
+
                     return {
                       id: pkg.package_id,
                       name: pkg.name,
@@ -354,12 +380,15 @@ export default async function PublicOffersPage() {
                           imageUrl: FALLBACK_PACKAGE_IMAGE,
                           isPackage: true,
                           capacityKw: 6,
-                          hardwareBullets: [
-                            "10× panels",
-                            "1× inverter",
-                            "1× battery",
-                            "Mounting sys",
-                          ],
+                          hardwareBullets:
+                            customOfferBullets.length > 0
+                              ? customOfferBullets
+                              : [
+                                  "10× Tier-1 Solar Panels",
+                                  "1× Hybrid Inverter",
+                                  "1× LiFePO4 Lithium Battery",
+                                  "Complete Mounting & DC Protection",
+                                ],
                         },
                       ];
 
@@ -413,7 +442,7 @@ export default async function PublicOffersPage() {
                             {offer.title}
                           </h3>
 
-                          {offer.description && (
+                          {offer.description && !offer.description.includes("\n") && (
                             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-2">
                               {offer.description}
                             </p>
@@ -502,7 +531,7 @@ export default async function PublicOffersPage() {
                               {/* Included Hardware Breakdown Section */}
                               <div className="pt-3 border-t border-slate-200/90 space-y-2">
                                 <h5 className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-800">
-                                  Included Hardware
+                                  Included Hardware &amp; Appliance Loads
                                 </h5>
                                 <ul className="space-y-1 text-xs text-slate-700">
                                   {item.hardwareBullets.map((bullet, bIdx) => (

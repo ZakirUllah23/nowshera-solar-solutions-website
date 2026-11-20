@@ -20,6 +20,9 @@ import {
   Sparkles,
   Tag,
   ImageIcon,
+  CheckCircle2,
+  Save,
+  Edit3,
 } from "lucide-react";
 
 // Next.js 16 dynamic server rendering control
@@ -188,6 +191,87 @@ export default async function AdminOffersPage(props: PageProps) {
     revalidatePath("/offers");
     revalidatePath("/admin");
     redirect("/admin/offers");
+  }
+
+  // 1b. Update Existing Offer (Title, Bullets / Hardware Description, Discount, Schedule)
+  async function updateOffer(formData: FormData) {
+    "use server";
+    await requireAdminOrOwner();
+    const supabaseServer = await createClient();
+
+    const offer_id = String(formData.get("offer_id") || "");
+    const title = String(formData.get("title") || "").trim();
+    const description =
+      String(formData.get("description") || "").trim() || null;
+    const discount_type = String(
+      formData.get("discount_type") || "percentage"
+    ) as DiscountType;
+    const discount_value = Number(formData.get("discount_value") || 0);
+    const start_time_raw = String(formData.get("start_time") || "");
+    const end_time_raw = String(formData.get("end_time") || "");
+
+    if (!offer_id || !title || !discount_value || !start_time_raw || !end_time_raw) {
+      redirect(
+        `/admin/offers?error=${encodeURIComponent(
+          "All required fields (title, discount value, start time, end time) must be filled."
+        )}`
+      );
+    }
+
+    const start_time = new Date(start_time_raw).toISOString();
+    const end_time = new Date(end_time_raw).toISOString();
+
+    if (new Date(end_time) <= new Date(start_time)) {
+      redirect(
+        `/admin/offers?error=${encodeURIComponent(
+          "Offer end time must be after start time."
+        )}`
+      );
+    }
+
+    const { error: updateErr } = await supabaseServer
+      .from("offers")
+      .update({
+        title,
+        description,
+        discount_type,
+        discount_value,
+        start_time,
+        end_time,
+      })
+      .eq("id", offer_id);
+
+    if (updateErr) {
+      redirect(
+        `/admin/offers?error=${encodeURIComponent(updateErr.message)}`
+      );
+    }
+
+    revalidatePath("/admin/offers");
+    revalidatePath("/offers");
+    revalidatePath("/admin");
+    redirect(
+      `/admin/offers?success=${encodeURIComponent(
+        `Offer "${title}" updated successfully.`
+      )}`
+    );
+  }
+
+  // Helper for input datetime-local default value
+  function toDateTimeLocalInput(isoString: string): string {
+    try {
+      const d = new Date(isoString);
+      if (isNaN(d.getTime())) return "";
+      const pad = (n: number) => String(n).padStart(2, "0");
+      const year = d.getFullYear();
+      const month = pad(d.getMonth() + 1);
+      const day = pad(d.getDate());
+      const hours = pad(d.getHours());
+      const minutes = pad(d.getMinutes());
+      return `${year}-${month}-${day}T${hours}:${minutes}`;
+    } catch {
+      return "";
+    }
   }
 
   // 2. Assign Product to Offer (Trigger validates overlaps & special prices)
@@ -457,15 +541,19 @@ export default async function AdminOffersPage(props: PageProps) {
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-xs font-medium text-slate-700 mb-1.5">
-                Offer Description / Terms (Optional)
+              <label className="block text-xs font-semibold text-slate-800 mb-1.5 flex items-center justify-between">
+                <span>Included Hardware &amp; Appliance Bullets (One per line)</span>
+                <span className="text-[11px] font-normal text-slate-500 font-mono">Editable • Displays on /offers</span>
               </label>
-              <input
-                type="text"
+              <textarea
                 name="description"
-                placeholder="Applicable while promotional warehouse stock lasts or during current billing cycle..."
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white"
-              />
+                rows={4}
+                placeholder={"10x Tier-1 N-Type TOPCon Panels\n1x 6kW Dual-MPPT Hybrid Inverter\n1x 5.12kWh LiFePO4 Lithium Battery\nTurnkey PESCO Net-Metering Setup"}
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white font-mono leading-relaxed"
+              ></textarea>
+              <p className="text-[11px] text-slate-500 mt-1">
+                Enter each bullet point on a separate line. These will render directly as green checkmark items on the promotional offer card.
+              </p>
             </div>
           </div>
 
@@ -909,6 +997,156 @@ export default async function AdminOffersPage(props: PageProps) {
                       </div>
                     </div>
                   </div>
+
+                  {/* Active Bullets Preview */}
+                  <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />
+                        Hardware &amp; Promotional Bullets (Public /offers)
+                      </span>
+                      <span className="text-[10px] text-slate-500 font-mono">
+                        {offer.description?.trim()
+                          ? "Custom Bullets Active"
+                          : "Using Linked Hardware/Package Defaults"}
+                      </span>
+                    </div>
+                    {offer.description?.trim() ? (
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-slate-700 font-mono">
+                        {offer.description
+                          .split("\n")
+                          .map((b) => b.trim())
+                          .filter(Boolean)
+                          .map((bullet, idx) => (
+                            <li key={idx} className="flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0" />
+                              <span>{bullet}</span>
+                            </li>
+                          ))}
+                      </ul>
+                    ) : (
+                      <p className="text-xs text-slate-500 italic">
+                        No custom bullets entered. This offer automatically displays the hardware items of linked packages/products or standard Tier-1 defaults.
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Comprehensive Offer & Bullets Editor */}
+                  {canEdit && (
+                    <form
+                      action={updateOffer}
+                      className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-4"
+                    >
+                      <input type="hidden" name="offer_id" value={offer.id} />
+                      <div className="flex items-center justify-between text-xs font-semibold text-slate-900 border-b border-slate-200 pb-2">
+                        <span className="flex items-center gap-1.5">
+                          <Edit3 className="w-3.5 h-3.5 text-blue-600" />
+                          Edit Offer Header &amp; Bullet Points
+                        </span>
+                        <span className="text-[11px] text-slate-500 font-normal">
+                          Live update to public /offers cards
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                        <div className="sm:col-span-2">
+                          <label className="block text-[11px] text-slate-700 mb-1 font-semibold">
+                            Offer / Campaign Title *
+                          </label>
+                          <input
+                            type="text"
+                            name="title"
+                            defaultValue={offer.title}
+                            required
+                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600 font-medium"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] text-slate-700 mb-1 font-semibold">
+                            Discount Type
+                          </label>
+                          <select
+                            name="discount_type"
+                            defaultValue={offer.discount_type}
+                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600"
+                          >
+                            <option value="percentage">Percentage (%)</option>
+                            <option value="fixed_amount">Fixed Amount (PKR)</option>
+                            <option value="special_price">Special Flat Price (PKR)</option>
+                          </select>
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] text-slate-700 mb-1 font-semibold">
+                            Discount Value *
+                          </label>
+                          <input
+                            type="number"
+                            name="discount_value"
+                            defaultValue={offer.discount_value}
+                            min="0"
+                            step="any"
+                            required
+                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-blue-600 focus:outline-none focus:border-blue-600 font-mono font-bold"
+                          />
+                        </div>
+
+                        <div className="sm:col-span-2">
+                          <label className="block text-[11px] text-slate-700 mb-1 font-semibold">
+                            Start Time (PKT) *
+                          </label>
+                          <input
+                            type="datetime-local"
+                            name="start_time"
+                            defaultValue={toDateTimeLocalInput(offer.start_time)}
+                            required
+                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600 font-mono"
+                          />
+                        </div>
+
+                        <div className="sm:col-span-2">
+                          <label className="block text-[11px] text-slate-700 mb-1 font-semibold">
+                            End Time / Expiry (PKT) *
+                          </label>
+                          <input
+                            type="datetime-local"
+                            name="end_time"
+                            defaultValue={toDateTimeLocalInput(offer.end_time)}
+                            required
+                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600 font-mono"
+                          />
+                        </div>
+
+                        <div className="sm:col-span-2 md:col-span-4">
+                          <label className="block text-[11px] text-slate-700 mb-1 font-semibold flex items-center justify-between">
+                            <span>Included Hardware &amp; Appliance Bullets (One per line)</span>
+                            <span className="text-[10px] font-normal text-slate-500 font-mono">Each line = 1 checkmark bullet on /offers</span>
+                          </label>
+                          <textarea
+                            name="description"
+                            rows={4}
+                            defaultValue={offer.description || ""}
+                            placeholder={"10x Tier-1 N-Type TOPCon Panels\n1x 6kW Dual-MPPT Hybrid Inverter\n1x 5.12kWh LiFePO4 Lithium Battery\nTurnkey PESCO Net-Metering Setup"}
+                            className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-blue-600 font-mono leading-relaxed"
+                          />
+                          <p className="text-[10px] text-slate-500 mt-1">
+                            Add, edit, or remove lines above. Each line appears as a green checkmark bullet on the promotional offer card.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-end pt-1">
+                        <button
+                          type="submit"
+                          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg text-xs transition flex items-center gap-1.5 shadow-sm"
+                        >
+                          <Save className="w-3.5 h-3.5" />
+                          <span>Save Offer Changes &amp; Bullets</span>
+                        </button>
+                      </div>
+                    </form>
+                  )}
                 </div>
               );
             })}

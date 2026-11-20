@@ -346,8 +346,22 @@ export default async function PublicPackagesPage() {
                   ? Number(promo?.promotional_price)
                   : regularPrice;
 
-                const shortTitle = simplifyPackageTitle(pkg.name, pkg.capacity_kw);
-                const applianceBullets = getApplianceLoadBullets(pkg.capacity_kw);
+                // Use custom admin package name if provided, or fallback to standard simplified title
+                const displayTitle = pkg.name?.trim()
+                  ? pkg.name.trim()
+                  : simplifyPackageTitle(pkg.name, pkg.capacity_kw);
+
+                // Parse custom appliance load bullets from pkg.description (split by newline), fallback to kW defaults
+                const customBullets = pkg.description
+                  ? pkg.description
+                      .split("\n")
+                      .map((line) => line.trim())
+                      .filter((line) => line.length > 0)
+                  : [];
+                const applianceBullets =
+                  customBullets.length > 0
+                    ? customBullets
+                    : getApplianceLoadBullets(pkg.capacity_kw);
 
                 // Filter BOM items linked to this package
                 const items = (packageItemsData ?? [])
@@ -358,7 +372,7 @@ export default async function PublicPackagesPage() {
                   }));
 
                 // Pre-fill WhatsApp message
-                const waMessage = `Hello Nowshera Solar Solutions, I am interested in booking the ${shortTitle} (${pkg.capacity_kw}kW System) listed at PKR ${effectivePrice.toLocaleString()}. Please provide turnkey installation schedule and site survey details.`;
+                const waMessage = `Hello Nowshera Solar Solutions, I am interested in booking the ${displayTitle} (${pkg.capacity_kw}kW System) listed at PKR ${effectivePrice.toLocaleString()}. Please provide turnkey installation schedule and site survey details.`;
                 const waUrl = `https://wa.me/923195092003?text=${encodeURIComponent(
                   waMessage
                 )}`;
@@ -374,7 +388,7 @@ export default async function PublicPackagesPage() {
                         <div className="relative h-48 w-full bg-slate-100 overflow-hidden border-b border-slate-200">
                           <Image
                             src={pkg.featured_image_url}
-                            alt={shortTitle}
+                            alt={displayTitle}
                             fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
                             className="object-cover object-center"
@@ -406,12 +420,12 @@ export default async function PublicPackagesPage() {
                           </span>
                         </div>
 
-                        {/* Short Package Title (Max 4-5 words) */}
+                        {/* Package Title (Admin Editable Header) */}
                         <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight leading-snug">
-                          {shortTitle}
+                          {displayTitle}
                         </h3>
 
-                        {/* Tick Bullet Points for Appliance Loads */}
+                        {/* Tick Bullet Points for Appliance Loads (Admin Editable from Description) */}
                         <ul className="space-y-1.5 pt-1 text-xs text-slate-700">
                           {applianceBullets.map((bullet, bIdx) => (
                             <li key={bIdx} className="flex items-start gap-2">

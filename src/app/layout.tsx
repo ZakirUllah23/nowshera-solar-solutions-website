@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { SITE_IMAGES } from "@/config/siteImages";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
   title: "Nowshera Solar Solutions | Tier-1 Wholesale & EPC",
   description: "Direct wholesale solar distributor & EPC firm in Nowshera, KPK.",
   icons: {
-    icon: "/images/logo/logo.png",
+    icon: SITE_IMAGES.logo,
   },
 };
 

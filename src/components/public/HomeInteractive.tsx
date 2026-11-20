@@ -17,23 +17,18 @@ interface Slide {
 const HERO_SLIDES: Slide[] = [
   {
     id: 1,
-    imageUrl: SITE_IMAGES.homeShowcase[0],
+    imageUrl: SITE_IMAGES.heroes.home[0],
     alt: "Utility-scale monocrystalline solar panel arrays under sunlight",
   },
   {
     id: 2,
-    imageUrl: SITE_IMAGES.homeShowcase[1],
+    imageUrl: SITE_IMAGES.heroes.home[1],
     alt: "Commercial rooftop solar installation in Pakistan",
   },
   {
     id: 3,
-    imageUrl: SITE_IMAGES.homeShowcase[2],
+    imageUrl: SITE_IMAGES.heroes.home[2],
     alt: "High-voltage hybrid inverters and lithium battery bank storage",
-  },
-  {
-    id: 4,
-    imageUrl: SITE_IMAGES.homeShowcase[3],
-    alt: "Industrial warehouse solar power system installation",
   },
 ];
 

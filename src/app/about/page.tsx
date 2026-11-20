@@ -23,7 +23,7 @@ import {
 export const metadata = {
   title: "About Us | Nowshera Solar Solutions — Tier-1 Wholesale Distributor & EPC",
   description:
-    "Learn about Nowshera Solar Solutions, Managing Director Zakir Ullah Khan, our certified electrical engineering team, local diagnostic repair workshop, and direct wholesale solar distribution across Khyber Pakhtunkhwa.",
+    "Learn about Nowshera Solar Solutions, Managing Director M Raheel Khan, our certified electrical engineering team, local diagnostic repair workshop, and direct wholesale solar distribution across Khyber Pakhtunkhwa.",
 };
 
 export default function AboutPage() {
@@ -226,22 +226,23 @@ export default function AboutPage() {
           </div>
 
           <div className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-start">
               {/* Executive Portrait Card */}
-              <div className="lg:col-span-5 relative min-h-[320px] sm:min-h-[380px] lg:min-h-[460px] bg-slate-900 border-b lg:border-b-0 lg:border-r border-slate-200">
+              <div className="lg:col-span-5 relative bg-slate-900 border-b lg:border-b-0 lg:border-r border-slate-200">
                 <Image
-                  src={SITE_IMAGES.about.owner}
-                  alt="Zakir Ullah Khan — Managing Director & Technical Lead"
-                  fill
+                  src={SITE_IMAGES.about.managerHeadshot}
+                  alt="M Raheel Khan — Managing Director & Technical Lead"
+                  width={0}
+                  height={0}
                   sizes="(max-width: 1024px) 100vw, 450px"
-                  className="object-cover object-top brightness-[0.95]"
+                  className="w-full h-auto block brightness-[0.95]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent lg:hidden" />
                 <div className="absolute bottom-4 left-4 lg:hidden bg-slate-950/90 backdrop-blur-sm px-3.5 py-2 rounded-md border border-slate-700 text-white">
                   <span className="text-[10px] font-mono text-blue-400 font-bold uppercase block">
                     Managing Director
                   </span>
-                  <span className="text-sm font-bold">Zakir Ullah Khan</span>
+                  <span className="text-sm font-bold">M Raheel Khan</span>
                 </div>
               </div>
 
@@ -253,14 +254,14 @@ export default function AboutPage() {
                       Managing Director &amp; Technical Lead
                     </span>
                     <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                      Zakir Ullah Khan
+                      M Raheel Khan
                     </h3>
                   </div>
 
                   {/* Concise 2-Sentence Executive Summary */}
                   <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
                     With an advanced background in computer science and commercial power systems,
-                    Zakir Ullah Khan founded Nowshera Solar Solutions with a singular objective: to
+                    M Raheel Khan founded Nowshera Solar Solutions with a singular objective: to
                     replace speculative retail markups with transparent, data-driven wholesale
                     distribution and precision engineering. Under his technical leadership, the company
                     has established direct Tier-1 factory supply agreements with global manufacturers,
@@ -459,7 +460,7 @@ export default function AboutPage() {
           {/* 4:3 Aspect Ratio Horizontal Workshop Image */}
           <div className="relative aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] w-full bg-slate-900 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
             <Image
-              src={SITE_IMAGES.about.repairCenter}
+              src={SITE_IMAGES.about.repairShop}
               alt="Solar Electronics Diagnostic Bench"
               fill
               sizes="(max-width: 1200px) 100vw, 1200px"
