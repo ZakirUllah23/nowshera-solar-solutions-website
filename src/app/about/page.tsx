@@ -226,52 +226,46 @@ export default function AboutPage() {
           </div>
 
           <div className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-start">
-              {/* Executive Portrait Card */}
-              <div className="lg:col-span-5 relative bg-slate-900 border-b lg:border-b-0 lg:border-r border-slate-200">
-                <Image
-                  src={SITE_IMAGES.about.managerHeadshot}
-                  alt="M Raheel Khan — Managing Director & Technical Lead"
-                  width={0}
-                  height={0}
-                  sizes="(max-width: 1024px) 100vw, 450px"
-                  className="w-full h-auto block brightness-[0.95]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent lg:hidden" />
-                <div className="absolute bottom-4 left-4 lg:hidden bg-slate-950/90 backdrop-blur-sm px-3.5 py-2 rounded-md border border-slate-700 text-white">
-                  <span className="text-[10px] font-mono text-blue-400 font-bold uppercase block">
-                    Managing Director
-                  </span>
-                  <span className="text-sm font-bold">M Raheel Khan</span>
+            <div className="flex flex-col md:flex-row items-start gap-6 md:gap-8 lg:gap-10 p-6 sm:p-8 lg:p-10">
+              {/* Executive Portrait Card (Framed & Controlled Width) */}
+              <div className="w-full max-w-[260px] md:max-w-none md:w-[260px] lg:w-[320px] shrink-0 mx-auto md:mx-0">
+                <div className="rounded-xl overflow-hidden border border-slate-200 bg-white shadow-sm">
+                  <Image
+                    src={SITE_IMAGES.about.managerHeadshot}
+                    alt="M Raheel Khan — Managing Director & Technical Lead"
+                    width={0}
+                    height={0}
+                    sizes="(max-width: 768px) 260px, (max-width: 1024px) 260px, 320px"
+                    className="w-full h-auto block brightness-[0.98]"
+                    priority
+                  />
                 </div>
               </div>
 
               {/* Bio & Professional Profile */}
-              <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 flex flex-col justify-between space-y-6">
-                <div className="space-y-4">
-                  <div className="hidden lg:block space-y-1">
-                    <span className="text-xs font-mono text-blue-600 font-bold tracking-widest uppercase block">
-                      Managing Director &amp; Technical Lead
-                    </span>
-                    <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                      M Raheel Khan
-                    </h3>
-                  </div>
-
-                  {/* Concise 2-Sentence Executive Summary */}
-                  <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
-                    With an advanced background in computer science and commercial power systems,
-                    M Raheel Khan founded Nowshera Solar Solutions with a singular objective: to
-                    replace speculative retail markups with transparent, data-driven wholesale
-                    distribution and precision engineering. Under his technical leadership, the company
-                    has established direct Tier-1 factory supply agreements with global manufacturers,
-                    stringent EPC execution standards, and localized diagnostic after-sales support across
-                    Khyber Pakhtunkhwa.
-                  </p>
+              <div className="flex-1 min-w-0 space-y-5">
+                <div className="space-y-1">
+                  <span className="text-xs font-mono text-blue-600 font-bold tracking-widest uppercase block">
+                    Managing Director &amp; Technical Lead
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                    M Raheel Khan
+                  </h3>
                 </div>
 
+                {/* Concise 2-Sentence Executive Summary */}
+                <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
+                  With an advanced background in computer science and commercial power systems,
+                  M Raheel Khan founded Nowshera Solar Solutions with a singular objective: to
+                  replace speculative retail markups with transparent, data-driven wholesale
+                  distribution and precision engineering. Under his technical leadership, the company
+                  has established direct Tier-1 factory supply agreements with global manufacturers,
+                  stringent EPC execution standards, and localized diagnostic after-sales support across
+                  Khyber Pakhtunkhwa.
+                </p>
+
                 {/* Small Professional Supporting Milestone Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-4 border-t border-slate-200">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-5 border-t border-slate-200">
                   <div className="bg-white p-3.5 rounded-lg border border-slate-200 shadow-2xs">
                     <span className="text-xs font-mono text-blue-600 font-bold block mb-1">
                       Direct Imports
